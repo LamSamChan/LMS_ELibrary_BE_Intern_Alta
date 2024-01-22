@@ -17,6 +17,7 @@
           <mxGeometry y="50" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="WkRM8bRASP1RiSPlc05D-3" value="Documents" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-30" y="465" width="200" height="215" as="geometry" />
         </mxCell>
         <mxCell id="WkRM8bRASP1RiSPlc05D-4" value="+ Name&lt;br&gt;+ Type ( Bài giảng hoặc tài nguyên)&lt;br&gt;+ Teacher&lt;br&gt;+ Submission-Date&lt;br&gt;+ Status&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;+ File&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Subject&lt;br&gt;+ Note&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="WkRM8bRASP1RiSPlc05D-3" vertex="1">
           <mxGeometry y="50" width="200" height="165" as="geometry" />
