@@ -1,20 +1,20 @@
-<mxfile host="Electron" modified="2024-01-23T09:28:50.300Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.21 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="OhVzsPXO9kMIToXzIpog" version="22.1.21" type="device">
+<mxfile host="Electron" modified="2024-01-24T07:38:21.356Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.21 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="oh0mSwrAQETdGXJ7xlgt" version="22.1.21" type="device">
   <diagram name="Page-1" id="wIqU8FdTsNSahX9Sebv4">
-    <mxGraphModel dx="3133" dy="1790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3209" dy="1980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="YYTNkHkmk9sQ7s7jDryC-1" value="Subject" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-270" y="490" width="200" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="YYTNkHkmk9sQ7s7jDryC-2" value="+ Subject Code&lt;br&gt;+DepartmentID&lt;br&gt;+ Name&lt;br&gt;+ TeacherID&lt;br&gt;+ Submission-Date&lt;br&gt;+ Status&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;+ Description&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="YYTNkHkmk9sQ7s7jDryC-1" vertex="1">
+        <mxCell id="YYTNkHkmk9sQ7s7jDryC-2" value="+ Subject Code&lt;br&gt;+ DepartmentID&lt;br&gt;+ Name&lt;br&gt;+ TeacherID&lt;br&gt;+ Submission-Date&lt;br&gt;+ Status&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;+ Description&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="YYTNkHkmk9sQ7s7jDryC-1" vertex="1">
           <mxGeometry y="50" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="WkRM8bRASP1RiSPlc05D-3" value="Documents" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-510" y="450" width="200" height="200" as="geometry" />
+          <mxGeometry x="-510" y="500" width="200" height="220" as="geometry" />
         </mxCell>
-        <mxCell id="WkRM8bRASP1RiSPlc05D-4" value="+ Name&lt;br&gt;+ Type&lt;br&gt;+ Teacher&lt;br&gt;+ Submission-Date&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;+ File&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ LessonID&lt;br&gt;+ Status&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Helvetica&quot;&gt;+ Censor&lt;br&gt;&lt;/font&gt;+ Note&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="WkRM8bRASP1RiSPlc05D-3" vertex="1">
-          <mxGeometry y="50" width="200" height="150" as="geometry" />
+        <mxCell id="WkRM8bRASP1RiSPlc05D-4" value="+ Name&lt;br&gt;+ Type&lt;br&gt;+ Teacher&lt;br&gt;+ Submission-Date&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;+ File&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ LessonID&lt;br&gt;+ DateUpdated&lt;br&gt;+ Status&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Helvetica&quot;&gt;+ Censor&lt;br&gt;&lt;/font&gt;+ Note&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="WkRM8bRASP1RiSPlc05D-3" vertex="1">
+          <mxGeometry y="50" width="200" height="170" as="geometry" />
         </mxCell>
         <mxCell id="louY3IBBI9BvioG2gEGh-1" value="PrivateFile" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1040" y="280" width="200" height="130" as="geometry" />
@@ -23,10 +23,10 @@
           <mxGeometry y="50" width="200" height="80" as="geometry" />
         </mxCell>
         <mxCell id="rqF0E4ZXU8l-zSK0DjSr-9" value="User" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1040" width="200" height="200" as="geometry" />
+          <mxGeometry x="1040" y="-10" width="200" height="220" as="geometry" />
         </mxCell>
-        <mxCell id="rqF0E4ZXU8l-zSK0DjSr-10" value="+ FullName&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Email&lt;br&gt;+ DateOfBirth&lt;br&gt;+ PhoneNumber&lt;br&gt;+ Address&lt;br&gt;+ Gender&lt;br&gt;+ Avartar&lt;br&gt;+ Password&lt;br&gt;+ RoleID&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="rqF0E4ZXU8l-zSK0DjSr-9" vertex="1">
-          <mxGeometry y="50" width="200" height="150" as="geometry" />
+        <mxCell id="rqF0E4ZXU8l-zSK0DjSr-10" value="+ FullName&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Email&lt;br&gt;+ DateOfBirth&lt;br&gt;+ PhoneNumber&lt;br&gt;+ Address&lt;br&gt;+ Gender&lt;br&gt;+ Avartar&lt;br&gt;+ Password&lt;br&gt;+ RoleID&lt;br&gt;+ DepartmentID&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="rqF0E4ZXU8l-zSK0DjSr-9" vertex="1">
+          <mxGeometry y="50" width="200" height="170" as="geometry" />
         </mxCell>
         <mxCell id="rqF0E4ZXU8l-zSK0DjSr-13" value="Help" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1040" y="-160" width="200" height="100" as="geometry" />
@@ -41,7 +41,7 @@
           <mxGeometry y="50" width="200" height="55" as="geometry" />
         </mxCell>
         <mxCell id="d8f4K2Hc_LIDOgLQ2HtI-1" value="SystemInfomation" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="2060" y="660" width="200" height="240" as="geometry" />
+          <mxGeometry x="1320" y="690" width="200" height="240" as="geometry" />
         </mxCell>
         <mxCell id="d8f4K2Hc_LIDOgLQ2HtI-2" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ SchoolID&amp;nbsp;&lt;br&gt;+ Name&lt;br&gt;+ SchoolWebsite&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ SchoolType&amp;nbsp;&lt;br&gt;+ Principals&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+&amp;nbsp;LibrarySystemName&lt;br&gt;+ LMSWebsite&lt;br&gt;+ PhoneNumber&lt;br&gt;+ Email&lt;br&gt;+ Language&lt;br&gt;+&amp;nbsp;AcademicYear&lt;br&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;+ LogoImg&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="d8f4K2Hc_LIDOgLQ2HtI-1" vertex="1">
           <mxGeometry y="50" width="200" height="190" as="geometry" />
@@ -52,16 +52,16 @@
         <mxCell id="donhk6P68hNKu05nPL7n-2" value="+ Name&lt;br&gt;+ Description&lt;br&gt;+ DateUpdated&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="donhk6P68hNKu05nPL7n-1" vertex="1">
           <mxGeometry y="50" width="200" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="donhk6P68hNKu05nPL7n-3" value="RoleSetting" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="donhk6P68hNKu05nPL7n-3" value="Permissions" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="760" y="-125" width="200" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="donhk6P68hNKu05nPL7n-4" value="+ Subject_View&lt;br&gt;+ Subject_Edit&lt;br&gt;+ PrivateFile_Create&lt;br&gt;+ PrivateFile_View&lt;br&gt;+ ...&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="donhk6P68hNKu05nPL7n-3" vertex="1">
+        <mxCell id="donhk6P68hNKu05nPL7n-4" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ PermissionName&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="donhk6P68hNKu05nPL7n-3" vertex="1">
           <mxGeometry y="50" width="200" height="100" as="geometry" />
         </mxCell>
         <mxCell id="uDp7Oc-BDPe_ocFwuahR-1" value="Exams" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="20" y="-500" width="200" height="240" as="geometry" />
         </mxCell>
-        <mxCell id="uDp7Oc-BDPe_ocFwuahR-2" value="+ FileType&lt;br&gt;+ Name&lt;br&gt;+ Subject&lt;br&gt;+ Format&lt;br&gt;+&amp;nbsp;Duration&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ TeacherCreated&lt;br&gt;+ Status&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Helvetica&quot;&gt;+ Censor&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;+ Note&lt;br&gt;+ FilePath&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="uDp7Oc-BDPe_ocFwuahR-1" vertex="1">
+        <mxCell id="uDp7Oc-BDPe_ocFwuahR-2" value="+ FileType&lt;br&gt;+ Name&lt;br&gt;+ Subject&lt;br&gt;+ Format&lt;br&gt;+&amp;nbsp;Duration&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ TeacherCreated&lt;br&gt;+ DateCreated&lt;br&gt;+SubjectID&lt;br&gt;+ Status&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Helvetica&quot;&gt;+ Censor&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;+ Note&lt;br&gt;+ FilePath&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="uDp7Oc-BDPe_ocFwuahR-1" vertex="1">
           <mxGeometry y="50" width="200" height="190" as="geometry" />
         </mxCell>
         <mxCell id="uDp7Oc-BDPe_ocFwuahR-3" value="QuestionsBank" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -85,7 +85,7 @@
         <mxCell id="jgIaRZZBkH27jQLYDEGe-3" value="NotificationSetting" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1320" y="50" width="200" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="jgIaRZZBkH27jQLYDEGe-4" value="+ UserID&lt;br&gt;+&amp;nbsp;Title&lt;br&gt;+&amp;nbsp;Content&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ IsOn&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jgIaRZZBkH27jQLYDEGe-3" vertex="1">
+        <mxCell id="jgIaRZZBkH27jQLYDEGe-4" value="+ UserID&lt;br&gt;+&amp;nbsp;FeaturesID&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+&amp;nbsp;ReceiveNotification&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jgIaRZZBkH27jQLYDEGe-3" vertex="1">
           <mxGeometry y="50" width="200" height="90" as="geometry" />
         </mxCell>
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-1" value="CustomInfoOfSubject" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -107,10 +107,10 @@
           <mxGeometry y="50" width="200" height="110" as="geometry" />
         </mxCell>
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-7" value="Lesson" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-510" y="210" width="200" height="220" as="geometry" />
+          <mxGeometry x="-510" y="210" width="200" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="jV7Zrpm06Uq43UpFrcTu-8" value="+ Subject Code&lt;br&gt;+ Title&lt;br&gt;+ Description&lt;br&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;+ PartID&lt;br&gt;+&amp;nbsp;&lt;/font&gt;PersonalLessonID&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;+ IsHidden&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Status&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Helvetica&quot;&gt;+ Censor&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;+ Note&lt;br&gt;+ NumericalOrder&lt;br&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;+ ClassID&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-7" vertex="1">
-          <mxGeometry y="50" width="200" height="170" as="geometry" />
+        <mxCell id="jV7Zrpm06Uq43UpFrcTu-8" value="+ Subject Code&lt;br&gt;+ Title&lt;br&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;+ PartID&lt;br&gt;&lt;/font&gt;+ DateUpdated&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;+ IsHidden&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Status&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Helvetica&quot;&gt;+ Censor&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;+ Note&lt;br&gt;+ NumericalOrder&lt;br&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;+ ClassID&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-7" vertex="1">
+          <mxGeometry y="50" width="200" height="200" as="geometry" />
         </mxCell>
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-9" value="Lesson_Questions" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-750" y="260" width="200" height="160" as="geometry" />
@@ -131,10 +131,10 @@
           <mxGeometry y="50" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-16" value="SubjectNotification" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-287.5" y="870" width="235" height="170" as="geometry" />
+          <mxGeometry x="-287.5" y="870" width="235" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="jV7Zrpm06Uq43UpFrcTu-17" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Title&lt;br&gt;+ Content&lt;br&gt;+ ClassID (Có thể chọn 1 hoặc nhiều)&lt;br&gt;+ StudentID (Có thể chọn 1 hoặc nhiều)&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-16" vertex="1">
-          <mxGeometry y="50" width="235" height="120" as="geometry" />
+        <mxCell id="jV7Zrpm06Uq43UpFrcTu-17" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Title&lt;br&gt;+ Content&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-16" vertex="1">
+          <mxGeometry y="50" width="235" height="50" as="geometry" />
         </mxCell>
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-20" value="DistributingSubjects" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-270" y="110" width="200" height="110" as="geometry" />
@@ -148,18 +148,6 @@
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-23" value="+ FullName&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Email&lt;br&gt;+ DateOfBirth&lt;br&gt;+ PhoneNumber&lt;br&gt;+ Address&lt;br&gt;+ Gender&lt;br&gt;+ Avartar&lt;br&gt;+ Password&lt;br&gt;+ ClassID&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-22" vertex="1">
           <mxGeometry y="50" width="200" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="jV7Zrpm06Uq43UpFrcTu-26" value="PersonalLesson" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-510" y="-60" width="200" height="220" as="geometry" />
-        </mxCell>
-        <mxCell id="jV7Zrpm06Uq43UpFrcTu-27" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Name&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Modifier&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ DateChanged&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ FilePath&lt;br&gt;+ SubjectID&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-26" vertex="1">
-          <mxGeometry y="50" width="200" height="170" as="geometry" />
-        </mxCell>
-        <mxCell id="jV7Zrpm06Uq43UpFrcTu-28" value="PersonalDocument" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-510" y="670" width="200" height="220" as="geometry" />
-        </mxCell>
-        <mxCell id="jV7Zrpm06Uq43UpFrcTu-29" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ Name&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Modifier&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ DateChanged&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ FilePath&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Base64&lt;br&gt;+ SubjectID&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="jV7Zrpm06Uq43UpFrcTu-28" vertex="1">
-          <mxGeometry y="50" width="200" height="170" as="geometry" />
-        </mxCell>
         <mxCell id="jV7Zrpm06Uq43UpFrcTu-30" value="Exam_Answers_E" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-470" y="-640" width="200" height="110" as="geometry" />
         </mxCell>
@@ -172,35 +160,65 @@
         <mxCell id="-pWjCHKB16QgWj9AhpG9-2" value="+ Name&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="-pWjCHKB16QgWj9AhpG9-1" vertex="1">
           <mxGeometry y="50" width="200" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-7" value="Questions_Exams" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="01onyFc2ARTJmx60kdZD-7" value="Questions_Exams" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-100" y="-690" width="200" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-8" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ ExamsID&lt;br&gt;+ QuestionID&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="01onyFc2ARTJmx60kdZD-7">
+        <mxCell id="01onyFc2ARTJmx60kdZD-8" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ ExamsID&lt;br&gt;+ QuestionID&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="01onyFc2ARTJmx60kdZD-7" vertex="1">
           <mxGeometry y="50" width="200" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-9" value="Student_Subject" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="01onyFc2ARTJmx60kdZD-9" value="Student_Subject" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="300" y="1090" width="200" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-10" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ SubjectID&lt;br&gt;+ StudentID&lt;br&gt;+ SubjectMark&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="01onyFc2ARTJmx60kdZD-9">
+        <mxCell id="01onyFc2ARTJmx60kdZD-10" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ SubjectID&lt;br&gt;+ StudentID&lt;br&gt;+ SubjectMark&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="01onyFc2ARTJmx60kdZD-9" vertex="1">
           <mxGeometry y="50" width="200" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-11" value="VideoHistory" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="01onyFc2ARTJmx60kdZD-11" value="VideoHistory" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="300" y="1510" width="200" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-12" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ StudentID&lt;br&gt;+ VideoID&lt;br&gt;+ WatchMinutes&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="01onyFc2ARTJmx60kdZD-11">
+        <mxCell id="01onyFc2ARTJmx60kdZD-12" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ StudentID&lt;br&gt;+ VideoID&lt;br&gt;+ WatchMinutes&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="01onyFc2ARTJmx60kdZD-11" vertex="1">
           <mxGeometry y="50" width="200" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-13" value="StudyTime" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="01onyFc2ARTJmx60kdZD-13" value="StudyTime" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="520" y="1510" width="200" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-14" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ StudentID&lt;br&gt;+ SubjectID&lt;br&gt;+ StudyDate&lt;br&gt;+ TotalTime&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="01onyFc2ARTJmx60kdZD-13">
+        <mxCell id="01onyFc2ARTJmx60kdZD-14" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ StudentID&lt;br&gt;+ SubjectID&lt;br&gt;+ StudyDate&lt;br&gt;+ TotalTime&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="01onyFc2ARTJmx60kdZD-13" vertex="1">
           <mxGeometry y="50" width="200" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-15" value="Student_QnALikes" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="01onyFc2ARTJmx60kdZD-15" value="Student_QnALikes" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="520" y="1090" width="200" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="01onyFc2ARTJmx60kdZD-16" value="+&amp;nbsp;StudentID&lt;br&gt;+ QuestionsLikedID&lt;br&gt;+ AnswersLikedID&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="01onyFc2ARTJmx60kdZD-15">
+        <mxCell id="01onyFc2ARTJmx60kdZD-16" value="+&amp;nbsp;StudentID&lt;br&gt;+ QuestionsLikedID&lt;br&gt;+ AnswersLikedID&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="01onyFc2ARTJmx60kdZD-15" vertex="1">
           <mxGeometry y="50" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-4" value="Role_Permissions" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-310" width="200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-5" value="+ RoleID&lt;br&gt;+&amp;nbsp;PermissionsID&lt;br&gt;+&amp;nbsp;CanAccess&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="kAhjPw_TSHLWIffQKNpO-4">
+          <mxGeometry y="50" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-6" value="NotificationFeatures&lt;br&gt;(Tên các chức năng nhận thông báo)" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="10" width="300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-7" value="+&amp;nbsp;FeatureType&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="kAhjPw_TSHLWIffQKNpO-6">
+          <mxGeometry y="50" width="300" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-8" value="Teacher_Class" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="725" width="200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-9" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+ TeacherID&lt;br&gt;+ ClassID&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="kAhjPw_TSHLWIffQKNpO-8">
+          <mxGeometry y="50" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-12" value="SubjectNotification_Class" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="725" width="235" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-13" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+&amp;nbsp;SubjectNotificationID&lt;br&gt;+ ClassID&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="kAhjPw_TSHLWIffQKNpO-12">
+          <mxGeometry y="50" width="235" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-14" value="SubjectNotification_Student" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="910" width="235" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kAhjPw_TSHLWIffQKNpO-15" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;+&amp;nbsp;SubjectNotificationID&lt;br&gt;+ StudentID&amp;nbsp;&lt;br&gt;&lt;/font&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="kAhjPw_TSHLWIffQKNpO-14">
+          <mxGeometry y="50" width="235" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
