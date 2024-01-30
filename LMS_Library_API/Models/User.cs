@@ -12,10 +12,12 @@ namespace LMS_Library_API.Models
         public Guid Id { get; set; } = new Guid();
 
         [Column(TypeName = "nvarchar(50)")]
+        [StringLength(50, ErrorMessage ="Vượt quá độ dài cho phép")]
         [Required(ErrorMessage ="Hãy nhập tên người dùng")]
         public string FullName { get; set; }
 
         [Column(TypeName = "varchar(50)")]
+        [StringLength(50, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage ="Hãy nhâp email người dùng")]
         [RegularExpression("^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$",
             ErrorMessage = "Email không hợp lệ !")]
@@ -26,11 +28,13 @@ namespace LMS_Library_API.Models
         public DateTime DateOfBirth { get; set; }
 
         [Column("varchar(20)")]
+        [StringLength(20, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage ="Hãy nhập số điện thoại người dùng")]
         [RegularExpression("^(?:\\+84|0)\\d{9}$", ErrorMessage = "Số điện thoại không hợp lệ !")]
         public string PhoneNumber { get; set; }
 
         [Column("nvarhar(150)")]
+        [StringLength(150, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage ="Hãy nhập địa chỉ nhà của người dùng")]
         public string Address { get; set; }
 
@@ -43,6 +47,7 @@ namespace LMS_Library_API.Models
         public string Password { get; set; }
 
         //navigation property
+        public virtual SystemInfomation SystemInfomation { get; set; }
 
     }
 }
