@@ -40,7 +40,7 @@ namespace LMS_Library_API.Models
         [Required(ErrorMessage = "Hãy nhập địa chỉ website hệ thống thư viện của trường")]
         public string LMSWebsite { get; set; }
 
-        [Column("varchar(20)")]
+        [Column(TypeName = "varchar(20)")]
         [StringLength(20, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage = "Hãy nhập số điện thoại của trường")]
         [RegularExpression("^(?:\\+84|0)\\d{9}$", ErrorMessage = "Số điện thoại không hợp lệ !")]

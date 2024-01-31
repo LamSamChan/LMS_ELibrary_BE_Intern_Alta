@@ -1,4 +1,6 @@
 ﻿using LMS_Library_API.Enums;
+using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.Notification;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,13 +29,13 @@ namespace LMS_Library_API.Models
         [Required(ErrorMessage ="Hãy nhập ngày sinh người dùng")]
         public DateTime DateOfBirth { get; set; }
 
-        [Column("varchar(20)")]
+        [Column(TypeName = "varchar(20)")]
         [StringLength(20, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage ="Hãy nhập số điện thoại người dùng")]
         [RegularExpression("^(?:\\+84|0)\\d{9}$", ErrorMessage = "Số điện thoại không hợp lệ !")]
         public string PhoneNumber { get; set; }
 
-        [Column("nvarhar(150)")]
+        [Column(TypeName = "nvarchar(150)")]
         [StringLength(150, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage ="Hãy nhập địa chỉ nhà của người dùng")]
         public string Address { get; set; }
@@ -47,7 +49,30 @@ namespace LMS_Library_API.Models
         public string Password { get; set; }
 
         //navigation property
+        [InverseProperty("User")]
         public virtual SystemInfomation SystemInfomation { get; set; }
+
+
+        [InverseProperty("User")]
+        public virtual QnALikes QnALikes { get; set; }
+
+
+        [InverseProperty("User")]
+        public virtual List<Notification.Notification> Notifications { get; set; }
+
+
+        [InverseProperty("User")]
+        public virtual ICollection<NotificationSetting> NotificationSetting { get; set; }
+
+
+        [InverseProperty("User")]
+        public virtual ICollection<PrivateFile> PrivateFiles { get; set; }
+
+
+        [InverseProperty("User")]
+        public virtual ICollection<Help> Helps { get; set; }
+
+
 
     }
 }
