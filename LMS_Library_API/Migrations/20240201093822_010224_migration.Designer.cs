@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240201093822_010224_migration")]
+    partial class _010224_migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,7 +198,13 @@ namespace LMS_Library_API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Role", (string)null);
                 });
@@ -330,13 +338,7 @@ namespace LMS_Library_API.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("Roleid")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("Roleid")
-                        .IsUnique();
 
                     b.ToTable("User", (string)null);
                 });
@@ -404,6 +406,17 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("LMS_Library_API.Models.RoleAccess.Role", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithOne("Role")
+                        .HasForeignKey("LMS_Library_API.Models.RoleAccess.Role", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.RoleAccess.Role_Permissions", b =>
                 {
                     b.HasOne("LMS_Library_API.Models.RoleAccess.Permissions", "Permissions")
@@ -434,17 +447,6 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.User", b =>
-                {
-                    b.HasOne("LMS_Library_API.Models.RoleAccess.Role", "Role")
-                        .WithOne("User")
-                        .HasForeignKey("LMS_Library_API.Models.User", "Roleid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("LMS_Library_API.Models.Notification.NotificationFeatures", b =>
                 {
                     b.Navigation("NotificationSetting");
@@ -458,9 +460,6 @@ namespace LMS_Library_API.Migrations
             modelBuilder.Entity("LMS_Library_API.Models.RoleAccess.Role", b =>
                 {
                     b.Navigation("Role_Permissions");
-
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.User", b =>
@@ -474,6 +473,9 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("PrivateFiles");
 
                     b.Navigation("QnALikes")
+                        .IsRequired();
+
+                    b.Navigation("Role")
                         .IsRequired();
 
                     b.Navigation("SystemInfomation")

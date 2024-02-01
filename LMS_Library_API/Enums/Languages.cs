@@ -6,10 +6,10 @@ namespace LMS_Library_API.Enums
     {
         [Display(Name = "Tiếng Việt")]
         [EnumMember(Value = "vi")]
-        Vietnamese,
+        Vietnamese = 0,
         [Display(Name = "English")]
         [EnumMember(Value = "en")]
-        English
+        English = 1
 
     }
 }

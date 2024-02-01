@@ -1,6 +1,8 @@
 ﻿using LMS_Library_API.Enums;
 using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models.Notification;
+using LMS_Library_API.Models.RoleAccess;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -49,12 +51,14 @@ namespace LMS_Library_API.Models
         public string Password { get; set; }
 
         //navigation property
-        [InverseProperty("User")]
         public virtual SystemInfomation SystemInfomation { get; set; }
 
 
-        [InverseProperty("User")]
         public virtual QnALikes QnALikes { get; set; }
+
+        [ForeignKey("Role")]
+        public int RoleId { get; set; }
+        public virtual Role Role { get; set; }
 
 
         [InverseProperty("User")]
@@ -73,6 +77,8 @@ namespace LMS_Library_API.Models
         public virtual ICollection<Help> Helps { get; set; }
 
 
+        [InverseProperty("User")]
+        public virtual ICollection<Exam> Exams { get; set; }
 
     }
 }

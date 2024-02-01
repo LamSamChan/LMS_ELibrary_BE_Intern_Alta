@@ -2,6 +2,7 @@
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.RoleAccess;
 
 namespace LMS_Library_API.Context
 {
@@ -24,6 +25,9 @@ namespace LMS_Library_API.Context
         public DbSet<QnALikes> QnALikes { get; set; }
         public DbSet<Help> Helps { get; set; }
         public DbSet<PrivateFile> PrivateFiles { get; set; }
+        public DbSet<Permissions> Permissions { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<Role_Permissions> Role_Permissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,10 +39,16 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<QnALikes>().ToTable("QnALikes");
             modelBuilder.Entity<Help>().ToTable("Help");
             modelBuilder.Entity<PrivateFile>().ToTable("PrivateFile");
+            modelBuilder.Entity<Permissions>().ToTable("Permissions");
+            modelBuilder.Entity<Role>().ToTable("Role");
+            modelBuilder.Entity<Role_Permissions>().ToTable("Role_Permissions");
 
 
             modelBuilder.Entity<NotificationSetting>()
             .HasKey(ns => new { ns.UserId, ns.FeaturesId });
+
+            modelBuilder.Entity<Role_Permissions>()
+           .HasKey(rp => new { rp.RoleId, rp.PermissionsId });
 
         }
         
