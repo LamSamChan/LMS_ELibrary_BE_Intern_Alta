@@ -15,7 +15,10 @@ namespace LMS_Library_API.Models
 
 
         //navigation property
-        public virtual User User { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
+
+
 
     }
 }

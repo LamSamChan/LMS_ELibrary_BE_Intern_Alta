@@ -1,6 +1,42 @@
-﻿namespace LMS_Library_API.Models
+﻿using LMS_Library_API.Models.Exams;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
+namespace LMS_Library_API.Models
 {
     public class Subject
     {
+        [Column(TypeName ="varchar(20)")]
+        [MaxLength(20)]
+        [Key] public string Id { get; set; }
+
+        [Column(TypeName=("nvarchar(100)"))]
+        [MaxLength(100)]
+        public string Name { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime SubmissionDate { get; set; } = DateTime.Now;
+
+        [Column(TypeName = ("nvarchar"))]
+        [Required]
+        public string Description { get; set; }
+
+
+        //navigation property
+        [ForeignKey("Department")]
+        [Column(TypeName = "varchar(20)")]
+        public string DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
+
+        [ForeignKey("User")]
+        public Guid TeacherId { get; set; }
+        public virtual User User { get; set; }
+
+        public virtual ICollection<Exam> Exams { get; set; } 
+
+        public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
+
+
     }
 }

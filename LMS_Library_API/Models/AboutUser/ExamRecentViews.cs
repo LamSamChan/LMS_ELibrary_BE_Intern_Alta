@@ -7,11 +7,12 @@ namespace LMS_Library_API.Models.AboutUser
     {
 
         [ForeignKey("User")]
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public virtual User User { get; set; }
 
         [ForeignKey("Exam")]
-        public int ExamId { get; set; }
+        [Column(TypeName = "varchar(30)")]
+        public string ExamId { get; set; }
         public virtual Exam Exam { get; set; }
     }
 }

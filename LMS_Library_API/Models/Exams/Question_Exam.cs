@@ -5,6 +5,7 @@ namespace LMS_Library_API.Models.Exams
     public class Question_Exam
     {
         [ForeignKey("Exam")]
+        [Column(TypeName = "varchar(30)")]
         public string ExamId { get; set; }
         public virtual Exam Exam { get; set; }
 

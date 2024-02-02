@@ -9,6 +9,7 @@ namespace LMS_Library_API.Models.Exams
 {
     public class Exam
     {
+        [Column(TypeName = "varchar(30)")]
         [Key] public string Id { get; set; }
 
         [Column(TypeName = "varchar(30)")]
@@ -20,9 +21,8 @@ namespace LMS_Library_API.Models.Exams
         [Required]
         public string FileName { get; set; }
 
-        [Column(TypeName = "bit")]
         [Required]
-        public QuestionFormat Format { get; set; }
+        public bool Format { get; set; }
 
         [Required]
         public int Duration { get; set; }
@@ -44,14 +44,22 @@ namespace LMS_Library_API.Models.Exams
 
 
         //navigation property
-        [ForeignKey("User")]
+        [ForeignKey("Censor")]
         [AllowNull]
         public Guid CensorId { get; set; }
+        public virtual User Censor { get; set; }
 
-        [ForeignKey("User")]
+
+        [ForeignKey("TeacherCreated")]
         [Required]
         public Guid TeacherCreatedId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User TeacherCreated { get; set; }
+
+        [ForeignKey("Subject")]
+        [Column(TypeName = "varchar(20)")]
+        [Required]
+        public string SubjectId { get; set; }
+        public virtual Subject Subject { get; set; }
 
         [InverseProperty("Exam")]
         public virtual ICollection<Question_Exam> Question_Exam { get; set; }

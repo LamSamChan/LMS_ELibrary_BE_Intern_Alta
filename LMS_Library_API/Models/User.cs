@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models
 {
@@ -60,13 +61,15 @@ namespace LMS_Library_API.Models
         public string DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
-
         public virtual SystemInfomation SystemInfomation { get; set; }
 
 
         public virtual QnALikes QnALikes { get; set; }
 
         
+        public virtual Subject Subject { get; set; }
+
+
         public virtual ICollection<Notification.Notification> Notifications { get; set; }
 
 
@@ -79,8 +82,11 @@ namespace LMS_Library_API.Models
 
         public virtual ICollection<Help> Helps { get; set; }
 
+        [InverseProperty("Censor")]
+        public virtual ICollection<Exam> Censor { get; set; }
 
-        public virtual ICollection<Exam> Exams { get; set; }
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Exam> TeacherCreated { get; set; }
 
 
         public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
@@ -88,6 +94,9 @@ namespace LMS_Library_API.Models
 
         [InverseProperty("User")]
         public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
+
+
+      
 
     }
 }

@@ -35,6 +35,8 @@ namespace LMS_Library_API.Context
         public DbSet<QB_Answer_Essay> QB_Answers_Essay { get; set; }
         public DbSet<QB_Answer_MC> QB_Answers_MC { get; set; }
         public DbSet<Question_Exam> Question_Exam { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +57,8 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<QB_Answer_Essay>().ToTable("QB_Answer_Essay");
             modelBuilder.Entity<QB_Answer_MC>().ToTable("QB_Answer_MC");
             modelBuilder.Entity<Question_Exam>().ToTable("Question_Exam");
+            modelBuilder.Entity<Department>().ToTable("Department");
+            modelBuilder.Entity<Subject>().ToTable("Subject");
 
 
             modelBuilder.Entity<NotificationSetting>()
@@ -68,6 +72,7 @@ namespace LMS_Library_API.Context
 
             modelBuilder.Entity<ExamRecentViews>()
         .HasKey(erv => new { erv.UserId, erv.ExamId });
+
 
         }
         

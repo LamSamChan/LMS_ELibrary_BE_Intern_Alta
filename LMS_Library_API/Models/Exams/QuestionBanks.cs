@@ -8,9 +8,8 @@ namespace LMS_Library_API.Models.Exams
     {
         [Key] public int Id { get; set; }
 
-        [Column(TypeName = "bit")]
         [Required]
-        public QuestionFormat Format { get; set; }
+        public bool Format { get; set; }
 
         [Column(TypeName ="nvarchar")]
         [Required]
@@ -26,6 +25,12 @@ namespace LMS_Library_API.Models.Exams
         [ForeignKey("User")]
         public Guid TeacherCreatedId { get; set; }
         public virtual User User { get; set; }
+
+        [ForeignKey("Subject")]
+        [Column(TypeName = "varchar(20)")]
+        [Required]
+        public string SubjectId { get; set; }
+        public virtual Subject Subject { get; set; }
 
         public virtual ICollection<QB_Answer_MC> QB_Answers_MC { get; set; }
 

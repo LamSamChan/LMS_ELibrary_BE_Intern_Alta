@@ -22,6 +22,21 @@ namespace LMS_Library_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.ExamRecentViews", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ExamId")
+                        .HasColumnType("varchar(30)");
+
+                    b.HasKey("UserId", "ExamId");
+
+                    b.HasIndex("ExamId");
+
+                    b.ToTable("ExamRecentViews", (string)null);
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.AboutUser.Help", b =>
                 {
                     b.Property<int>("Id")
@@ -93,6 +108,179 @@ namespace LMS_Library_API.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("QnALikes", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Department", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Department", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.Exam", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<Guid>("CensorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<bool>("Format")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubjectId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<Guid>("TeacherCreatedId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CensorId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherCreatedId");
+
+                    b.ToTable("Exam", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QB_Answer_Essay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("LimitWord")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SubmitType")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId")
+                        .IsUnique();
+
+                    b.ToTable("QB_Answer_Essay", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QB_Answer_MC", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AnswerContent")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QB_Answer_MC", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.Question_Exam", b =>
+                {
+                    b.Property<string>("ExamId")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExamId", "QuestionId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Question_Exam", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QuestionBanks", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar");
+
+                    b.Property<bool>("Format")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubjectId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<Guid>("TeacherCreatedId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherCreatedId");
+
+                    b.ToTable("QuestionBanks", (string)null);
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.Notification.Notification", b =>
@@ -219,6 +407,41 @@ namespace LMS_Library_API.Migrations
                     b.ToTable("Role_Permissions", (string)null);
                 });
 
+            modelBuilder.Entity("LMS_Library_API.Models.Subject", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("DepartmentId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("TeacherId")
+                        .IsUnique();
+
+                    b.ToTable("Subject", (string)null);
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.SystemInfomation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -308,6 +531,10 @@ namespace LMS_Library_API.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DepartmentId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -330,15 +557,36 @@ namespace LMS_Library_API.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("Roleid")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Roleid")
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("RoleId")
                         .IsUnique();
 
                     b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.ExamRecentViews", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.Exams.Exam", "Exam")
+                        .WithMany("ExamRecentViews")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithMany("ExamRecentViews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutUser.Help", b =>
@@ -370,6 +618,93 @@ namespace LMS_Library_API.Migrations
                         .HasForeignKey("LMS_Library_API.Models.AboutUser.QnALikes", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.Exam", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.User", "Censor")
+                        .WithMany("Censor")
+                        .HasForeignKey("CensorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.Subject", "Subject")
+                        .WithMany("Exams")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.User", "TeacherCreated")
+                        .WithMany("TeacherCreated")
+                        .HasForeignKey("TeacherCreatedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Censor");
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("TeacherCreated");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QB_Answer_Essay", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.Exams.QuestionBanks", "QuestionBanks")
+                        .WithOne("QB_Answer_Essay")
+                        .HasForeignKey("LMS_Library_API.Models.Exams.QB_Answer_Essay", "QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestionBanks");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QB_Answer_MC", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.Exams.QuestionBanks", "QuestionBanks")
+                        .WithMany("QB_Answers_MC")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestionBanks");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.Question_Exam", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.Exams.Exam", "Exam")
+                        .WithMany("Question_Exam")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.Exams.QuestionBanks", "QuestionBanks")
+                        .WithMany("Question_Exam")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("QuestionBanks");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QuestionBanks", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.Subject", "Subject")
+                        .WithMany("QuestionBanks")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithMany("QuestionBanks")
+                        .HasForeignKey("TeacherCreatedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
 
                     b.Navigation("User");
                 });
@@ -423,6 +758,25 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("LMS_Library_API.Models.Subject", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.Department", "Department")
+                        .WithMany("Subjects")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithOne("Subject")
+                        .HasForeignKey("LMS_Library_API.Models.Subject", "TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.SystemInfomation", b =>
                 {
                     b.HasOne("LMS_Library_API.Models.User", "User")
@@ -436,13 +790,45 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.User", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.RoleAccess.Role", "Role")
-                        .WithOne("User")
-                        .HasForeignKey("LMS_Library_API.Models.User", "Roleid")
+                    b.HasOne("LMS_Library_API.Models.Department", "Department")
+                        .WithMany("Users")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LMS_Library_API.Models.RoleAccess.Role", "Role")
+                        .WithOne("User")
+                        .HasForeignKey("LMS_Library_API.Models.User", "RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Department", b =>
+                {
+                    b.Navigation("Subjects");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.Exam", b =>
+                {
+                    b.Navigation("ExamRecentViews");
+
+                    b.Navigation("Question_Exam");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.Exams.QuestionBanks", b =>
+                {
+                    b.Navigation("QB_Answer_Essay")
+                        .IsRequired();
+
+                    b.Navigation("QB_Answers_MC");
+
+                    b.Navigation("Question_Exam");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.Notification.NotificationFeatures", b =>
@@ -463,8 +849,19 @@ namespace LMS_Library_API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LMS_Library_API.Models.Subject", b =>
+                {
+                    b.Navigation("Exams");
+
+                    b.Navigation("QuestionBanks");
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.User", b =>
                 {
+                    b.Navigation("Censor");
+
+                    b.Navigation("ExamRecentViews");
+
                     b.Navigation("Helps");
 
                     b.Navigation("NotificationSetting");
@@ -476,8 +873,15 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("QnALikes")
                         .IsRequired();
 
+                    b.Navigation("QuestionBanks");
+
+                    b.Navigation("Subject")
+                        .IsRequired();
+
                     b.Navigation("SystemInfomation")
                         .IsRequired();
+
+                    b.Navigation("TeacherCreated");
                 });
 #pragma warning restore 612, 618
         }
