@@ -1,4 +1,5 @@
 ﻿using LMS_Library_API.Enums;
+using LMS_Library_API.Models.AboutUser;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,6 +19,10 @@ namespace LMS_Library_API.Models.Exams
         [StringLength(100, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required]
         public string FileName { get; set; }
+
+        [Column(TypeName = "bit")]
+        [Required]
+        public QuestionFormat Format { get; set; }
 
         [Required]
         public int Duration { get; set; }
@@ -41,10 +46,18 @@ namespace LMS_Library_API.Models.Exams
         //navigation property
         [ForeignKey("User")]
         [AllowNull]
-        public Guid Censor { get; set; }
+        public Guid CensorId { get; set; }
+
         [ForeignKey("User")]
-        public Guid TeacherCreate { get; set; }
+        [Required]
+        public Guid TeacherCreatedId { get; set; }
         public virtual User User { get; set; }
+
+        [InverseProperty("Exam")]
+        public virtual ICollection<Question_Exam> Question_Exam { get; set; }
+
+        [InverseProperty("Exam")]
+        public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
 
     }
 }

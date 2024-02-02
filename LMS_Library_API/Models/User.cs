@@ -51,34 +51,43 @@ namespace LMS_Library_API.Models
         public string Password { get; set; }
 
         //navigation property
+        [ForeignKey("Role")]
+        public int RoleId { get; set; }
+        public virtual Role Role { get; set; }
+
+        [ForeignKey("Department")]
+        [Column(TypeName = "varchar(20)")]
+        public string DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
+
+
         public virtual SystemInfomation SystemInfomation { get; set; }
 
 
         public virtual QnALikes QnALikes { get; set; }
 
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
-
-
-        [InverseProperty("User")]
-        public virtual List<Notification.Notification> Notifications { get; set; }
+        
+        public virtual ICollection<Notification.Notification> Notifications { get; set; }
 
 
         [InverseProperty("User")]
         public virtual ICollection<NotificationSetting> NotificationSetting { get; set; }
 
 
-        [InverseProperty("User")]
         public virtual ICollection<PrivateFile> PrivateFiles { get; set; }
 
 
-        [InverseProperty("User")]
         public virtual ICollection<Help> Helps { get; set; }
 
 
-        [InverseProperty("User")]
         public virtual ICollection<Exam> Exams { get; set; }
+
+
+        public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
+
+
+        [InverseProperty("User")]
+        public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
 
     }
 }
