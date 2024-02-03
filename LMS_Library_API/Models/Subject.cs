@@ -1,4 +1,5 @@
-﻿using LMS_Library_API.Models.Exams;
+﻿using LMS_Library_API.Models.AboutSubject;
+using LMS_Library_API.Models.Exams;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -36,6 +37,9 @@ namespace LMS_Library_API.Models
         public virtual ICollection<Exam> Exams { get; set; } 
 
         public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
+
+        public virtual ICollection<Part> Parts { get; set; }
+
 
 
     }

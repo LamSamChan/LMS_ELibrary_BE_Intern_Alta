@@ -5,13 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
-    public class Part
+    public class Lesson
     {
         [Key] public int Id { get; set; }
 
         [Column(TypeName = "nvarchar(255)")]
         [Required]
-        public string name { get; set; }
+        public string title { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime dateSubmited { get; set; } = DateTime.Now;
@@ -30,6 +30,10 @@ namespace LMS_Library_API.Models.AboutSubject
 
         //navigation property
 
+        [ForeignKey("Part")]
+        public int partId { get; set; }
+        public virtual Part Part { get; set; }
+
         [ForeignKey("Censor")]
         [AllowNull]
         public Guid censorId { get; set; }
@@ -40,11 +44,5 @@ namespace LMS_Library_API.Models.AboutSubject
         [Required]
         public Guid teacherCreatedId { get; set; }
         public virtual User TeacherCreated { get; set; }
-
-        [ForeignKey("Subject")]
-        public string subjectId { get; set; }
-        public virtual Subject Subject { get; set; }
-
-        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }

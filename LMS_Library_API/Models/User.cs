@@ -1,4 +1,5 @@
 ﻿using LMS_Library_API.Enums;
+using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models.Notification;
@@ -95,8 +96,18 @@ namespace LMS_Library_API.Models
         [InverseProperty("User")]
         public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
 
+        [InverseProperty("Censor")]
+        public virtual ICollection<Part> CensorPart { get; set; }
 
-      
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Part> TeacherCreatedPart { get; set; }
 
+        [InverseProperty("Censor")]
+        public virtual ICollection<Lesson> CensorLesson { get; set; }
+
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Lesson> TeacherCreatedLesson { get; set; }
     }
+
+
 }

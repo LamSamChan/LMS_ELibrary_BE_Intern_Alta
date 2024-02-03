@@ -4,6 +4,7 @@ using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.Models.Exams;
+using LMS_Library_API.Models.AboutSubject;
 
 namespace LMS_Library_API.Context
 {
@@ -37,6 +38,9 @@ namespace LMS_Library_API.Context
         public DbSet<Question_Exam> Question_Exam { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Part> Parts { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,19 +63,21 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<Question_Exam>().ToTable("Question_Exam");
             modelBuilder.Entity<Department>().ToTable("Department");
             modelBuilder.Entity<Subject>().ToTable("Subject");
+            modelBuilder.Entity<Part>().ToTable("Part");
+            modelBuilder.Entity<Lesson>().ToTable("Lesson");
 
 
             modelBuilder.Entity<NotificationSetting>()
             .HasKey(ns => new { ns.UserId, ns.FeaturesId });
 
             modelBuilder.Entity<Role_Permissions>()
-           .HasKey(rp => new { rp.RoleId, rp.PermissionsId });
+            .HasKey(rp => new { rp.RoleId, rp.PermissionsId });
 
             modelBuilder.Entity<Question_Exam>()
-          .HasKey(qe => new { qe.ExamId, qe.QuestionId });
+            .HasKey(qe => new { qe.ExamId, qe.QuestionId });
 
             modelBuilder.Entity<ExamRecentViews>()
-        .HasKey(erv => new { erv.UserId, erv.ExamId });
+            .HasKey(erv => new { erv.UserId, erv.ExamId });
 
 
         }
