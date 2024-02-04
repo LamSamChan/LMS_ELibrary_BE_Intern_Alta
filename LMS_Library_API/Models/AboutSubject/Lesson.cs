@@ -44,5 +44,9 @@ namespace LMS_Library_API.Models.AboutSubject
         [Required]
         public Guid teacherCreatedId { get; set; }
         public virtual User TeacherCreated { get; set; }
+
+        public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
+
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

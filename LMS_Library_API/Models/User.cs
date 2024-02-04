@@ -107,6 +107,9 @@ namespace LMS_Library_API.Models
 
         [InverseProperty("TeacherCreated")]
         public virtual ICollection<Lesson> TeacherCreatedLesson { get; set; }
+
+        public virtual ICollection<Document> CensorDocument { get; set; }
+
     }
 
 

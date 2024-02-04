@@ -40,6 +40,10 @@ namespace LMS_Library_API.Context
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Part> Parts { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<LessonQuestion> LessonQuestions { get; set; }
+        public DbSet<LessonAnswer> LessonAnswers { get; set; }
+        public DbSet<Document> Documents { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,6 +69,9 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<Subject>().ToTable("Subject");
             modelBuilder.Entity<Part>().ToTable("Part");
             modelBuilder.Entity<Lesson>().ToTable("Lesson");
+            modelBuilder.Entity<LessonQuestion>().ToTable("LessonQuestion");
+            modelBuilder.Entity<LessonAnswer>().ToTable("LessonAnswer");
+            modelBuilder.Entity<Document>().ToTable("Document");
 
 
             modelBuilder.Entity<NotificationSetting>()
