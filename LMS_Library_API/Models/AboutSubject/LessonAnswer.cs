@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -30,8 +31,15 @@ namespace LMS_Library_API.Models.AboutSubject
         public virtual LessonQuestion LessonQuestion { get; set; }
 
         [ForeignKey("User")]
-        public Guid userId { get; set; }
+        [AllowNull]
+        public Guid teacherId { get; set; }
         public virtual User User { get; set; }
+
+        [ForeignKey("Student")]
+        [AllowNull]
+        public Guid studentId { get; set; }
+        public virtual Student Student { get; set; }
+
 
     }
 }

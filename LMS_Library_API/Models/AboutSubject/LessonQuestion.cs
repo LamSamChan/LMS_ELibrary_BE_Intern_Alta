@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -28,9 +29,14 @@ namespace LMS_Library_API.Models.AboutSubject
         public virtual Lesson Lesson { get; set; }
 
         [ForeignKey("User")]
-        public Guid userId { get; set; }
+        [AllowNull]
+        public Guid teacherId { get; set; }
         public virtual User User { get; set; }
 
+        [ForeignKey("Student")]
+        [AllowNull]
+        public Guid studentId { get; set; }
+        public virtual Student Student { get; set; }
 
         public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
 

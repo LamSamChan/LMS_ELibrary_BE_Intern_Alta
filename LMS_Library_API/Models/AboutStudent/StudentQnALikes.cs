@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace LMS_Library_API.Models.AboutUser
+namespace LMS_Library_API.Models.AboutStudent
 {
-    public class QnALikes
+    public class StudentQnALikes
     {
         [Key]
-        [ForeignKey("User")]
-        public Guid UserId { get; set; }
+        [ForeignKey("Student")]
+        public Guid studentId { get; set; }
 
         [Column(TypeName ="varchar")]
         [AllowNull]
@@ -19,7 +19,6 @@ namespace LMS_Library_API.Models.AboutUser
         public string AnswersLikedID { get; set; }
 
         //navigation property
-        public virtual User User { get; set; }
+        public virtual Student Student { get; set; }
     }
-
 }

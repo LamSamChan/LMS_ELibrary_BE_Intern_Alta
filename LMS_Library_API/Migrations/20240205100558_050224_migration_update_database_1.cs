@@ -5,10 +5,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS_Library_API.Migrations
 {
-    public partial class _020224_migration : Migration
+    public partial class _050224_migration_update_database_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Class",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    totalStudent = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Class", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Department",
                 columns: table => new
@@ -60,6 +73,45 @@ namespace LMS_Library_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentNotificationFeatures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    featureType = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentNotificationFeatures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Student",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Avartar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    classId = table.Column<string>(type: "nvarchar(30)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Student", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Student_Class_classId",
+                        column: x => x.classId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,6 +168,73 @@ namespace LMS_Library_API.Migrations
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentNotification",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    TimeCounter = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    studentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentNotification", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentNotification_Student_studentId",
+                        column: x => x.studentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentNotificationSetting",
+                columns: table => new
+                {
+                    studentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    featuresId = table.Column<int>(type: "int", nullable: false),
+                    receiveNotification = table.Column<bool>(type: "bit", nullable: false),
+                    StudentNotificationFeaturesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentNotificationSetting", x => new { x.studentId, x.featuresId });
+                    table.ForeignKey(
+                        name: "FK_StudentNotificationSetting_Student_studentId",
+                        column: x => x.studentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentNotificationSetting_StudentNotificationFeatures_StudentNotificationFeaturesId",
+                        column: x => x.StudentNotificationFeaturesId,
+                        principalTable: "StudentNotificationFeatures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentQnALikes",
+                columns: table => new
+                {
+                    studentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionsLikedID = table.Column<string>(type: "varchar", nullable: false),
+                    AnswersLikedID = table.Column<string>(type: "varchar", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentQnALikes", x => x.studentId);
+                    table.ForeignKey(
+                        name: "FK_StudentQnALikes_Student_studentId",
+                        column: x => x.studentId,
+                        principalTable: "Student",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -287,6 +406,28 @@ namespace LMS_Library_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomInfoOfSubject",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    title = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    content = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
+                    subjectId = table.Column<string>(type: "varchar(20)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomInfoOfSubject", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomInfoOfSubject_Subject_subjectId",
+                        column: x => x.subjectId,
+                        principalTable: "Subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Exam",
                 columns: table => new
                 {
@@ -327,6 +468,45 @@ namespace LMS_Library_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Part",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    dateSubmited = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isHidden = table.Column<bool>(type: "bit", nullable: false),
+                    numericalOrder = table.Column<int>(type: "int", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
+                    note = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    censorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    teacherCreatedId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    subjectId = table.Column<string>(type: "varchar(20)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Part", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Part_Subject_subjectId",
+                        column: x => x.subjectId,
+                        principalTable: "Subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Part_User_censorId",
+                        column: x => x.censorId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Part_User_teacherCreatedId",
+                        column: x => x.teacherCreatedId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "QuestionBanks",
                 columns: table => new
                 {
@@ -357,6 +537,35 @@ namespace LMS_Library_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubjectNotification",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    content = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    subjectId = table.Column<string>(type: "varchar(20)", nullable: false),
+                    teacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectNotification", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubjectNotification_Subject_subjectId",
+                        column: x => x.subjectId,
+                        principalTable: "Subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubjectNotification_User_teacherId",
+                        column: x => x.teacherId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ExamRecentViews",
                 columns: table => new
                 {
@@ -375,6 +584,45 @@ namespace LMS_Library_API.Migrations
                     table.ForeignKey(
                         name: "FK_ExamRecentViews_User_UserId",
                         column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lesson",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    title = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    dateSubmited = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isHidden = table.Column<bool>(type: "bit", nullable: false),
+                    numericalOrder = table.Column<int>(type: "int", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
+                    note = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    partId = table.Column<int>(type: "int", nullable: false),
+                    censorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    teacherCreatedId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lesson_Part_partId",
+                        column: x => x.partId,
+                        principalTable: "Part",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Lesson_User_censorId",
+                        column: x => x.censorId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Lesson_User_teacherCreatedId",
+                        column: x => x.teacherCreatedId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
@@ -446,6 +694,160 @@ namespace LMS_Library_API.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "NotificationClassStudent",
+                columns: table => new
+                {
+                    subjectNotificationId = table.Column<int>(type: "int", nullable: false),
+                    classId = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    studentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    isForAllStudent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotificationClassStudent", x => new { x.subjectNotificationId, x.classId, x.studentId });
+                    table.ForeignKey(
+                        name: "FK_NotificationClassStudent_Class_classId",
+                        column: x => x.classId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NotificationClassStudent_Student_studentId",
+                        column: x => x.studentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_NotificationClassStudent_SubjectNotification_subjectNotificationId",
+                        column: x => x.subjectNotificationId,
+                        principalTable: "SubjectNotification",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Document",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Type = table.Column<bool>(type: "bit", nullable: false),
+                    submissionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    updatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
+                    note = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    lessonId = table.Column<int>(type: "int", nullable: false),
+                    censorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Document", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Document_Lesson_lessonId",
+                        column: x => x.lessonId,
+                        principalTable: "Lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Document_User_censorId",
+                        column: x => x.censorId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LessonQuestion",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    content = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    likesCounter = table.Column<int>(type: "int", nullable: false),
+                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isTeacher = table.Column<bool>(type: "bit", nullable: false),
+                    lessonId = table.Column<int>(type: "int", nullable: false),
+                    teacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    studentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LessonQuestion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LessonQuestion_Lesson_lessonId",
+                        column: x => x.lessonId,
+                        principalTable: "Lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LessonQuestion_Student_studentId",
+                        column: x => x.studentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LessonQuestion_User_teacherId",
+                        column: x => x.teacherId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LessonAnswer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    content = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    likesCounter = table.Column<int>(type: "int", nullable: false),
+                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isTeacher = table.Column<bool>(type: "bit", nullable: false),
+                    lessonQuestionId = table.Column<int>(type: "int", nullable: false),
+                    teacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    studentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LessonAnswer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LessonAnswer_LessonQuestion_lessonQuestionId",
+                        column: x => x.lessonQuestionId,
+                        principalTable: "LessonQuestion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LessonAnswer_Student_studentId",
+                        column: x => x.studentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_LessonAnswer_User_teacherId",
+                        column: x => x.teacherId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomInfoOfSubject_subjectId",
+                table: "CustomInfoOfSubject",
+                column: "subjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Document_censorId",
+                table: "Document",
+                column: "censorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Document_lessonId",
+                table: "Document",
+                column: "lessonId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Exam_CensorId",
                 table: "Exam",
@@ -472,14 +874,84 @@ namespace LMS_Library_API.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Lesson_censorId",
+                table: "Lesson",
+                column: "censorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lesson_partId",
+                table: "Lesson",
+                column: "partId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lesson_teacherCreatedId",
+                table: "Lesson",
+                column: "teacherCreatedId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LessonAnswer_lessonQuestionId",
+                table: "LessonAnswer",
+                column: "lessonQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LessonAnswer_studentId",
+                table: "LessonAnswer",
+                column: "studentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LessonAnswer_teacherId",
+                table: "LessonAnswer",
+                column: "teacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LessonQuestion_lessonId",
+                table: "LessonQuestion",
+                column: "lessonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LessonQuestion_studentId",
+                table: "LessonQuestion",
+                column: "studentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LessonQuestion_teacherId",
+                table: "LessonQuestion",
+                column: "teacherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notification_UserId",
                 table: "Notification",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NotificationClassStudent_classId",
+                table: "NotificationClassStudent",
+                column: "classId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NotificationClassStudent_studentId",
+                table: "NotificationClassStudent",
+                column: "studentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NotificationSetting_FeaturesId",
                 table: "NotificationSetting",
                 column: "FeaturesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Part_censorId",
+                table: "Part",
+                column: "censorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Part_subjectId",
+                table: "Part",
+                column: "subjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Part_teacherCreatedId",
+                table: "Part",
+                column: "teacherCreatedId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrivateFile_UserId",
@@ -518,6 +990,21 @@ namespace LMS_Library_API.Migrations
                 column: "PermissionsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Student_classId",
+                table: "Student",
+                column: "classId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentNotification_studentId",
+                table: "StudentNotification",
+                column: "studentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentNotificationSetting_StudentNotificationFeaturesId",
+                table: "StudentNotificationSetting",
+                column: "StudentNotificationFeaturesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subject_DepartmentId",
                 table: "Subject",
                 column: "DepartmentId");
@@ -527,6 +1014,16 @@ namespace LMS_Library_API.Migrations
                 table: "Subject",
                 column: "TeacherId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectNotification_subjectId",
+                table: "SubjectNotification",
+                column: "subjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectNotification_teacherId",
+                table: "SubjectNotification",
+                column: "teacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SystemInfomation_Principals",
@@ -549,13 +1046,25 @@ namespace LMS_Library_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CustomInfoOfSubject");
+
+            migrationBuilder.DropTable(
+                name: "Document");
+
+            migrationBuilder.DropTable(
                 name: "ExamRecentViews");
 
             migrationBuilder.DropTable(
                 name: "Help");
 
             migrationBuilder.DropTable(
+                name: "LessonAnswer");
+
+            migrationBuilder.DropTable(
                 name: "Notification");
+
+            migrationBuilder.DropTable(
+                name: "NotificationClassStudent");
 
             migrationBuilder.DropTable(
                 name: "NotificationSetting");
@@ -579,7 +1088,22 @@ namespace LMS_Library_API.Migrations
                 name: "Role_Permissions");
 
             migrationBuilder.DropTable(
+                name: "StudentNotification");
+
+            migrationBuilder.DropTable(
+                name: "StudentNotificationSetting");
+
+            migrationBuilder.DropTable(
+                name: "StudentQnALikes");
+
+            migrationBuilder.DropTable(
                 name: "SystemInfomation");
+
+            migrationBuilder.DropTable(
+                name: "LessonQuestion");
+
+            migrationBuilder.DropTable(
+                name: "SubjectNotification");
 
             migrationBuilder.DropTable(
                 name: "NotificationFeatures");
@@ -592,6 +1116,21 @@ namespace LMS_Library_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Permissions");
+
+            migrationBuilder.DropTable(
+                name: "StudentNotificationFeatures");
+
+            migrationBuilder.DropTable(
+                name: "Lesson");
+
+            migrationBuilder.DropTable(
+                name: "Student");
+
+            migrationBuilder.DropTable(
+                name: "Part");
+
+            migrationBuilder.DropTable(
+                name: "Class");
 
             migrationBuilder.DropTable(
                 name: "Subject");

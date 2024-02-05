@@ -110,6 +110,13 @@ namespace LMS_Library_API.Models
 
         public virtual ICollection<Document> CensorDocument { get; set; }
 
+        public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }
+
+        public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
+
+        public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
+
+
     }
 
 

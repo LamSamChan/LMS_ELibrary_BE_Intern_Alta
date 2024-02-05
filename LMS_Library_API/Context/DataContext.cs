@@ -5,6 +5,8 @@ using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models.AboutSubject;
+using LMS_Library_API.Models.StudentNotification;
+using LMS_Library_API.Models.AboutStudent;
 
 namespace LMS_Library_API.Context
 {
@@ -43,6 +45,15 @@ namespace LMS_Library_API.Context
         public DbSet<LessonQuestion> LessonQuestions { get; set; }
         public DbSet<LessonAnswer> LessonAnswers { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<CustomInfoOfSubject> CustomInfoOfSubjects { get; set; }
+        public DbSet<SubjectNotification> SubjectNotifications { get; set; }
+        public DbSet<NotificationClassStudent> NotificationClassStudents { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<StudentQnALikes> StudentQnALikes { get; set; }
+        public DbSet<StudentNotification> StudentNotifications { get; set; }
+        public DbSet<StudentNotificationSetting> StudentNotificationSetting { get; set; }
+        public DbSet<StudentNotificationFeatures> StudentNotificationFeatures { get; set; }
 
 
 
@@ -72,6 +83,15 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<LessonQuestion>().ToTable("LessonQuestion");
             modelBuilder.Entity<LessonAnswer>().ToTable("LessonAnswer");
             modelBuilder.Entity<Document>().ToTable("Document");
+            modelBuilder.Entity<CustomInfoOfSubject>().ToTable("CustomInfoOfSubject");
+            modelBuilder.Entity<SubjectNotification>().ToTable("SubjectNotification");
+            modelBuilder.Entity<NotificationClassStudent>().ToTable("NotificationClassStudent");
+            modelBuilder.Entity<Class>().ToTable("Class");
+            modelBuilder.Entity<Student>().ToTable("Student");
+            modelBuilder.Entity<StudentNotificationFeatures>().ToTable("StudentNotificationFeatures");
+            modelBuilder.Entity<StudentNotification>().ToTable("StudentNotification");
+            modelBuilder.Entity<StudentQnALikes>().ToTable("StudentQnALikes");
+            modelBuilder.Entity<StudentNotificationSetting>().ToTable("StudentNotificationSetting");
 
 
             modelBuilder.Entity<NotificationSetting>()
@@ -86,7 +106,11 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<ExamRecentViews>()
             .HasKey(erv => new { erv.UserId, erv.ExamId });
 
+            modelBuilder.Entity<NotificationClassStudent>()
+            .HasKey(ncs => new { ncs.subjectNotificationId, ncs.classId, ncs.studentId });
 
+            modelBuilder.Entity<StudentNotificationSetting>()
+            .HasKey(sns => new { sns.studentId, sns.featuresId });
         }
         
     }

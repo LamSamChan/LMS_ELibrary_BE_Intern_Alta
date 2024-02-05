@@ -40,6 +40,11 @@ namespace LMS_Library_API.Models
 
         public virtual ICollection<Part> Parts { get; set; }
 
+        public virtual ICollection<CustomInfoOfSubject> CustomInfoOfSubjects { get; set; }
+
+        public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }
+
+
 
 
     }
