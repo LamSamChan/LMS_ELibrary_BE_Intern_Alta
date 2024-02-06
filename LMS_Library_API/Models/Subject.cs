@@ -1,4 +1,5 @@
-﻿using LMS_Library_API.Models.AboutSubject;
+﻿using LMS_Library_API.Models.AboutStudent;
+using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.Models.Exams;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -44,7 +45,15 @@ namespace LMS_Library_API.Models
 
         public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }
 
+        [InverseProperty("Subject")]
+        public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
 
+        [InverseProperty("Subject")]
+        public virtual ICollection<ClassSubject> ClassSubjects { get; set; }
+
+
+        [InverseProperty("Subject")]
+        public virtual ICollection<StudyTime> StudyTimes { get; set; }
 
 
     }

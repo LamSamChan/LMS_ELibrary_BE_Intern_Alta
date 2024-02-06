@@ -54,6 +54,11 @@ namespace LMS_Library_API.Context
         public DbSet<StudentNotification> StudentNotifications { get; set; }
         public DbSet<StudentNotificationSetting> StudentNotificationSetting { get; set; }
         public DbSet<StudentNotificationFeatures> StudentNotificationFeatures { get; set; }
+        public DbSet<StudentSubject> StudentSubjects { get; set; }
+        public DbSet<ClassSubject> ClassSubjects { get; set; }
+        public DbSet<TeacherClass> TeacherClasses { get; set; }
+        public DbSet<StudyTime> StudyTimes { get; set; }
+        public DbSet<StudyHistory> StudyHistories { get; set; }
 
 
 
@@ -92,6 +97,11 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<StudentNotification>().ToTable("StudentNotification");
             modelBuilder.Entity<StudentQnALikes>().ToTable("StudentQnALikes");
             modelBuilder.Entity<StudentNotificationSetting>().ToTable("StudentNotificationSetting");
+            modelBuilder.Entity<StudentSubject>().ToTable("StudentSubject");
+            modelBuilder.Entity<ClassSubject>().ToTable("ClassSubject");
+            modelBuilder.Entity<TeacherClass>().ToTable("TeacherClass");
+            modelBuilder.Entity<StudyTime>().ToTable("StudyTime");
+            modelBuilder.Entity<StudyHistory>().ToTable("StudyHistory");
 
 
             modelBuilder.Entity<NotificationSetting>()
@@ -111,6 +121,21 @@ namespace LMS_Library_API.Context
 
             modelBuilder.Entity<StudentNotificationSetting>()
             .HasKey(sns => new { sns.studentId, sns.featuresId });
+
+            modelBuilder.Entity<StudentSubject>()
+            .HasKey(ss => new { ss.studentId, ss.subjectId });
+
+            modelBuilder.Entity<ClassSubject>()
+           .HasKey(cs => new { cs.classId, cs.subjectId });
+
+            modelBuilder.Entity<TeacherClass>()
+            .HasKey(tc => new { tc.classId, tc.teacherId });
+
+            modelBuilder.Entity<StudyTime>()
+            .HasKey(st => new { st.studentId, st.subjectId });
+
+            modelBuilder.Entity<StudyHistory>()
+            .HasKey(sh => new { sh.studentId, sh.documentId });
         }
         
     }

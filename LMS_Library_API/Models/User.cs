@@ -116,6 +116,9 @@ namespace LMS_Library_API.Models
 
         public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
 
+        [InverseProperty("Teacher")]
+        public virtual ICollection<TeacherClass> TeacherClasses { get; set; }
+
 
     }
 

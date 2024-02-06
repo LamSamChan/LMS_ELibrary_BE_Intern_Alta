@@ -68,6 +68,15 @@ namespace LMS_Library_API.Models
 
         public virtual ICollection<StudentNotification.StudentNotification> StudentNotifications { get; set; }
 
+        [InverseProperty("Student")]
+        public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
+
+        [InverseProperty("Student")]
+        public virtual ICollection<StudyTime> StudyTimes { get; set; }
+
+        [InverseProperty("Student")]
+        public virtual ICollection<StudyHistory> StudyHistories { get; set; }
+
 
     }
 }

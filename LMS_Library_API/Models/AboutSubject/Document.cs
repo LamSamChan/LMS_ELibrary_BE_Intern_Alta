@@ -1,4 +1,5 @@
 ﻿using LMS_Library_API.Enums;
+using LMS_Library_API.Models.AboutStudent;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -45,9 +46,10 @@ namespace LMS_Library_API.Models.AboutSubject
         [ForeignKey("User")]
         [AllowNull]
         public Guid censorId { get; set; }
-        public virtual User User { get; set; }  
+        public virtual User User { get; set; }
 
-
+        [InverseProperty("Document")]
+        public virtual ICollection<StudyHistory> StudyHistories { get; set; }
 
 
     }
