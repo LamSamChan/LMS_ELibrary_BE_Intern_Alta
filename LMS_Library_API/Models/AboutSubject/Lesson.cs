@@ -48,5 +48,8 @@ namespace LMS_Library_API.Models.AboutSubject
         public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
 
         public virtual ICollection<Document> Documents { get; set; }
+
+        [InverseProperty("Lesson")]
+        public virtual ICollection<LessonAccess> LessonAccess { get; set; }
     }
 }

@@ -51,6 +51,9 @@ namespace LMS_Library_API.Models.AboutSubject
         [InverseProperty("Document")]
         public virtual ICollection<StudyHistory> StudyHistories { get; set; }
 
+        [InverseProperty("Document")]
+        public virtual ICollection<DocumentAccess> DocumentAccess { get; set; }
+
 
     }
 }

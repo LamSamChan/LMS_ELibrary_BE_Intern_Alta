@@ -59,6 +59,8 @@ namespace LMS_Library_API.Context
         public DbSet<TeacherClass> TeacherClasses { get; set; }
         public DbSet<StudyTime> StudyTimes { get; set; }
         public DbSet<StudyHistory> StudyHistories { get; set; }
+        public DbSet<LessonAccess> LessonAccess { get; set; }
+        public DbSet<DocumentAccess> DocumentAccess { get; set; }
 
 
 
@@ -102,6 +104,8 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<TeacherClass>().ToTable("TeacherClass");
             modelBuilder.Entity<StudyTime>().ToTable("StudyTime");
             modelBuilder.Entity<StudyHistory>().ToTable("StudyHistory");
+            modelBuilder.Entity<LessonAccess>().ToTable("LessonAccess");
+            modelBuilder.Entity<DocumentAccess>().ToTable("DocumentAccess");
 
 
             modelBuilder.Entity<NotificationSetting>()

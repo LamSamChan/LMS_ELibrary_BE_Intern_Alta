@@ -35,5 +35,11 @@ namespace LMS_Library_API.Models
 
         [InverseProperty("Class")]
         public virtual ICollection<TeacherClass> TeacherClasses { get; set; }
+
+        [InverseProperty("Class")]
+        public virtual ICollection<LessonAccess> LessonAccess { get; set; }
+
+        [InverseProperty("Class")]
+        public virtual ICollection<DocumentAccess> DocumentAccess { get; set; }
     }
 }
