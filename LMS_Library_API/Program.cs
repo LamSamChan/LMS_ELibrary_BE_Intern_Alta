@@ -1,4 +1,5 @@
 using LMS_Library_API.Context;
+using LMS_Library_API.Services.DepartmentService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("connection");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IDepartmentSvc, DepartmentSvc>();
+
 
 var app = builder.Build();
 

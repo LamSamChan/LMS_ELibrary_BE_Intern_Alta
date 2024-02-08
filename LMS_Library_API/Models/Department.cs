@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models
 {
@@ -7,16 +9,18 @@ namespace LMS_Library_API.Models
     {
         [Key]
         [Column(TypeName ="varchar(20)")]
+        [Required]
         public string Id { get; set; }
 
         [Column(TypeName ="nvarchar(150)")]
-        [Required]
         public string Name { get; set; }
 
 
         //navigation property
-        public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<Subject> Subjects { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<User>? Users { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Subject>? Subjects { get; set; }
 
 
 
