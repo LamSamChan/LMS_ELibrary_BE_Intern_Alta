@@ -16,11 +16,6 @@ namespace LMS_Library_API.Context
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<SystemInfomation> SystemInfomation { get; set; }
         public DbSet<Notification> Notifications { get; set; }

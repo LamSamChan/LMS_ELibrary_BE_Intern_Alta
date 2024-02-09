@@ -3,6 +3,7 @@ using LMS_Library_API.Models;
 using LMS_Library_API.Models.RoleAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Net.WebSockets;
 
 namespace LMS_Library_API.Services.DepartmentService
 {
@@ -22,7 +23,8 @@ namespace LMS_Library_API.Services.DepartmentService
                 await _context.SaveChangesAsync();
                 return new Logger() {
                     status = TaskStatus.RanToCompletion,
-                    message = "Thêm thành công"
+                    message = "Thêm thành công",
+                    data = new Department() { Id = department.Id, Name = department.Name }
                 };
             }
             catch (Exception ex)
@@ -31,6 +33,7 @@ namespace LMS_Library_API.Services.DepartmentService
                 {
                     status = TaskStatus.Faulted,
                     message = ex.Message,
+                   
                 };
             }
         }
@@ -40,7 +43,7 @@ namespace LMS_Library_API.Services.DepartmentService
             try
             {
                 var existDepartment = await _context.Departments.FindAsync(departmentId);
-
+                
                 if (existDepartment == null)
                 {
                     return new Logger()
@@ -55,7 +58,8 @@ namespace LMS_Library_API.Services.DepartmentService
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
-                    message = "Xoá thành công"
+                    message = "Xoá thành công",
+                    data = new Department() { Id = existDepartment.Id, Name = existDepartment.Name }
 
                 };
             }
@@ -69,16 +73,25 @@ namespace LMS_Library_API.Services.DepartmentService
             }
         }
 
-        public async Task<IEnumerable<Department>> GetAll()
-        {
+        public async Task<Logger> GetAll()
+        {   
             try
             {
                 var respone = await _context.Departments.ToListAsync();
-                return respone;
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    listData = new List<object>() { respone }
+                };
             }
             catch (Exception ex)
             {
-                return new List<Department>();
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
             }
         }
 
@@ -86,7 +99,7 @@ namespace LMS_Library_API.Services.DepartmentService
         {
             try
             {
-                Department existingDepartment = _context.Departments.Find(departmentId.ToUpper());
+                Department existingDepartment = await _context.Departments.FindAsync(departmentId.ToUpper());
 
                 if (existingDepartment == null)
                 {
@@ -114,10 +127,39 @@ namespace LMS_Library_API.Services.DepartmentService
             }
         }
 
-        public async Task<IEnumerable<Department>> Search(string query)
+        public async Task<IEnumerable<Department>> GetCheck()
         {
-            var respone = await _context.Departments.Where(d => d.Name.ToUpper().Contains(query) || d.Id.ToUpper().Contains(query)).ToListAsync();
-            return respone;
+            try
+            {
+                var respone = await _context.Departments.ToListAsync();
+                return respone;
+            }
+            catch (Exception)
+            {
+                return new List<Department>();
+            }
+        }
+
+        public async Task<Logger> Search(string query)
+        {
+            try
+            {
+                var respone = await _context.Departments.Where(d => d.Name.ToUpper().Contains(query) || d.Id.ToUpper().Contains(query)).ToListAsync();
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    listData = new List<object>() { respone }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
         }
 
         public async Task<Logger> Update(Department department)
@@ -125,7 +167,7 @@ namespace LMS_Library_API.Services.DepartmentService
             try
             {
 
-                Department existingDepartment =  _context.Departments.Find(department.Id);
+                Department existingDepartment = await _context.Departments.FindAsync(department.Id.ToUpper());
 
                 if (existingDepartment == null)
                 {
@@ -144,6 +186,7 @@ namespace LMS_Library_API.Services.DepartmentService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Cập nhật thành công",
+                    data = new Department() { Id = existingDepartment.Id, Name = existingDepartment.Name }
                 };
             }
             catch (Exception ex)

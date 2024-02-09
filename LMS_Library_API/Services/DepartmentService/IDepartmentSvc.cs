@@ -8,8 +8,9 @@ namespace LMS_Library_API.Services.DepartmentService
         Task<Logger> Update(Department department);
         Task<Logger> Delete(string departmentId);
         Task<Logger> GetById(string departmentId);
-        Task<IEnumerable<Department>> GetAll();
-        Task<IEnumerable<Department>> Search(string query);
+        Task<Logger> GetAll();
+        Task<Logger> Search(string query);
+        Task<IEnumerable<Department>> GetCheck();
 
     }
 }

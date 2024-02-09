@@ -19,10 +19,7 @@ namespace LMS_Library_API.Models
         //navigation property
         [JsonIgnore]
         public virtual ICollection<User>? Users { get; set; }
-        [JsonIgnore]
+        [JsonIgnore]    
         public virtual ICollection<Subject>? Subjects { get; set; }
-
-
-
     }
 }

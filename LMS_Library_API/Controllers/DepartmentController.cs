@@ -17,7 +17,7 @@ namespace LMS_Library_API.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Department department)
         {
-            var listData = await _departmentSvc.GetAll();
+            var listData = await _departmentSvc.GetCheck();
             foreach (var item in listData)
             {
                 if (department.Id == item.Id)
@@ -38,10 +38,17 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Department>> GetAll()
+        public async Task<ActionResult<IEnumerable<Department>>> GetAll()
         {
             var loggerResult = await _departmentSvc.GetAll();
-            return loggerResult;
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }
         }
 
         [HttpGet("{id}")]
@@ -70,14 +77,14 @@ namespace LMS_Library_API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(query))
             {
-                try
+                var loggerResult = await _departmentSvc.Search(query.Trim().ToUpper());
+                if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
-                    var loggerResult = await _departmentSvc.Search(query.Trim().ToUpper());
                     return Ok(loggerResult);
                 }
-                catch (Exception e)
+                else
                 {
-                    return BadRequest(e.Message);
+                    return BadRequest(loggerResult);
                 }
             }
             else

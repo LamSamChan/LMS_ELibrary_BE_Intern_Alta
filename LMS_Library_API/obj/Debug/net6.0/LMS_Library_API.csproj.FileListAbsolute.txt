@@ -77,3 +77,6 @@ D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\obj\Debug\net6.0\refint\LMS
 D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\obj\Debug\net6.0\LMS_Library_API.pdb
 D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\obj\Debug\net6.0\LMS_Library_API.genruntimeconfig.cache
 D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\obj\Debug\net6.0\ref\LMS_Library_API.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
