@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using LMS_Library_API.Models.Notification;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.RoleAccess
 {
@@ -22,8 +23,8 @@ namespace LMS_Library_API.Models.RoleAccess
         public DateTime DateUpdated { get; set; } = DateTime.Now;
 
         //navigation property
-
-        public virtual User User { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<User> Users { get; set; }
 
         [InverseProperty("Role")]
         public virtual ICollection<Role_Permissions> Role_Permissions { get; set; }

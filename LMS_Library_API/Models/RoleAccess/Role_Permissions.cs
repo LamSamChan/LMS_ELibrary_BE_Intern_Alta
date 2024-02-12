@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.RoleAccess
 {
@@ -15,6 +16,7 @@ namespace LMS_Library_API.Models.RoleAccess
         public bool CanAccess { get; set; }
 
         //navigation property
+        [JsonIgnore]
         public virtual Role Role { get; set; }
         public virtual Permissions Permissions { get; set; }
     }

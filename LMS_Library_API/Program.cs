@@ -1,5 +1,6 @@
 using LMS_Library_API.Context;
 using LMS_Library_API.Services.DepartmentService;
+using LMS_Library_API.Services.RoleAccess.PermissionsService;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft;
 
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(conne
 
 
 builder.Services.AddScoped<IDepartmentSvc, DepartmentSvc>();
+builder.Services.AddScoped <IPermissionsSvc, PermissionsSvc > ();
 
 
 var app = builder.Build();

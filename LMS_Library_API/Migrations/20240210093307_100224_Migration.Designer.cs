@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240210093307_100224_Migration")]
+    partial class _100224_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1176,7 +1178,8 @@ namespace LMS_Library_API.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .IsUnique();
 
                     b.ToTable("User", (string)null);
                 });
@@ -1777,8 +1780,8 @@ namespace LMS_Library_API.Migrations
                         .IsRequired();
 
                     b.HasOne("LMS_Library_API.Models.RoleAccess.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
+                        .WithOne("User")
+                        .HasForeignKey("LMS_Library_API.Models.User", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1871,7 +1874,8 @@ namespace LMS_Library_API.Migrations
                 {
                     b.Navigation("Role_Permissions");
 
-                    b.Navigation("Users");
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.Student", b =>
