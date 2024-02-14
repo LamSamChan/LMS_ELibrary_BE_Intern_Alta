@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,7 +20,8 @@ namespace LMS_Library_API.Models.AboutUser
         public string AnswersLikedID { get; set; }
 
         //navigation property
-        public virtual User User { get; set; }
+        [JsonIgnore]
+        public virtual User? User { get; set; }
     }
 
 }

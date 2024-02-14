@@ -13,11 +13,11 @@ namespace LMS_Library_API.Models.RoleAccess
         public int PermissionsId { get; set; }
 
         [Required]
-        public bool CanAccess { get; set; }
+        public bool CanAccess { get; set; } = false;
 
         //navigation property
         [JsonIgnore]
-        public virtual Role Role { get; set; }
-        public virtual Permissions Permissions { get; set; }
+        public virtual Role? Role { get; set; }
+        public virtual Permissions? Permissions { get; set; }
     }
 }

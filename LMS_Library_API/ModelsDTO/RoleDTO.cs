@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using LMS_Library_API.Models.RoleAccess;
+using LMS_Library_API.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using LMS_Library_API.Models.Notification;
-using System.Text.Json.Serialization;
+using System.ComponentModel;
 
-namespace LMS_Library_API.Models.RoleAccess
+namespace LMS_Library_API.ModelsDTO
 {
-    public class Role
+    public class RoleDTO
     {
         [Key] public int Id { get; set; }
 
@@ -22,11 +23,6 @@ namespace LMS_Library_API.Models.RoleAccess
 
         public DateTime DateUpdated { get; set; } = DateTime.Now;
 
-        //navigation property
-        [JsonIgnore]
-        public virtual ICollection<User> Users { get; set; }
-
-        [InverseProperty("Role")]
-        public virtual ICollection<Role_Permissions>? Role_Permissions { get; set; }
+        public virtual ICollection<Role_PermissionsDTO> Role_Permissions { get; set; }
     }
 }

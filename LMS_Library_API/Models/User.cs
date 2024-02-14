@@ -62,65 +62,73 @@ namespace LMS_Library_API.Models
         public string DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
-        public virtual SystemInfomation SystemInfomation { get; set; }
-
-
-        public virtual QnALikes QnALikes { get; set; }
-
-        
-        public virtual Subject Subject { get; set; }
-
-
-        public virtual ICollection<Notification.Notification> Notifications { get; set; }
-
-
-        [InverseProperty("User")]
-        public virtual ICollection<NotificationSetting> NotificationSetting { get; set; }
-
-
-        public virtual ICollection<PrivateFile> PrivateFiles { get; set; }
-
-
-        public virtual ICollection<Help> Helps { get; set; }
-
-        [InverseProperty("Censor")]
-        public virtual ICollection<Exam> Censor { get; set; }
-
-        [InverseProperty("TeacherCreated")]
-        public virtual ICollection<Exam> TeacherCreated { get; set; }
-
-
-        public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
-
-
         [InverseProperty("User")]
         public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
-
-        [InverseProperty("Censor")]
-        public virtual ICollection<Part> CensorPart { get; set; }
-
-        [InverseProperty("TeacherCreated")]
-        public virtual ICollection<Part> TeacherCreatedPart { get; set; }
-
-        [InverseProperty("Censor")]
-        public virtual ICollection<Lesson> CensorLesson { get; set; }
-
-        [InverseProperty("TeacherCreated")]
-        public virtual ICollection<Lesson> TeacherCreatedLesson { get; set; }
-
-        public virtual ICollection<Document> CensorDocument { get; set; }
-
-        public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }
-
-        public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
-
-        public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
 
         [InverseProperty("Teacher")]
         public virtual ICollection<TeacherClass> TeacherClasses { get; set; }
 
+        [JsonIgnore]
+        public virtual QnALikes QnALikes { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<Notification.Notification> Notifications { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("User")]
+        public virtual ICollection<NotificationSetting> NotificationSetting { get; set; }
+
+
+        [JsonIgnore]
+        public virtual SystemInfomation SystemInfomation { get; set; }
+
+        [JsonIgnore]
+        public virtual Subject Subject { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<PrivateFile> PrivateFiles { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Help> Helps { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Censor")]
+        public virtual ICollection<Exam> Censor { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Exam> TeacherCreated { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
+
+
+        [JsonIgnore]
+        [InverseProperty("Censor")]
+        public virtual ICollection<Part> CensorPart { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Part> TeacherCreatedPart { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Censor")]
+        public virtual ICollection<Lesson> CensorLesson { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Lesson> TeacherCreatedLesson { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Document> CensorDocument { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
     }
-
-
 }

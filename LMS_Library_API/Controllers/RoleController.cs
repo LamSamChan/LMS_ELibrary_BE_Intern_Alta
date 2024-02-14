@@ -1,26 +1,32 @@
-﻿using LMS_Library_API.Models;
+﻿using AutoMapper;
+using LMS_Library_API.Models;
 using LMS_Library_API.Models.RoleAccess;
-using LMS_Library_API.Services.DepartmentService;
+using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.RoleAccess.PermissionsService;
+using LMS_Library_API.Services.RoleAccess.RoleService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.WebSockets;
 
 namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PermissionsController : ControllerBase
+    public class RoleController : ControllerBase
     {
-        private readonly IPermissionsSvc _permissionsSvc;
-        public PermissionsController(IPermissionsSvc permissionsSvc)
+        private readonly IRoleSvc _roleSvc;
+        private readonly IMapper _mapper;
+        public RoleController(IRoleSvc roleSvc, IMapper mapper)
         {
-            _permissionsSvc = permissionsSvc;
+           _roleSvc = roleSvc;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Permissions permission)
+        public async Task<ActionResult> Create(RoleDTO role)
         {
-            var loggerResult = await _permissionsSvc.Create(permission);
+            var newRole = _mapper.Map<Role>(role);
+            var loggerResult = await _roleSvc.Create(newRole);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -32,9 +38,9 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Permissions>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Role>>> GetAll()
         {
-            var loggerResult = await _permissionsSvc.GetAll();
+            var loggerResult = await _roleSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -46,11 +52,11 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Permissions>> GetById(int id)
+        public async Task<ActionResult<Role>> GetById(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
-                var loggerResult = await _permissionsSvc.GetById(id);
+                var loggerResult = await _roleSvc.GetById(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);
@@ -66,11 +72,13 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Permissions>> Update(Permissions permissions)
-        {
 
-            var loggerResult = await _permissionsSvc.Update(permissions);
+        [HttpPut]
+        public async Task<ActionResult> Update(RoleDTO role)
+        {
+            var newDataRole = _mapper.Map<Role>(role);
+
+            var loggerResult = await _roleSvc.Update(newDataRole);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -86,7 +94,7 @@ namespace LMS_Library_API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
-                var loggerResult = await _permissionsSvc.Delete(id);
+                var loggerResult = await _roleSvc.Delete(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);

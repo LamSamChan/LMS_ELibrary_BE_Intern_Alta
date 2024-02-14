@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "+FoUhNkJNp2jJ3wqT5rRMzKbbqwSdyZanZeLQgBxxlmpjRV5XJhiDPBoicnI+Ew2zvHFFo+rs97DrbNTDBDDvw==",
+  "dgSpecHash": "JQqU6QUWt5VBtz3TRHI3cOsMaFqqLSD/wVOrYM8llY314FPyzsEwgsP8pe/qeNjLomBFxAoVGZ0ANduvWNBHBw==",
   "success": true,
   "projectFilePath": "D:\\Intern_Alta\\TASK_2\\ELibrary_TASK2\\LMS_Library_API\\LMS_Library_API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\PC\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

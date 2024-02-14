@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMS_Library_API.Models.Notification
@@ -23,7 +24,8 @@ namespace LMS_Library_API.Models.Notification
         //navigation property
         [ForeignKey("User")]
         public Guid UserId { get; set; }
-        public virtual User User { get; set; }
+        [JsonIgnore]
+        public virtual User? User { get; set; }
 
     }
 }
