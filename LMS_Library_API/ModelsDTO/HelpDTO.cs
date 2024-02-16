@@ -1,13 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LMS_Library_API.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace LMS_Library_API.Models.AboutUser
+namespace LMS_Library_API.ModelsDTO
 {
-    public class Help
+    public class HelpDTO
     {
         [Key] public int Id { get; set; }
 
-        [Column(TypeName ="nvarchar(255)")]
+        [Column(TypeName = "nvarchar(255)")]
         [Required]
         public string Content { get; set; }
 
@@ -17,6 +19,5 @@ namespace LMS_Library_API.Models.AboutUser
         //navigation property
         [ForeignKey("User")]
         public Guid UserId { get; set; }
-        public virtual User User { get; set; }
     }
 }

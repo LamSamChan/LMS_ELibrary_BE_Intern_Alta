@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 
 namespace LMS_Library_API.ModelsDTO
 {
@@ -46,6 +47,10 @@ namespace LMS_Library_API.ModelsDTO
         [AllowNull]
         public string Avartar { get; set; }
         public string? Password { get; set; }
+
+        [DefaultValue(false)]
+        [Required]
+        public bool isLocked { get; set; }
 
         //navigation property
         [ForeignKey("Role")]

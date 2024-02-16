@@ -1,7 +1,10 @@
 using LMS_Library_API.Context;
+using LMS_Library_API.Helpers;
 using LMS_Library_API.Services.DepartmentService;
 using LMS_Library_API.Services.RoleAccess.PermissionsService;
 using LMS_Library_API.Services.RoleAccess.RoleService;
+using LMS_Library_API.Services.ServiceAboutUser.HelpService;
+using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
 using LMS_Library_API.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft;
@@ -29,6 +32,9 @@ builder.Services.AddScoped<IDepartmentSvc, DepartmentSvc>();
 builder.Services.AddScoped<IPermissionsSvc, PermissionsSvc>();
 builder.Services.AddScoped<IRoleSvc, RoleSvc>();
 builder.Services.AddScoped<IUserSvc, UserSvc>();
+builder.Services.AddScoped<IEncodeHelper, EncodeHelper>();
+builder.Services.AddScoped<IHelpSvc, HelpSvc>();
+builder.Services.AddScoped<IQnALikesSvc, QnALikesSvc>();
 
 
 var app = builder.Build();

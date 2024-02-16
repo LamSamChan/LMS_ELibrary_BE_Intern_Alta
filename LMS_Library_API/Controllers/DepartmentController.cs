@@ -72,7 +72,7 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpGet("/search/{query}")]
+        [HttpGet("search/{query}")]
         public async Task<ActionResult<IEnumerable<Department>>> Search(string query)
         {
             if (!String.IsNullOrWhiteSpace(query))

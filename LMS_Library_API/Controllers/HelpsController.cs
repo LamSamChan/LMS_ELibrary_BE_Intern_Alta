@@ -1,32 +1,29 @@
 ﻿using AutoMapper;
-using LMS_Library_API.Models;
+using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
-using LMS_Library_API.Services.RoleAccess.PermissionsService;
-using LMS_Library_API.Services.RoleAccess.RoleService;
+using LMS_Library_API.Services.ServiceAboutUser.HelpService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.WebSockets;
 
 namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class HelpsController : ControllerBase
     {
-        private readonly IRoleSvc _roleSvc;
-        private readonly IMapper _mapper;
-        public RoleController(IRoleSvc roleSvc, IMapper mapper)
-        {
-           _roleSvc = roleSvc;
+        private readonly IHelpSvc _helpSvc;
+        private readonly IMapper _mapper; 
+        public HelpsController(IHelpSvc helpSvc, IMapper mapper) {
+            _helpSvc = helpSvc;
             _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(RoleDTO role)
+        public async Task<ActionResult> Create(HelpDTO help)
         {
-            var newRole = _mapper.Map<Role>(role);
-            var loggerResult = await _roleSvc.Create(newRole);
+            var newHelp = _mapper.Map<Help>(help);
+            var loggerResult = await _helpSvc.Create(newHelp);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -38,9 +35,9 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Help>>> GetAll()
         {
-            var loggerResult = await _roleSvc.GetAll();
+            var loggerResult = await _helpSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -52,11 +49,11 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetById(int id)
+        public async Task<ActionResult<Help>> GetById(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
-                var loggerResult = await _roleSvc.GetById(id);
+                var loggerResult = await _helpSvc.GetById(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);
@@ -72,29 +69,33 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-
-        [HttpPut]
-        public async Task<ActionResult> Update(RoleDTO role)
+        [HttpGet("User/{userId}")]
+        public async Task<ActionResult<IEnumerable<Help>>> GetByUserId(string userId)
         {
-            var newDataRole = _mapper.Map<Role>(role);
-
-            var loggerResult = await _roleSvc.Update(newDataRole);
-            if (loggerResult.status == TaskStatus.RanToCompletion)
+            if (!String.IsNullOrWhiteSpace(userId))
             {
-                return Ok(loggerResult);
+                var loggerResult = await _helpSvc.GetByUserId(userId);
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
             }
             else
             {
-                return BadRequest(loggerResult);
+                return BadRequest("Hãy điền ID để tìm kiếm đối tượng");
             }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Role>> Detele(int id)
+        public async Task<ActionResult<Help>> Detele(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
-                var loggerResult = await _roleSvc.Delete(id);
+                var loggerResult = await _helpSvc.Delete(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);

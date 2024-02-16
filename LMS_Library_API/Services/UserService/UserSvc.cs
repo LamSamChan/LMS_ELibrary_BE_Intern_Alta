@@ -3,6 +3,7 @@ using LMS_Library_API.Helpers;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.RoleAccess;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace LMS_Library_API.Services.UserService
 {
@@ -10,9 +11,9 @@ namespace LMS_Library_API.Services.UserService
     {
 
         private readonly DataContext _context;
-        private readonly EncodeHelper _encodeHelper;
+        private readonly IEncodeHelper _encodeHelper;
 
-        public UserSvc(DataContext context, EncodeHelper encodeHelper)
+        public UserSvc(DataContext context, IEncodeHelper encodeHelper)
         {
             _context = context;
             _encodeHelper = encodeHelper;
@@ -46,7 +47,9 @@ namespace LMS_Library_API.Services.UserService
         {
             try
             {
-                var respone = await _context.Users.ToListAsync();
+                var respone = await _context.Users.Include(_ => _.Role).ThenInclude(_ => _.Role_Permissions).ThenInclude(_ => _.Permissions)
+                    .Include(_ => _.Department)
+                    .ToListAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
@@ -68,7 +71,8 @@ namespace LMS_Library_API.Services.UserService
         {
             try
             {
-                User existUser = await _context.Users.Include(_ => _.ExamRecentViews).Include(_ => _.TeacherClasses).Include(_ => _.Role).Include(_ => _.Department)
+                User existUser = await _context.Users.Include(_ => _.Role).ThenInclude(_ => _.Role_Permissions).ThenInclude(_ => _.Permissions)
+                    .Include(_ => _.Department)
                     .FirstOrDefaultAsync(x => x.Id == Guid.Parse(userId));
 
                 if (existUser == null)
@@ -101,8 +105,8 @@ namespace LMS_Library_API.Services.UserService
         {
             try
             {
-                var respone = await _context.Users.Where(d => d.FullName.ToUpper().Contains(query.ToUpper()) || d.Id.ToString().ToUpper().Contains(query.ToUpper()) || d.Email.ToUpper().Contains(query.ToUpper())
-                || d.PhoneNumber.ToUpper().Contains(query.ToUpper()))
+                var respone = await _context.Users.Where(d => d.FullName.ToUpper().Contains(query) || d.Id.ToString().ToUpper().Contains(query) || d.Email.ToUpper().Contains(query)
+                || d.PhoneNumber.ToUpper().Contains(query))
                     .ToListAsync();
                 return new Logger()
                 {
@@ -123,7 +127,50 @@ namespace LMS_Library_API.Services.UserService
 
         public async Task<Logger> Update(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                User existUser = await _context.Users.FindAsync(user.Id);
+
+                if (existUser == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần cập nhật"
+                    };
+                }
+
+                existUser.FullName = user.FullName;
+                existUser.Email = user.Email;
+                existUser.DateOfBirth = user.DateOfBirth;
+                existUser.PhoneNumber = user.PhoneNumber;
+                existUser.Address = user.Address;
+                existUser.Gender = user.Gender;
+                existUser.Avartar = user.Avartar;
+                existUser.Password = user.Password;
+                existUser.RoleId = user.RoleId;
+                existUser.Role = user.Role;
+                existUser.DepartmentId = user.DepartmentId;
+                existUser.Department = user.Department;
+
+                await _context.SaveChangesAsync();
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Cập nhật thành công",
+                    data = existUser
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
         }
     }
 }

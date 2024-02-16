@@ -5,6 +5,7 @@ using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.RoleAccess;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -29,7 +30,7 @@ namespace LMS_Library_API.Models
             ErrorMessage = "Email không hợp lệ !")]
         public string Email { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage ="Hãy nhập ngày sinh người dùng")]
         public DateTime DateOfBirth { get; set; }
 
@@ -52,6 +53,10 @@ namespace LMS_Library_API.Models
         public string Avartar { get; set; }
         public string Password { get; set; }
 
+        [DefaultValue(false)]
+        [Required]
+        public bool isLocked { get; set; }
+
         //navigation property
         [ForeignKey("Role")]
         public int RoleId { get; set; }
@@ -62,9 +67,11 @@ namespace LMS_Library_API.Models
         public string DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
+        [JsonIgnore]
         [InverseProperty("User")]
         public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
 
+        [JsonIgnore]
         [InverseProperty("Teacher")]
         public virtual ICollection<TeacherClass> TeacherClasses { get; set; }
 
