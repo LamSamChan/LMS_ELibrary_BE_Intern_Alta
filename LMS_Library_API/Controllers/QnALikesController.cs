@@ -1,5 +1,6 @@
 ﻿using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<QnALikesDTO>>> GetAll()
+        public async Task<ActionResult<Logger>> GetAll()
         {
             Logger loggerResult = new Logger();
             var qnALikes = await _qnALikesSvc.GetAll();
@@ -50,6 +51,58 @@ namespace LMS_Library_API.Controllers
 
             return Ok(loggerResult);
         }
-        
+
+        [HttpPut]
+        public async Task<ActionResult<Logger>> Update(QnALikesDTO qnALikesDTO)
+        {
+            QnALikes qnALikes = new QnALikes()
+            {
+                UserId = qnALikesDTO.UserId,
+                QuestionsLikedID = JsonConvert.SerializeObject(qnALikesDTO.QuestionsLikedID),
+                AnswersLikedID = JsonConvert.SerializeObject(qnALikesDTO.AnswersLikedID),
+            };
+
+            var loggerResult = await _qnALikesSvc.Update(qnALikes);
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<Logger>> GetByUserId(string id)
+        {
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                var loggerResult = await _qnALikesSvc.GetByUserId(id);
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    QnALikes qnALikes = (QnALikes)loggerResult.data;
+
+                    QnALikesDTO qnALikesDTO = new QnALikesDTO() { 
+                        UserId = qnALikes.UserId,
+                        QuestionsLikedID = JsonConvert.DeserializeObject<List<QnALikeID>>(qnALikes.QuestionsLikedID),
+                        AnswersLikedID = JsonConvert.DeserializeObject<List<QnALikeID>>(qnALikes.AnswersLikedID),
+                    };
+
+                    loggerResult.data = qnALikesDTO;
+
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
+            }
+            else
+            {
+                return BadRequest("Hãy điền ID để tìm kiếm đối tượng");
+            }
+        }
+
     }
 }
