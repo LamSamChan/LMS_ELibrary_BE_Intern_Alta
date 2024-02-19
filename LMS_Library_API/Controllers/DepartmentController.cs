@@ -15,7 +15,7 @@ namespace LMS_Library_API.Controllers
             _departmentSvc = departmentSvc;
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Department department)
+        public async Task<ActionResult<Logger>> Create(Department department)
         {
             var listData = await _departmentSvc.GetCheck();
             foreach (var item in listData)
@@ -38,7 +38,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Department>>> GetAll()
+        public async Task<ActionResult<Logger>> GetAll()
         {
             var loggerResult = await _departmentSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
@@ -52,7 +52,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Department>> GetById(string id)
+        public async Task<ActionResult<Logger>> GetById(string id)
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
@@ -73,7 +73,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("search/{query}")]
-        public async Task<ActionResult<IEnumerable<Department>>> Search(string query)
+        public async Task<ActionResult<Logger>> Search(string query)
         {
             if (!String.IsNullOrWhiteSpace(query))
             {
@@ -94,7 +94,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Department>> Update(Department department)
+        public async Task<ActionResult<Logger>> Update(Department department)
         {
             
             var loggerResult = await _departmentSvc.Update(department);
@@ -109,7 +109,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Department>> Detele(string id)
+        public async Task<ActionResult<Logger>> Detele(string id)
         {
             if (!String.IsNullOrWhiteSpace(id))
             {

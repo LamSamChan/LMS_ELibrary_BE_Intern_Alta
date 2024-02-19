@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
@@ -20,7 +21,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(HelpDTO help)
+        public async Task<ActionResult<Logger>> Create(HelpDTO help)
         {
             var newHelp = _mapper.Map<Help>(help);
             var loggerResult = await _helpSvc.Create(newHelp);
@@ -35,7 +36,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Help>>> GetAll()
+        public async Task<ActionResult<Logger>> GetAll()
         {
             var loggerResult = await _helpSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
@@ -49,7 +50,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Help>> GetById(int id)
+        public async Task<ActionResult<Logger>> GetById(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
@@ -70,7 +71,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("User/{userId}")]
-        public async Task<ActionResult<IEnumerable<Help>>> GetByUserId(string userId)
+        public async Task<ActionResult<Logger>> GetByUserId(string userId)
         {
             if (!String.IsNullOrWhiteSpace(userId))
             {
@@ -91,7 +92,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Help>> Detele(int id)
+        public async Task<ActionResult<Logger>> Detele(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {

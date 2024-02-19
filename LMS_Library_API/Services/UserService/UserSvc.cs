@@ -23,6 +23,31 @@ namespace LMS_Library_API.Services.UserService
         {
             try
             {
+                var userList = await _context.Users.ToListAsync();
+
+                foreach (var item in userList)
+                {
+                    if (string.Equals(user.Email, item.Email, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return new Logger()
+                        {
+                            status = TaskStatus.Faulted,
+                            message = "Email đã tồn tại",
+                            data = user
+                        };
+                    }
+
+                    if (string.Equals(user.PhoneNumber.Substring(user.PhoneNumber.Length - 9), item.PhoneNumber.Substring(item.PhoneNumber.Length - 9)))
+                    {
+                        return new Logger()
+                        {
+                            status = TaskStatus.Faulted,
+                            message = "Số điện thoại đã tồn tại",
+                            data = user
+                        };
+                    }
+                }
+
                 user.Password = _encodeHelper.Encode(user.Password);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();

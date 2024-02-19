@@ -18,7 +18,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Permissions permission)
+        public async Task<ActionResult<Logger>> Create(Permissions permission)
         {
             var loggerResult = await _permissionsSvc.Create(permission);
             if (loggerResult.status == TaskStatus.RanToCompletion)
@@ -32,7 +32,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Permissions>>> GetAll()
+        public async Task<ActionResult<Logger>> GetAll()
         {
             var loggerResult = await _permissionsSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
@@ -46,7 +46,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Permissions>> GetById(int id)
+        public async Task<ActionResult<Logger>> GetById(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
@@ -67,7 +67,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Permissions>> Update(Permissions permissions)
+        public async Task<ActionResult<Logger>> Update(Permissions permissions)
         {
 
             var loggerResult = await _permissionsSvc.Update(permissions);
@@ -82,7 +82,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Role>> Detele(int id)
+        public async Task<ActionResult<Logger>> Detele(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {

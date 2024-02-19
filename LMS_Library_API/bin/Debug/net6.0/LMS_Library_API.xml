@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LMS_Library_API</name>
+    </assembly>
+    <members>
+        <member name="M:LMS_Library_API.Controllers.BlobStorageController.GetAll(System.String)">
+            <summary>
+            image => list file trong container "image"
+            để trống => list file trong container "document"
+            </summary>
+        </member>
+    </members>
+</doc>

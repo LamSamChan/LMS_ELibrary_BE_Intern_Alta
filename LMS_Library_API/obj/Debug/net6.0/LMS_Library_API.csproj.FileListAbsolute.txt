@@ -82,3 +82,11 @@ D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Microsoft.
 D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\AutoMapper.dll
 D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Azure.Core.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Azure.Storage.Common.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\System.IO.Hashing.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\System.Memory.Data.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\LMS_Library_API.xml
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\obj\Debug\net6.0\LMS_Library_API.xml

@@ -23,7 +23,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(RoleDTO role)
+        public async Task<ActionResult<Logger>> Create(RoleDTO role)
         {
             var newRole = _mapper.Map<Role>(role);
             var loggerResult = await _roleSvc.Create(newRole);
@@ -38,7 +38,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetAll()
+        public async Task<ActionResult<Logger>> GetAll()
         {
             var loggerResult = await _roleSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
@@ -52,7 +52,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetById(int id)
+        public async Task<ActionResult<Logger>> GetById(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))
             {
@@ -74,7 +74,7 @@ namespace LMS_Library_API.Controllers
 
 
         [HttpPut]
-        public async Task<ActionResult> Update(RoleDTO role)
+        public async Task<ActionResult<Logger>> Update(RoleDTO role)
         {
             var newDataRole = _mapper.Map<Role>(role);
 

@@ -24,7 +24,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(UserDTO user)
+        public async Task<ActionResult<Logger>> Create(UserDTO user)
         {
             var newUser = _mapper.Map<User>(user);
             var loggerResult = await _userSvc.Create(newUser);
@@ -52,7 +52,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        public async Task<ActionResult<Logger>> GetAll()
         {
             var loggerResult = await _userSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
@@ -66,7 +66,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetById(string id)
+        public async Task<ActionResult<Logger>> GetById(string id)
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
@@ -87,7 +87,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UserDTO user)
+        public async Task<ActionResult<Logger>> Update(UserDTO user)
         {
             var newDataUser = _mapper.Map<User>(user);
 
@@ -103,7 +103,7 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("search/{query}")]
-        public async Task<ActionResult<IEnumerable<User>>> Search(string query)
+        public async Task<ActionResult<Logger>> Search(string query)
         {
             if (!String.IsNullOrWhiteSpace(query))
             {
