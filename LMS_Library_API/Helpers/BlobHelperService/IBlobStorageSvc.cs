@@ -7,7 +7,7 @@ namespace LMS_Library_API.Helpers.BlobHelperService
     {
         Task<BlobObject> GetBlobFile(string filePath, string containerName);
         Task<Logger> UploadBlobFile (BlobContentModel uploadModel);
-        void DeleteBlobFile (string filePath);
+        Task<Logger> DeleteBlobFile (string filePath,string containerName);
         Task<Logger> ListFileBlobs(string containerName);
     }
 }

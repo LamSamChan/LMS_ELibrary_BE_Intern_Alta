@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace LMS_Library_API.Models.BlobStorage
@@ -10,6 +11,7 @@ namespace LMS_Library_API.Models.BlobStorage
         [Required]
         public string FileName { get; set; }
         [Required]
+        [DefaultValue(true)]
         public bool isImage { get; set; }
     }
 }

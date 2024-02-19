@@ -4,11 +4,26 @@
         <name>LMS_Library_API</name>
     </assembly>
     <members>
+        <member name="M:LMS_Library_API.Controllers.BlobStorageController.GetBlobFile(System.String,System.String)">
+            <summary>
+            containerName: image => thao tác với file trong container "image" |
+            containerName: document => thao tác với file trong container "document"
+            </summary>
+            
+        </member>
         <member name="M:LMS_Library_API.Controllers.BlobStorageController.GetAll(System.String)">
             <summary>
-            image => list file trong container "image"
-            để trống => list file trong container "document"
+            containerName: image => thao tác với file trong container "image" |
+            containerName: document => thao tác với file trong container "document"
             </summary>
+            
+        </member>
+        <member name="M:LMS_Library_API.Controllers.BlobStorageController.DeleteBlobFile(System.String,System.String)">
+            <summary>
+            containerName: image => thao tác với file trong container "image" |
+            containerName: document => thao tác với file trong container "document"
+            </summary>
+            
         </member>
     </members>
 </doc>

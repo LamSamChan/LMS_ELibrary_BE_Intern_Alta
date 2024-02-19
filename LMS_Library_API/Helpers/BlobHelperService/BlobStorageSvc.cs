@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using LMS_Library_API.Constants;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.BlobStorage;
 using System.ComponentModel;
@@ -21,9 +22,35 @@ namespace LMS_Library_API.Helpers.BlobHelperService
             _docBlobContainerClient = _blobServiceClient.GetBlobContainerClient("documentcontainer");
         }
 
-        public void DeleteBlobFile(string filePath)
+        public async Task<Logger> DeleteBlobFile(string filePath, string containerName)
         {
-            throw new NotImplementedException();
+            var fileName = new Uri(filePath).Segments.LastOrDefault();
+            BlobClient blobClient;
+            if (string.Equals(containerName, "image", StringComparison.OrdinalIgnoreCase))
+            {
+                blobClient = _imgBlobContainerClient.GetBlobClient(fileName);
+            }
+            else if (string.Equals(containerName, "document", StringComparison.OrdinalIgnoreCase))
+            {
+                blobClient = _docBlobContainerClient.GetBlobClient(fileName);
+            }
+            else
+            {
+                return new Logger
+                {
+                    status = TaskStatus.Faulted,
+                    message = "Không tìm thấy file cần xóa, hãy kiểm tra lại container hoặc đường dẫn",
+                };
+            }
+
+            await blobClient.DeleteIfExistsAsync();
+
+            return new Logger
+            {
+                status = TaskStatus.RanToCompletion,
+                message = "Xóa tệp thành công",
+            };
+
         }
 
         public async Task<BlobObject> GetBlobFile(string filePath, string containerName)
@@ -48,13 +75,27 @@ namespace LMS_Library_API.Helpers.BlobHelperService
 
                 if (await blobClient.ExistsAsync())
                 {
+                    BlobDownloadResult content = await blobClient.DownloadContentAsync();
+                    var downloadData = content.Content.ToStream();
+
+                    if (string.Equals(containerName, "image", StringComparison.OrdinalIgnoreCase))
+                    {
+                       var extension = Path.GetExtension(fileName);
+                       return new BlobObject { Content = downloadData,ContentType="image/"+ extension.Remove(0,1) ,FileName = fileName };
+                    }
+                    else
+                    {
+                       return new BlobObject { Content = downloadData, ContentType = content.Details.ContentType, FileName = fileName };
+                    }
 
                 }
             }
             catch (Exception ex)
             {
-                null;
+                return null;
             }
+
+            return null;
         }
 
         public async Task<Logger> ListFileBlobs(string containerName)
@@ -104,11 +145,24 @@ namespace LMS_Library_API.Helpers.BlobHelperService
             else
             {
                 blobClient = _docBlobContainerClient.GetBlobClient(uploadModel.FileName);
+
+            }
+            string fileExtension = Path.GetExtension(uploadModel.FileName);
+
+            string contentType = ChooseContentType(fileExtension);
+
+            if (contentType == null)
+            {
+                return new Logger
+                {
+                    status = TaskStatus.Faulted,
+                    message = "File không hợp lệ"
+                };
             }
 
             try
             {
-                await blobClient.UploadAsync(uploadModel.FilePath);
+                await blobClient.UploadAsync(uploadModel.FilePath, new BlobHttpHeaders { ContentType = contentType });
 
                 return new Logger
                 {
@@ -126,6 +180,18 @@ namespace LMS_Library_API.Helpers.BlobHelperService
                     message = ex.Message
                 };
             }
+        }
+
+        private string ChooseContentType(string fileExtenstion)
+        {
+            foreach (var ex in MimeType.ListMimeType)
+            {
+                if (string.Equals(fileExtenstion,ex.Key,StringComparison.OrdinalIgnoreCase))
+                {
+                    return ex.Value;
+                }
+            }
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMS_Library_API.Helpers.BlobHelperService;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.RoleAccess;
@@ -17,17 +18,23 @@ namespace LMS_Library_API.Controllers
         private readonly IUserSvc _userSvc;
         private readonly IMapper _mapper;
         private readonly IQnALikesSvc _qnALikesSvc;
-        public UsersController (IUserSvc userSvc, IMapper mapper, IQnALikesSvc qnALikesSvc) {
+        private readonly IBlobStorageSvc _blobStorageSvc;
+        public UsersController (IUserSvc userSvc, IMapper mapper, IQnALikesSvc qnALikesSvc, IBlobStorageSvc blobStorageSvc) {
             _mapper = mapper;
             _userSvc = userSvc;
             _qnALikesSvc = qnALikesSvc;
+            _blobStorageSvc = blobStorageSvc;
         }
 
         [HttpPost]
         public async Task<ActionResult<Logger>> Create(UserDTO user)
         {
+
+
             var newUser = _mapper.Map<User>(user);
+
             var loggerResult = await _userSvc.Create(newUser);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 User createQnALike = (User)loggerResult.data;

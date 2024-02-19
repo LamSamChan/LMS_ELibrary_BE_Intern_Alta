@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel;
+using LMS_Library_API.Models.BlobStorage;
 
 namespace LMS_Library_API.ModelsDTO
 {
@@ -45,7 +46,7 @@ namespace LMS_Library_API.ModelsDTO
         public Gender Gender { get; set; }
 
         [AllowNull]
-        public string Avartar { get; set; }
+        public BlobContentModel Avartar { get; set; }
         public string? Password { get; set; }
 
         [DefaultValue(false)]
