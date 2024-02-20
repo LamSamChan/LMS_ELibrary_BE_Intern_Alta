@@ -17,6 +17,7 @@ namespace LMS_Library_API.Helpers
             CreateMap<HelpDTO, Help>();
             CreateMap<PrivateFileDTO, PrivateFile>();
             CreateMap<PUTPrivateFileDTO, PrivateFile>();
+            CreateMap<SystemInfomationDTO, SystemInfomation>();
         }
     }
 }

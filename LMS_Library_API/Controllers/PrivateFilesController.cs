@@ -2,6 +2,7 @@
 using LMS_Library_API.Helpers.BlobHelperService;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.BlobStorage;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutUser.PrivateFileService;
 using Microsoft.AspNetCore.Http;
@@ -109,6 +110,29 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpGet("DownloadFile")]
+        public async Task<ActionResult<Logger>> DownloadFile(PrivateFile privateFile, string containerName)
+        {
+            BlobObject blobObject = await _blobStorageSvc.GetBlobFile(privateFile.FilePath, containerName);
+
+            if (blobObject == null)
+            {
+                return BadRequest(new Logger
+                {
+                    status = TaskStatus.Faulted,
+                    message = "Container hoặc File không tồn tại, hãy kiểm tra lại"
+                });
+            }
+            if (blobObject.ContentType.Contains("image"))
+            {
+                return File(blobObject.Content, blobObject.ContentType);
+            }
+            else
+            {
+                return File(blobObject.Content, blobObject.ContentType, privateFile.Name);
+            }
+        }
+
         [HttpGet("search/{userId}/{query}")]
         public async Task<ActionResult<Logger>> Search(string userId, string query)
         {
@@ -135,20 +159,6 @@ namespace LMS_Library_API.Controllers
         {
             var privateFile = _mapper.Map<PrivateFile>(privateFileDTO);
 
-            var getOldFile = await _privateFileSvc.GetById(privateFile.Id);
-
-            var oldFile = (PrivateFile)getOldFile.data;
-
-            string fileName = oldFile.Name;
-
-            var updateFile = await _blobStorageSvc.ChangeFileName(fileName, privateFile.Name);
-
-            if (updateFile.status == TaskStatus.Faulted)
-            {
-                return updateFile;
-            }
-
-            privateFile.FilePath = updateFile.data.ToString();
             var loggerResult = await _privateFileSvc.Update(privateFile);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {

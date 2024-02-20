@@ -1,11 +1,14 @@
 ﻿using LMS_Library_API.Enums;
-using System.ComponentModel.DataAnnotations;
+using LMS_Library_API.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using LMS_Library_API.Models.BlobStorage;
 
-namespace LMS_Library_API.Models
+namespace LMS_Library_API.ModelsDTO
 {
-    public class SystemInfomation
+    public class SystemInfomationDTO
     {
         [Key] public Guid Id { get; set; } = new Guid();
 
@@ -44,7 +47,7 @@ namespace LMS_Library_API.Models
         [StringLength(20, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage = "Hãy nhập số điện thoại của trường")]
         [RegularExpression("^(?:\\+84|0)\\d{9}$", ErrorMessage = "Số điện thoại không hợp lệ !")]
-        public string PhoneNumber { get; set;}
+        public string PhoneNumber { get; set; }
 
         [Column(TypeName = "varchar(50)")]
         [StringLength(50, ErrorMessage = "Vượt quá độ dài cho phép")]
@@ -64,12 +67,10 @@ namespace LMS_Library_API.Models
         public string AcademicYear { get; set; }
 
         [AllowNull]
-        public string SchoolLogo { get; set; }
+        public BlobContentModel SchoolLogo { get; set; }
 
         //navigation property
         [ForeignKey("User")]
         public Guid Principals { get; set; }
-        public virtual User? User { get; set; }
-
     }
 }

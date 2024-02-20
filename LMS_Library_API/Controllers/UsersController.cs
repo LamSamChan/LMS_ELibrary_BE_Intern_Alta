@@ -36,6 +36,7 @@ namespace LMS_Library_API.Controllers
 
             if (user.Avartar.FilePath != null && user.Avartar.FileName != null)
             {
+
                 var avartarPath = await _blobStorageSvc.UploadBlobFile(user.Avartar);
 
                 if (avartarPath.status == TaskStatus.RanToCompletion)

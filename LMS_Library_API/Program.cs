@@ -8,6 +8,7 @@ using LMS_Library_API.Services.RoleAccess.RoleService;
 using LMS_Library_API.Services.ServiceAboutUser.HelpService;
 using LMS_Library_API.Services.ServiceAboutUser.PrivateFileService;
 using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
+using LMS_Library_API.Services.SystemInfomationService;
 using LMS_Library_API.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -48,6 +49,7 @@ builder.Services.AddScoped<IUserSvc, UserSvc>();
 builder.Services.AddScoped<IHelpSvc, HelpSvc>();
 builder.Services.AddScoped<IQnALikesSvc, QnALikesSvc>();
 builder.Services.AddScoped<IPrivateFileSvc, PrivateFileSvc>();
+builder.Services.AddScoped<ISystemInfomationSvc, SystemInfomationSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

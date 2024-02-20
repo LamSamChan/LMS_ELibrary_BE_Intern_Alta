@@ -42,12 +42,6 @@ namespace LMS_Library_API.Helpers.BlobHelperService
             {
                 var copyBlobClient = _docBlobContainerClient.GetBlobClient(newFileName);
 
-                var blobExist = await CheckBlobExist(copyBlobClient);
-                if (blobExist.status == TaskStatus.Faulted)
-                {
-                    return blobExist;
-                }
-
                 await copyBlobClient.StartCopyFromUriAsync(blobClient.Uri);
                 await blobClient.DeleteIfExistsAsync();
                 return new Logger
@@ -63,12 +57,6 @@ namespace LMS_Library_API.Helpers.BlobHelperService
                 if (await imageBlobClient.ExistsAsync())
                 {
                     var copyBlobClient = _imgBlobContainerClient.GetBlobClient(newFileName);
-
-                    var blobExist = await CheckBlobExist(copyBlobClient);
-                    if (blobExist.status == TaskStatus.Faulted)
-                    {
-                        return blobExist;
-                    }
 
                     await copyBlobClient.StartCopyFromUriAsync(imageBlobClient.Uri);
                     await imageBlobClient.DeleteIfExistsAsync();
@@ -205,24 +193,6 @@ namespace LMS_Library_API.Helpers.BlobHelperService
 
         public async Task<Logger> UploadBlobFile(BlobContentModel uploadModel)
         {
-
-            BlobClient blobClient;
-            if (uploadModel.isImage)
-            {
-                blobClient = _imgBlobContainerClient.GetBlobClient(uploadModel.FileName);
-            }
-            else
-            {
-                blobClient = _docBlobContainerClient.GetBlobClient(uploadModel.FileName);
-
-            }
-
-            var blobExist = await CheckBlobExist(blobClient);
-            if (blobExist.status == TaskStatus.Faulted)
-            {
-                return blobExist;
-            }
-
             string fileExtension = Path.GetExtension(uploadModel.FileName);
 
             string contentType = ChooseContentType(fileExtension);
@@ -234,6 +204,17 @@ namespace LMS_Library_API.Helpers.BlobHelperService
                     status = TaskStatus.Faulted,
                     message = "File không hợp lệ"
                 };
+            }
+
+            uploadModel.FileName = Guid.NewGuid().ToString();
+            BlobClient blobClient;
+            if (uploadModel.isImage)
+            {
+                blobClient = _imgBlobContainerClient.GetBlobClient(uploadModel.FileName + fileExtension);
+            }
+            else
+            {
+                blobClient = _docBlobContainerClient.GetBlobClient(uploadModel.FileName + fileExtension);
             }
 
             try
