@@ -15,6 +15,8 @@ namespace LMS_Library_API.Helpers
             CreateMap<Role_PermissionsDTO, Role_Permissions>();
             CreateMap<UserDTO, User>();
             CreateMap<HelpDTO, Help>();
+            CreateMap<PrivateFileDTO, PrivateFile>();
+            CreateMap<PUTPrivateFileDTO, PrivateFile>();
         }
     }
 }

@@ -26,12 +26,31 @@ namespace LMS_Library_API.Controllers
             _blobStorageSvc = blobStorageSvc;
         }
 
+        /// <summary>
+        /// Nếu khi tạo người dùng mới mà không có avartar thì gán cho trường FilePath và FileName trong đổi tượng Avartar là null
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Logger>> Create(UserDTO user)
         {
-
-
             var newUser = _mapper.Map<User>(user);
+
+            if (user.Avartar.FilePath != null && user.Avartar.FileName != null)
+            {
+                var avartarPath = await _blobStorageSvc.UploadBlobFile(user.Avartar);
+
+                if (avartarPath.status == TaskStatus.RanToCompletion)
+                {
+                    newUser.Avartar = avartarPath.data.ToString();
+                }
+                else
+                {
+                    return BadRequest(avartarPath);
+                }
+            }
+            else
+            {
+                newUser.Avartar = null;
+            }
 
             var loggerResult = await _userSvc.Create(newUser);
 
@@ -98,7 +117,34 @@ namespace LMS_Library_API.Controllers
         {
             var newDataUser = _mapper.Map<User>(user);
 
+            if (user.Avartar.FilePath != null && user.Avartar.FileName != null)
+            {
+                var avartarPath = await _blobStorageSvc.UploadBlobFile(user.Avartar);
+
+                if (avartarPath.status == TaskStatus.RanToCompletion)
+                {
+                    newDataUser.Avartar = avartarPath.data.ToString();
+
+                    var oldUserData = (User)_userSvc.GetById(user.Id.ToString()).Result.data;
+                    var deleteOldUserImage = _blobStorageSvc.DeleteBlobFile(oldUserData.Avartar, "image");
+
+                    if (deleteOldUserImage.IsFaulted)
+                    {
+                        return BadRequest(deleteOldUserImage);
+                    }
+                }
+                else
+                {
+                    return BadRequest(avartarPath);
+                }
+            }
+            else
+            {
+                newDataUser.Avartar = null;
+            }
+
             var loggerResult = await _userSvc.Update(newDataUser);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);

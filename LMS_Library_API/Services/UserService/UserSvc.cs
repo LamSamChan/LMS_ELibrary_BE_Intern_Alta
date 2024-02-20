@@ -72,7 +72,7 @@ namespace LMS_Library_API.Services.UserService
         {
             try
             {
-                var respone = await _context.Users.Include(_ => _.Role).ThenInclude(_ => _.Role_Permissions).ThenInclude(_ => _.Permissions)
+                var respone = await _context.Users.Include(_ => _.Role)
                     .Include(_ => _.Department)
                     .ToListAsync();
                 return new Logger()
@@ -166,13 +166,22 @@ namespace LMS_Library_API.Services.UserService
                     };
                 }
 
+
+                if (user.Avartar == null)
+                {
+                    existUser.Avartar = existUser.Avartar;
+                }
+                else
+                {
+                    existUser.Avartar = user.Avartar;
+                }
+
                 existUser.FullName = user.FullName;
                 existUser.Email = user.Email;
                 existUser.DateOfBirth = user.DateOfBirth;
                 existUser.PhoneNumber = user.PhoneNumber;
                 existUser.Address = user.Address;
                 existUser.Gender = user.Gender;
-                existUser.Avartar = user.Avartar;
                 existUser.Password = user.Password;
                 existUser.RoleId = user.RoleId;
                 existUser.Role = user.Role;

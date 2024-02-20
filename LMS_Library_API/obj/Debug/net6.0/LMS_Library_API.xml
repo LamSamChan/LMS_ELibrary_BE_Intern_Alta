@@ -23,7 +23,16 @@
             containerName: image => thao tác với file trong container "image" |
             containerName: document => thao tác với file trong container "document"
             </summary>
-            
+        </member>
+        <member name="M:LMS_Library_API.Controllers.BlobStorageController.ChangeFileName(System.String,System.String)">
+            <summary>
+            Chỉ áp dụng với đổi tên tài liệu (document) =! ảnh
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.UsersController.Create(LMS_Library_API.ModelsDTO.UserDTO)">
+            <summary>
+            Nếu khi tạo người dùng mới mà không có avartar thì gán cho trường FilePath và FileName trong đổi tượng Avartar là null
+            </summary>
         </member>
     </members>
 </doc>

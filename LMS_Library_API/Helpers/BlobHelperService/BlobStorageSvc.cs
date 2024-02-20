@@ -22,6 +22,74 @@ namespace LMS_Library_API.Helpers.BlobHelperService
             _docBlobContainerClient = _blobServiceClient.GetBlobContainerClient("documentcontainer");
         }
 
+        public async Task<Logger> ChangeFileName(string fileName, string newFileName)
+        {
+
+            if (string.Equals(fileName,newFileName))
+            {
+                return new Logger
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Đổi tên tệp thành công",
+                    data = newFileName
+                };
+            }
+
+
+            var blobClient = _docBlobContainerClient.GetBlobClient(fileName);
+
+            if (await blobClient.ExistsAsync())
+            {
+                var copyBlobClient = _docBlobContainerClient.GetBlobClient(newFileName);
+
+                var blobExist = await CheckBlobExist(copyBlobClient);
+                if (blobExist.status == TaskStatus.Faulted)
+                {
+                    return blobExist;
+                }
+
+                await copyBlobClient.StartCopyFromUriAsync(blobClient.Uri);
+                await blobClient.DeleteIfExistsAsync();
+                return new Logger
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Đổi tên tệp thành công",
+                    data = copyBlobClient.Uri.AbsoluteUri
+                };
+            }
+            else
+            {
+                var imageBlobClient = _imgBlobContainerClient.GetBlobClient(fileName);
+                if (await imageBlobClient.ExistsAsync())
+                {
+                    var copyBlobClient = _imgBlobContainerClient.GetBlobClient(newFileName);
+
+                    var blobExist = await CheckBlobExist(copyBlobClient);
+                    if (blobExist.status == TaskStatus.Faulted)
+                    {
+                        return blobExist;
+                    }
+
+                    await copyBlobClient.StartCopyFromUriAsync(imageBlobClient.Uri);
+                    await imageBlobClient.DeleteIfExistsAsync();
+                    return new Logger
+                    {
+                        status = TaskStatus.RanToCompletion,
+                        message = "Đổi tên tệp thành công",
+                        data = copyBlobClient.Uri.AbsoluteUri
+                    };
+                }
+                else
+                {
+                    return new Logger
+                    {
+                        status = TaskStatus.Faulted,
+                        message = $"Không tồn tại tệp {fileName}",
+                    };
+                }      
+            }
+        }
+
         public async Task<Logger> DeleteBlobFile(string filePath, string containerName)
         {
             var fileName = new Uri(filePath).Segments.LastOrDefault();
@@ -137,6 +205,7 @@ namespace LMS_Library_API.Helpers.BlobHelperService
 
         public async Task<Logger> UploadBlobFile(BlobContentModel uploadModel)
         {
+
             BlobClient blobClient;
             if (uploadModel.isImage)
             {
@@ -147,6 +216,13 @@ namespace LMS_Library_API.Helpers.BlobHelperService
                 blobClient = _docBlobContainerClient.GetBlobClient(uploadModel.FileName);
 
             }
+
+            var blobExist = await CheckBlobExist(blobClient);
+            if (blobExist.status == TaskStatus.Faulted)
+            {
+                return blobExist;
+            }
+
             string fileExtension = Path.GetExtension(uploadModel.FileName);
 
             string contentType = ChooseContentType(fileExtension);
@@ -192,6 +268,25 @@ namespace LMS_Library_API.Helpers.BlobHelperService
                 }
             }
             return null;
+        }
+
+        private async Task<Logger> CheckBlobExist(BlobClient blobClient)
+        {
+            if (await blobClient.ExistsAsync())
+            {
+                return new Logger
+                {
+                    status = TaskStatus.Faulted,
+                    message = "Tên tệp đã tồn tại",
+                };
+            }
+            else
+            {
+                return new Logger
+                {
+                    status = TaskStatus.RanToCompletion,
+                };
+            }
         }
     }
 }

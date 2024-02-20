@@ -36,6 +36,7 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+
         /// <summary>
         /// containerName: image => thao tác với file trong container "image" |
         /// containerName: document => thao tác với file trong container "document"
@@ -88,7 +89,7 @@ namespace LMS_Library_API.Controllers
         /// containerName: image => thao tác với file trong container "image" |
         /// containerName: document => thao tác với file trong container "document"
         /// </summary>
-        /// 
+
         [HttpDelete("DeleteFile")]
         public async Task<ActionResult<Logger>> DeleteBlobFile(string filePath, string containerName)
         {
@@ -103,5 +104,21 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Chỉ áp dụng với đổi tên tài liệu (document) =! ảnh
+        /// </summary>
+        [HttpPut("ChangeNameFile")]
+        public async Task<ActionResult<Logger>> ChangeFileName(string fileName, string newFileName)
+        {
+            var loggerResult = await _blobStorageSvc.ChangeFileName(fileName, newFileName);
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }
+        }
     }
 }

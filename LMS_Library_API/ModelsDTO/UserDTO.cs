@@ -46,7 +46,7 @@ namespace LMS_Library_API.ModelsDTO
         public Gender Gender { get; set; }
 
         [AllowNull]
-        public BlobContentModel Avartar { get; set; }
+        public BlobContentModel Avartar { get; set; } = new BlobContentModel();
         public string? Password { get; set; }
 
         [DefaultValue(false)]

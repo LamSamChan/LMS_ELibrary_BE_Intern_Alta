@@ -1,14 +1,15 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
-namespace LMS_Library_API.Models.AboutUser
+namespace LMS_Library_API.ModelsDTO
 {
-    public class PrivateFile
+    public class PUTPrivateFileDTO
     {
         [Key] public int Id { get; set; }
 
-        [Column(TypeName ="nvarchar(150)")]
+        [Column(TypeName = "nvarchar(150)")]
         [Required]
         public string Name { get; set; }
 
@@ -29,6 +30,5 @@ namespace LMS_Library_API.Models.AboutUser
         //navigation property
         [ForeignKey("User")]
         public Guid UserId { get; set; }
-        public virtual User? User { get; set; }
     }
 }
