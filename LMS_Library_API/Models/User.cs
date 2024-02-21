@@ -79,7 +79,12 @@ namespace LMS_Library_API.Models
         public virtual QnALikes QnALikes { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Notification.Notification> Notifications { get; set; }
+        [InverseProperty("Recipient")]
+        public virtual ICollection<Notification.Notification> Recipients { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Sender")]
+        public virtual ICollection<Notification.Notification> Senders { get; set; }
 
         [JsonIgnore]
         [InverseProperty("User")]

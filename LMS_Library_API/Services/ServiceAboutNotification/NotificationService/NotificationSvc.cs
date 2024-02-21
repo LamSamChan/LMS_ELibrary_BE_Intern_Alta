@@ -1,29 +1,29 @@
 ﻿using LMS_Library_API.Context;
 using LMS_Library_API.Models;
-using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.Notification;
 using Microsoft.EntityFrameworkCore;
 
-namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
+namespace LMS_Library_API.Services.ServiceAboutNotification.NotificationService
 {
-    public class PrivateFileSvc : IPrivateFileSvc
+    public class NotificationSvc: INotificationSvc
     {
         private readonly DataContext _context;
-        public PrivateFileSvc(DataContext context)
+        public NotificationSvc(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<Logger> Create(PrivateFile privateFile)
+        public async Task<Logger> Create(Notification notification)
         {
             try
             {
-                _context.PrivateFiles.Add(privateFile);
+                _context.Notifications.Add(notification);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
-                    message = "Thêm tệp thành công",
-                    data = privateFile
+                    message = "Thêm thành công",
+                    data = notification
                 };
             }
             catch (Exception ex)
@@ -37,13 +37,13 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> Delete(int fileId)
+        public async Task<Logger> Delete(int notificationId)
         {
             try
             {
-                var existFile = await _context.PrivateFiles.FindAsync(fileId);
+                var existNotification = await _context.Notifications.FindAsync(notificationId);
 
-                if (existFile == null)
+                if (existNotification == null)
                 {
                     return new Logger()
                     {
@@ -52,14 +52,13 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                     };
                 }
 
-                _context.Remove(existFile);
+                _context.Remove(existNotification);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Xoá thành công",
-                    data = existFile
-
+                    data = existNotification
                 };
             }
             catch (Exception ex)
@@ -76,7 +75,9 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
         {
             try
             {
-                var respone = await _context.PrivateFiles.ToListAsync();
+                var respone = await _context.Notifications.Include(_ => _.Sender)
+                    .ToListAsync();
+
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
@@ -94,13 +95,15 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> GetById(int fileId)
+        public async Task<Logger> GetById(int notificationId)
         {
             try
             {
-                PrivateFile existFile = await _context.PrivateFiles.Include(_ => _.User).FirstOrDefaultAsync(x => x.Id == fileId);
+                Notification existNotification = await _context.Notifications.Include(_ => _.Sender)
+                    .FirstOrDefaultAsync(_ => _.Id == notificationId);
+                    
 
-                if (existFile == null)
+                if (existNotification == null)
                 {
                     return new Logger()
                     {
@@ -113,7 +116,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = existFile
+                    data = existNotification
                 };
             }
             catch (Exception ex)
@@ -126,18 +129,21 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> GetByUserId(string userId)
+        public async Task<Logger> GetByRecipientId(string recipientId)
         {
             try
             {
-                var respone = await _context.PrivateFiles.Where(_ => _.UserId == Guid.Parse(userId)).ToListAsync();
+                var listNotification = await _context.Notifications.Where(_ => _.RecipientId == Guid.Parse(recipientId))
+                    
+                    .Include(_ => _.Sender)
+                    .ToListAsync();
 
-                if (respone.Count == 0)
+                if (listNotification == null)
                 {
                     return new Logger()
                     {
-                        status = TaskStatus.RanToCompletion,
-                        message = "Không có kết quả",
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
                     };
                 }
 
@@ -145,7 +151,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    listData = new List<object>() { respone }
+                    listData = listNotification
                 };
             }
             catch (Exception ex)
@@ -162,15 +168,17 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
         {
             try
             {
-                var respone = await _context.PrivateFiles.Where(_ => _.UserId == Guid.Parse(userId) &&
-                _.Name.Contains(query)).ToListAsync();
+                var listNotification = await _context.Notifications.Where(_ => _.RecipientId == Guid.Parse(userId) && _.Content.Contains(query))
+                    
+                    .Include(_ => _.Sender)
+                    .ToListAsync();
 
-                if (respone.Count == 0)
+                if (listNotification == null)
                 {
                     return new Logger()
                     {
-                        status = TaskStatus.RanToCompletion,
-                        message = "Không có kết quả",
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
                     };
                 }
 
@@ -178,7 +186,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    listData = new List<object>() { respone }
+                    listData = listNotification
                 };
             }
             catch (Exception ex)
@@ -191,27 +199,14 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> Update(PrivateFile privateFile)
+        public async Task<Logger> Update(Notification notification)
         {
             try
             {
-                var respone = await _context.PrivateFiles.Where(_ => _.UserId == privateFile.UserId).ToListAsync();
 
-                foreach (var item in respone)
-                {
-                    if (privateFile.Name == item.Name)
-                    {
-                        return new Logger()
-                        {
-                            status = TaskStatus.Faulted,
-                            message = "Tên tệp đã tồn tại"
-                        };
-                    }
-                }
+                Notification extstNotification = await _context.Notifications.FindAsync(notification.Id);
 
-                PrivateFile existFile = await _context.PrivateFiles.FindAsync(privateFile.Id);
-
-                if (existFile == null)
+                if (extstNotification == null)
                 {
                     return new Logger()
                     {
@@ -219,12 +214,12 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                         message = "Không tìm thấy đối tượng cần cập nhật"
                     };
                 }
-                
-                existFile.Name = privateFile.Name;
-                existFile.Modifier = privateFile.Modifier;
-                existFile.DateChanged = DateTime.Now;
-                existFile.FilePath = privateFile.FilePath;
-                existFile.IsImage = privateFile.IsImage;
+
+                extstNotification.Content = notification.Content;
+                extstNotification.TimeCounter = notification.TimeCounter;
+                extstNotification.RecipientId = notification.RecipientId;
+                extstNotification.SenderId = notification.SenderId;
+                extstNotification.IsRead = notification.IsRead;
 
                 await _context.SaveChangesAsync();
 
@@ -232,7 +227,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Cập nhật thành công",
-                    data = existFile
+                    data = extstNotification
                 };
             }
             catch (Exception ex)

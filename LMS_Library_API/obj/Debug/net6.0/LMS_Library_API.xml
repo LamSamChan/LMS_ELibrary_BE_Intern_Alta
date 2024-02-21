@@ -29,6 +29,11 @@
             Chỉ áp dụng với đổi tên tài liệu (document) =! ảnh
             </summary>
         </member>
+        <member name="M:LMS_Library_API.Controllers.PrivateFilesController.GetByUserId(System.String)">
+            <summary>
+            Trả về danh sách file theo id của người dùng
+            </summary>
+        </member>
         <member name="M:LMS_Library_API.Controllers.SystemInfomationController.Create(LMS_Library_API.ModelsDTO.SystemInfomationDTO)">
             <summary>
             Nếu khi tạo dữ liệu mới mà không có avartar thì gán cho trường FilePath và FileName trong đổi tượng SchoolLogo là null

@@ -1,29 +1,30 @@
 ﻿using LMS_Library_API.Context;
 using LMS_Library_API.Models;
-using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.Notification;
 using Microsoft.EntityFrameworkCore;
 
-namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
+namespace LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService
 {
-    public class PrivateFileSvc : IPrivateFileSvc
+    public class NotificationSettingSvc:INotificationSettingSvc
     {
         private readonly DataContext _context;
-        public PrivateFileSvc(DataContext context)
+
+        public NotificationSettingSvc(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<Logger> Create(PrivateFile privateFile)
+        public async Task<Logger> Create(NotificationSetting setting)
         {
             try
             {
-                _context.PrivateFiles.Add(privateFile);
+                _context.NotificationSetting.Add(setting);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
-                    message = "Thêm tệp thành công",
-                    data = privateFile
+                    message = "Thêm thành công",
+                    data = setting
                 };
             }
             catch (Exception ex)
@@ -37,13 +38,13 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> Delete(int fileId)
+        public async Task<Logger> Delete(string userId, int id)
         {
             try
             {
-                var existFile = await _context.PrivateFiles.FindAsync(fileId);
+                var existSetting = await _context.NotificationSetting.FirstOrDefaultAsync(_ => _.FeaturesId == id && _.UserId == Guid.Parse(userId));
 
-                if (existFile == null)
+                if (existSetting == null)
                 {
                     return new Logger()
                     {
@@ -52,13 +53,13 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                     };
                 }
 
-                _context.Remove(existFile);
+                _context.Remove(existSetting);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Xoá thành công",
-                    data = existFile
+                    data = existSetting
 
                 };
             }
@@ -76,7 +77,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
         {
             try
             {
-                var respone = await _context.PrivateFiles.ToListAsync();
+                var respone = await _context.NotificationSetting.ToListAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
@@ -94,13 +95,13 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> GetById(int fileId)
+        public async Task<Logger> GetById(string userId, int id)
         {
             try
             {
-                PrivateFile existFile = await _context.PrivateFiles.Include(_ => _.User).FirstOrDefaultAsync(x => x.Id == fileId);
+                var existSetting = await _context.NotificationSetting.Include(_ => _.NotificationFeatures).FirstOrDefaultAsync(_ => _.FeaturesId == id && _.UserId == Guid.Parse(userId));
 
-                if (existFile == null)
+                if (existSetting == null)
                 {
                     return new Logger()
                     {
@@ -113,7 +114,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = existFile
+                    data = existSetting
                 };
             }
             catch (Exception ex)
@@ -130,14 +131,14 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
         {
             try
             {
-                var respone = await _context.PrivateFiles.Where(_ => _.UserId == Guid.Parse(userId)).ToListAsync();
+                var userSetting = await _context.NotificationSetting.Include(_ => _.NotificationFeatures).Where(_ => _.UserId == Guid.Parse(userId)).ToListAsync();
 
-                if (respone.Count == 0)
+                if (userSetting == null)
                 {
                     return new Logger()
                     {
-                        status = TaskStatus.RanToCompletion,
-                        message = "Không có kết quả",
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy danh sách đối tượng cần tìm"
                     };
                 }
 
@@ -145,7 +146,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    listData = new List<object>() { respone }
+                    listData = userSetting
                 };
             }
             catch (Exception ex)
@@ -158,60 +159,13 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
             }
         }
 
-        public async Task<Logger> Search(string userId, string query)
+        public async Task<Logger> Update(NotificationSetting setting)
         {
             try
             {
-                var respone = await _context.PrivateFiles.Where(_ => _.UserId == Guid.Parse(userId) &&
-                _.Name.Contains(query)).ToListAsync();
+                var existSetting = await _context.NotificationSetting.FirstOrDefaultAsync(_ => _.FeaturesId == setting.FeaturesId && _.UserId == setting.UserId);
 
-                if (respone.Count == 0)
-                {
-                    return new Logger()
-                    {
-                        status = TaskStatus.RanToCompletion,
-                        message = "Không có kết quả",
-                    };
-                }
-
-                return new Logger()
-                {
-                    status = TaskStatus.RanToCompletion,
-                    message = "Thành công",
-                    listData = new List<object>() { respone }
-                };
-            }
-            catch (Exception ex)
-            {
-                return new Logger()
-                {
-                    status = TaskStatus.Faulted,
-                    message = ex.Message,
-                };
-            }
-        }
-
-        public async Task<Logger> Update(PrivateFile privateFile)
-        {
-            try
-            {
-                var respone = await _context.PrivateFiles.Where(_ => _.UserId == privateFile.UserId).ToListAsync();
-
-                foreach (var item in respone)
-                {
-                    if (privateFile.Name == item.Name)
-                    {
-                        return new Logger()
-                        {
-                            status = TaskStatus.Faulted,
-                            message = "Tên tệp đã tồn tại"
-                        };
-                    }
-                }
-
-                PrivateFile existFile = await _context.PrivateFiles.FindAsync(privateFile.Id);
-
-                if (existFile == null)
+                if (existSetting == null)
                 {
                     return new Logger()
                     {
@@ -219,12 +173,10 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                         message = "Không tìm thấy đối tượng cần cập nhật"
                     };
                 }
-                
-                existFile.Name = privateFile.Name;
-                existFile.Modifier = privateFile.Modifier;
-                existFile.DateChanged = DateTime.Now;
-                existFile.FilePath = privateFile.FilePath;
-                existFile.IsImage = privateFile.IsImage;
+
+                existSetting.UserId = setting.UserId;
+                existSetting.FeaturesId = setting.FeaturesId;
+                existSetting.ReceiveNotification = setting.ReceiveNotification;
 
                 await _context.SaveChangesAsync();
 
@@ -232,7 +184,7 @@ namespace LMS_Library_API.Services.ServiceAboutUser.PrivateFileService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Cập nhật thành công",
-                    data = existFile
+                    data = existSetting
                 };
             }
             catch (Exception ex)

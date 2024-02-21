@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LMS_Library_API.Models.Notification
+namespace LMS_Library_API.ModelsDTO
 {
-    public class Notification
+    public class NotificationDTO
     {
         [Key] public int Id { get; set; }
 
@@ -14,23 +14,16 @@ namespace LMS_Library_API.Models.Notification
         [Required]
         public string Content { get; set; }
 
-        [DefaultValue(false)]
         [Required]
+        [DefaultValue(false)]
         public bool IsRead { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required]
         public DateTime TimeCounter { get; set; }
 
-
         //navigation property
-        [ForeignKey("Recipients")]
         public Guid RecipientId { get; set; }
-        public virtual User? Recipient { get; set; }
-
-        [ForeignKey("Sender")]
         public Guid SenderId { get; set; }
-        public virtual User? Sender { get; set; }
-
     }
 }

@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240221094104_updateModelSystemInfomation")]
+    partial class updateModelSystemInfomation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -795,20 +797,15 @@ namespace LMS_Library_API.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("RecipientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("TimeCounter")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientId");
-
-                    b.HasIndex("SenderId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notification", (string)null);
                 });
@@ -824,10 +821,6 @@ namespace LMS_Library_API.Migrations
                     b.Property<string>("FeatureType")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -1668,21 +1661,13 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.Notification.Notification", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.User", "Recipient")
-                        .WithMany("Recipients")
-                        .HasForeignKey("RecipientId")
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMS_Library_API.Models.User", "Sender")
-                        .WithMany("Senders")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipient");
-
-                    b.Navigation("Sender");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.Notification.NotificationSetting", b =>
@@ -1966,16 +1951,14 @@ namespace LMS_Library_API.Migrations
 
                     b.Navigation("NotificationSetting");
 
+                    b.Navigation("Notifications");
+
                     b.Navigation("PrivateFiles");
 
                     b.Navigation("QnALikes")
                         .IsRequired();
 
                     b.Navigation("QuestionBanks");
-
-                    b.Navigation("Recipients");
-
-                    b.Navigation("Senders");
 
                     b.Navigation("Subject")
                         .IsRequired();

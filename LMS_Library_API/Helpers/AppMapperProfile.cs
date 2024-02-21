@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
 using System.Net;
@@ -18,6 +19,8 @@ namespace LMS_Library_API.Helpers
             CreateMap<PrivateFileDTO, PrivateFile>();
             CreateMap<PUTPrivateFileDTO, PrivateFile>();
             CreateMap<SystemInfomationDTO, SystemInfomation>();
+            CreateMap<NotificationDTO, Notification>();
+            CreateMap<NotificationSettingDTO, NotificationSetting>();
         }
     }
 }

@@ -89,6 +89,10 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Trả về danh sách file theo id của người dùng
+        /// </summary>
+
         [HttpGet("user/{id}")]
         public async Task<ActionResult<Logger>> GetByUserId(string id)
         {
@@ -111,8 +115,15 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("DownloadFile")]
-        public async Task<ActionResult<Logger>> DownloadFile(PrivateFile privateFile, string containerName)
+        public async Task<ActionResult<Logger>> DownloadFile(int fileId, string containerName)
         {
+            var getFile = await _privateFileSvc.GetById(fileId);
+            if (getFile.status == TaskStatus.Faulted)
+            {
+                return BadRequest(getFile);
+            }
+            var privateFile = (PrivateFile)getFile.data;
+
             BlobObject blobObject = await _blobStorageSvc.GetBlobFile(privateFile.FilePath, containerName);
 
             if (blobObject == null)

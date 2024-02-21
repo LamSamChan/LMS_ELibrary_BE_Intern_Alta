@@ -56,10 +56,10 @@ namespace LMS_Library_API.ModelsDTO
                     ErrorMessage = "Email không hợp lệ !")]
         public string Email { get; set; }
 
-        [Column(TypeName = "varchar(10)")]
+        [Column(TypeName = "varchar(30)")]
         [StringLength(10, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required(ErrorMessage = "Hãy lựa chọn ngôn ngữ của hệ thống")]
-        public Languages Language { get; set; }
+        public string Language { get; set; }
 
         [Column(TypeName = "nvarchar(30)")]
         [StringLength(30, ErrorMessage = "Vượt quá độ dài cho phép")]

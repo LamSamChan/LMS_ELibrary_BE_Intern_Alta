@@ -206,15 +206,15 @@ namespace LMS_Library_API.Helpers.BlobHelperService
                 };
             }
 
-            uploadModel.FileName = Guid.NewGuid().ToString();
+            var fileName = Guid.NewGuid().ToString();
             BlobClient blobClient;
             if (uploadModel.isImage)
             {
-                blobClient = _imgBlobContainerClient.GetBlobClient(uploadModel.FileName + fileExtension);
+                blobClient = _imgBlobContainerClient.GetBlobClient(fileName + fileExtension);
             }
             else
             {
-                blobClient = _docBlobContainerClient.GetBlobClient(uploadModel.FileName + fileExtension);
+                blobClient = _docBlobContainerClient.GetBlobClient(fileName + fileExtension);
             }
 
             try
