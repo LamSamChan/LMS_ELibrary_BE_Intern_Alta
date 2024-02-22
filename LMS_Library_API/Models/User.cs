@@ -132,7 +132,12 @@ namespace LMS_Library_API.Models
         public virtual ICollection<Lesson> TeacherCreatedLesson { get; set; }
 
         [JsonIgnore]
+        [InverseProperty("Censor")]
         public virtual ICollection<Document> CensorDocument { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("TeacherCreated")]
+        public virtual ICollection<Document> TeacherCreateDocument { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }

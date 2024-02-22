@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using static LMS_Library_API.Enums.NotificationFearture;
 
 namespace LMS_Library_API.Models.Notification
 {
@@ -9,17 +10,15 @@ namespace LMS_Library_API.Models.Notification
     {
         [Key] public int Id { get; set; }
 
-        [Column(TypeName ="nvarchar(50)")]
         [Required]
-        public string FeatureType { get; set; }
+        public FeartureType FeatureType { get; set; }
 
-        [Column(TypeName = "nvarchar(30)")]
         [Required]
-        public string Type { get; set; }
+        public NotificationType Type { get; set; }
 
         //navigation property
         [JsonIgnore]
         [InverseProperty("NotificationFeatures")]
-        public virtual ICollection<NotificationSetting> NotificationSetting { get; set; }
+        public virtual ICollection<NotificationSetting>? NotificationSetting { get; set; }
     }
 }

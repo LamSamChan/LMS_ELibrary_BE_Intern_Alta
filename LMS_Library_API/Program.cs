@@ -8,9 +8,13 @@ using LMS_Library_API.Services.RoleAccess.RoleService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService;
+using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
+using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
+using LMS_Library_API.Services.ServiceAboutSubject.PartService;
 using LMS_Library_API.Services.ServiceAboutUser.HelpService;
 using LMS_Library_API.Services.ServiceAboutUser.PrivateFileService;
 using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
+using LMS_Library_API.Services.SubjectService;
 using LMS_Library_API.Services.SystemInfomationService;
 using LMS_Library_API.Services.UserService;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +60,10 @@ builder.Services.AddScoped<ISystemInfomationSvc, SystemInfomationSvc>();
 builder.Services.AddScoped<INotificationSvc, NotificationSvc>();
 builder.Services.AddScoped<INotificationFeaturesSvc, NotificationFeaturesSvc>();
 builder.Services.AddScoped<INotificationSettingSvc, NotificationSettingSvc>();
+builder.Services.AddScoped<ISubjectSvc, SubjectSvc>();
+builder.Services.AddScoped<IPartSvc, PartSvc>();
+builder.Services.AddScoped<ILessonSvc, LessonSvc>();
+builder.Services.AddScoped<IDocumentSvc, DocumentSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

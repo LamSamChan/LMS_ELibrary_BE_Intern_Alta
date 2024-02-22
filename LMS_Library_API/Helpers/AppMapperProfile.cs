@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LMS_Library_API.Models;
+using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.RoleAccess;
@@ -21,6 +22,10 @@ namespace LMS_Library_API.Helpers
             CreateMap<SystemInfomationDTO, SystemInfomation>();
             CreateMap<NotificationDTO, Notification>();
             CreateMap<NotificationSettingDTO, NotificationSetting>();
+            CreateMap<SubjectDTO, Subject>();
+            CreateMap<PartDTO, Part>();
+            CreateMap<LessonDTO, Lesson>();
+            CreateMap<DocumentDTO, Document>();
         }
     }
 }

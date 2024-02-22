@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240222074519_update_model_NotificationFearture")]
+    partial class update_model_NotificationFearture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,9 +185,6 @@ namespace LMS_Library_API.Migrations
                     b.Property<DateTime>("submissionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("teacherCreatedId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("updatedDate")
                         .HasColumnType("datetime2");
 
@@ -194,8 +193,6 @@ namespace LMS_Library_API.Migrations
                     b.HasIndex("censorId");
 
                     b.HasIndex("lessonId");
-
-                    b.HasIndex("teacherCreatedId");
 
                     b.ToTable("Document", (string)null);
                 });
@@ -404,8 +401,7 @@ namespace LMS_Library_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid?>("censorId")
-                        .IsRequired()
+                    b.Property<Guid>("censorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("dateSubmited")
@@ -419,6 +415,7 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("note")
+                        .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("numericalOrder")
@@ -1049,7 +1046,7 @@ namespace LMS_Library_API.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1302,7 +1299,7 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.Document", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.User", "Censor")
+                    b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("CensorDocument")
                         .HasForeignKey("censorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1314,17 +1311,9 @@ namespace LMS_Library_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMS_Library_API.Models.User", "TeacherCreated")
-                        .WithMany("TeacherCreateDocument")
-                        .HasForeignKey("teacherCreatedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Censor");
-
                     b.Navigation("Lesson");
 
-                    b.Navigation("TeacherCreated");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.DocumentAccess", b =>
@@ -1997,8 +1986,6 @@ namespace LMS_Library_API.Migrations
                         .IsRequired();
 
                     b.Navigation("TeacherClasses");
-
-                    b.Navigation("TeacherCreateDocument");
 
                     b.Navigation("TeacherCreated");
 
