@@ -167,7 +167,8 @@ namespace LMS_Library_API.Migrations
                     b.Property<bool>("Type")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("censorId")
+                    b.Property<Guid?>("censorId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("lessonId")
@@ -405,7 +406,6 @@ namespace LMS_Library_API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<Guid?>("censorId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("dateSubmited")
@@ -1477,9 +1477,7 @@ namespace LMS_Library_API.Migrations
                 {
                     b.HasOne("LMS_Library_API.Models.User", "Censor")
                         .WithMany("CensorPart")
-                        .HasForeignKey("censorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("censorId");
 
                     b.HasOne("LMS_Library_API.Models.Subject", "Subject")
                         .WithMany("Parts")

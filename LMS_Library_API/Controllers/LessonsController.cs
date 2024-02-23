@@ -6,11 +6,14 @@ using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [SwaggerTag("Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt")]
+
     public class LessonsController : ControllerBase
     {
 
@@ -22,6 +25,11 @@ namespace LMS_Library_API.Controllers
             _mapper = mapper;
             _lessonSvc = lessonSvc;
         }
+
+        /// <summary>
+        /// Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào         
+        /// Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt"
+        /// </summary>
 
         [HttpPost]
         public async Task<ActionResult<Logger>> Create(LessonDTO lessonDTO)
@@ -90,7 +98,7 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpDelete("id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Logger>> Delete(int id)
         {
             if (!String.IsNullOrWhiteSpace(id.ToString()))

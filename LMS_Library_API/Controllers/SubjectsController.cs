@@ -72,6 +72,27 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpGet("getAllDoc/{id}")]
+        public async Task<ActionResult<Logger>> GetAllDocument(string id)
+        {
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                var loggerResult = await _subjectSvc.GetAllDocument(id);
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
+            }
+            else
+            {
+                return BadRequest("Hãy điền ID để tìm kiếm đối tượng");
+            }
+        }
+
         [HttpGet("search/{query}")]
         public async Task<ActionResult<Logger>> Search(string query)
         {
@@ -109,7 +130,7 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpDelete("id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Logger>> Delete(string id)
         {
             if (!String.IsNullOrWhiteSpace(id))

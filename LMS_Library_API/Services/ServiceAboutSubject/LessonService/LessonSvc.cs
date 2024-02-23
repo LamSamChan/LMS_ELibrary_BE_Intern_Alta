@@ -77,7 +77,10 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.LessonService
         {
             try
             {
-                var respone = await _context.Lessons.ToListAsync();
+                var respone = await _context.Lessons
+                    .Include(_ => _.TeacherCreated)
+                    .Include(_ => _.Censor)
+                    .ToListAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,

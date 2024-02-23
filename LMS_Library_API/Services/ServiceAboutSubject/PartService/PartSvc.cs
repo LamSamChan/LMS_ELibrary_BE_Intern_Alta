@@ -77,7 +77,10 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.PartService
         {
             try
             {
-                var respone = await _context.Parts.ToListAsync();
+                var respone = await _context.Parts
+                    .Include(_ => _.TeacherCreated)
+                    .Include(_ => _.Censor)
+                    .ToListAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
@@ -132,7 +135,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.PartService
             try
             {
 
-                Part existPart = await _context.Parts.FindAsync(part.Id);
+                Part existPart = await _context.Parts.FirstOrDefaultAsync(_ => _.Id == part.Id);
 
                 if (existPart == null)
                 {

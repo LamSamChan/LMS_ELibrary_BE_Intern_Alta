@@ -1,6 +1,7 @@
 ﻿using LMS_Library_API.Enums;
 using LMS_Library_API.Models.AboutUser;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -20,7 +21,7 @@ namespace LMS_Library_API.Models.Exams
         [StringLength(100, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required]
         public string FileName { get; set; }
-
+        //false: tu luan, true: trac nghiem
         [Required]
         public bool Format { get; set; }
 
@@ -61,9 +62,11 @@ namespace LMS_Library_API.Models.Exams
         public string SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
 
+        [JsonIgnore]
         [InverseProperty("Exam")]
         public virtual ICollection<Question_Exam> Question_Exam { get; set; }
 
+        [JsonIgnore]
         [InverseProperty("Exam")]
         public virtual ICollection<ExamRecentViews> ExamRecentViews { get; set; }
 

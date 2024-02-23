@@ -76,7 +76,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI( s => { s.SwaggerEndpoint("/swagger/v1/swagger.json", "LMS ELibrary API"); });
+    app.UseSwaggerUI(s => { 
+        s.SwaggerEndpoint("/swagger/v1/swagger.json", "LMS ELibrary API");
+    });
 }
 
 app.UseHttpsRedirection();

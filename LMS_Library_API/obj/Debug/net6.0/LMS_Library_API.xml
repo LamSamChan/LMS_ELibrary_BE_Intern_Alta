@@ -29,6 +29,21 @@
             Chỉ áp dụng với đổi tên tài liệu (document) =! ảnh
             </summary>
         </member>
+        <member name="M:LMS_Library_API.Controllers.DocumentsController.Create(LMS_Library_API.ModelsDTO.DocumentDTO)">
+            <summary>
+            false: tai lieu, true: bai giang | Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.LessonsController.Create(LMS_Library_API.ModelsDTO.LessonDTO)">
+            <summary>
+            Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.PartsController.Create(LMS_Library_API.ModelsDTO.PartDTO)">
+            <summary>
+            Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào
+            </summary>
+        </member>
         <member name="M:LMS_Library_API.Controllers.PrivateFilesController.GetByUserId(System.String)">
             <summary>
             Trả về danh sách file theo id của người dùng

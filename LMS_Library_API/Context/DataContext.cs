@@ -135,6 +135,7 @@ namespace LMS_Library_API.Context
 
             modelBuilder.Entity<StudyHistory>()
             .HasKey(sh => new { sh.studentId, sh.documentId });
+
         }
         
     }

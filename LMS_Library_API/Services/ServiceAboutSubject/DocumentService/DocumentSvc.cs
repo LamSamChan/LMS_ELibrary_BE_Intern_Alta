@@ -93,7 +93,6 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.DocumentService
             try
             {
                 var respone = await _context.Documents
-                    .Include(_ => _.Lesson)
                     .Include(_ => _.TeacherCreated)
                     .Include(_ => _.Censor)
                     .ToListAsync();

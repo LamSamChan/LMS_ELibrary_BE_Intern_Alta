@@ -1,15 +1,16 @@
 ﻿using LMS_Library_API.Context;
 using LMS_Library_API.Enums;
 using LMS_Library_API.Models;
+using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.ModelsDTO;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace LMS_Library_API.Services.SubjectService
 {
-    public class SubjectSvc: ISubjectSvc
+    public class SubjectSvc : ISubjectSvc
     {
         private readonly DataContext _context;
+
         public SubjectSvc(DataContext context)
         {
             _context = context;
@@ -21,7 +22,7 @@ namespace LMS_Library_API.Services.SubjectService
             {
                 foreach (var item in await GetCheck())
                 {
-                    if (string.Equals(subject.Id, item.Id,StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(subject.Id, item.Id, StringComparison.OrdinalIgnoreCase))
                     {
                         return new Logger()
                         {
@@ -49,7 +50,6 @@ namespace LMS_Library_API.Services.SubjectService
                 {
                     status = TaskStatus.Faulted,
                     message = ex.Message,
-
                 };
             }
         }
@@ -76,7 +76,6 @@ namespace LMS_Library_API.Services.SubjectService
                     status = TaskStatus.RanToCompletion,
                     message = "Xoá thành công",
                     data = existSubject
-
                 };
             }
             catch (Exception ex)
@@ -96,8 +95,8 @@ namespace LMS_Library_API.Services.SubjectService
                 var respone = await _context.Subjects.Include(_ => _.Parts)
                     .ThenInclude(_ => _.Lessons)
                     .ThenInclude(_ => _.Documents)
+                    .Include(_ => _.User)
                     .ToListAsync();
-
 
                 IEnumerable<GETSubjectDTO> result = respone.Select(_ => new GETSubjectDTO
                 {
@@ -107,13 +106,12 @@ namespace LMS_Library_API.Services.SubjectService
                     Description = _.Description,
                     CountDocument = _.Parts.SelectMany(p => p.Lessons)
                                            .SelectMany(l => l.Documents)
-                                           .Count(),
+                                           .Count(d => d.status == Status.PendingApproval || d.status == Status.Approved),
                     CountDocumentApproved = _.Parts.SelectMany(p => p.Lessons)
                                            .SelectMany(l => l.Documents)
                                            .Count(d => d.status == Status.Approved),
                     Teacher = _.User
                 });
-
 
                 return new Logger()
                 {
@@ -139,6 +137,7 @@ namespace LMS_Library_API.Services.SubjectService
                 var respone = await _context.Subjects.Include(_ => _.Parts)
                     .ThenInclude(_ => _.Lessons)
                     .ThenInclude(_ => _.Documents)
+                    .Include(_ => _.User)
                     .FirstOrDefaultAsync(_ => _.Id == subjectId);
 
                 if (respone == null)
@@ -158,13 +157,12 @@ namespace LMS_Library_API.Services.SubjectService
                     Description = respone.Description,
                     CountDocument = respone.Parts.SelectMany(p => p.Lessons)
                                            .SelectMany(l => l.Documents)
-                                           .Count(),
+                                           .Count(d => d.status == Status.PendingApproval || d.status == Status.Approved),
                     CountDocumentApproved = respone.Parts.SelectMany(p => p.Lessons)
                                            .SelectMany(l => l.Documents)
                                            .Count(d => d.status == Status.Approved),
                     Teacher = respone.User
                 };
-
 
                 return new Logger()
                 {
@@ -203,9 +201,9 @@ namespace LMS_Library_API.Services.SubjectService
                 var respone = await _context.Subjects.Include(_ => _.Parts)
                     .ThenInclude(_ => _.Lessons)
                     .ThenInclude(_ => _.Documents)
+                    .Include(_ => _.User)
                     .Where(_ => _.Name.Contains(query) || _.Id.Contains(query))
                     .ToListAsync();
-
 
                 IEnumerable<GETSubjectDTO> result = respone.Select(_ => new GETSubjectDTO
                 {
@@ -215,13 +213,12 @@ namespace LMS_Library_API.Services.SubjectService
                     Description = _.Description,
                     CountDocument = _.Parts.SelectMany(p => p.Lessons)
                                            .SelectMany(l => l.Documents)
-                                           .Count(),
+                                            .Count(d => d.status == Status.PendingApproval || d.status == Status.Approved),
                     CountDocumentApproved = _.Parts.SelectMany(p => p.Lessons)
                                            .SelectMany(l => l.Documents)
                                            .Count(d => d.status == Status.Approved),
                     Teacher = _.User
                 });
-
 
                 return new Logger()
                 {
@@ -244,7 +241,6 @@ namespace LMS_Library_API.Services.SubjectService
         {
             try
             {
-
                 Subject existSubject = await _context.Subjects.FindAsync(subject.Id);
 
                 if (existSubject == null)
@@ -281,5 +277,45 @@ namespace LMS_Library_API.Services.SubjectService
             }
         }
 
+        public async Task<Logger> GetAllDocument(string subjectId)
+        {
+            try
+            {
+                var documentBySubject =  await _context.Subjects.Where(s => s.Id == subjectId)
+                                                        .SelectMany(subject => subject.Parts)
+                                                        .SelectMany(part => part.Lessons)
+                                                        .SelectMany(lesson => lesson.Documents)
+                                                        .Include(_ => _.TeacherCreated)
+                                                        .ToListAsync();
+
+
+
+                if (documentBySubject == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng"
+                    };
+                }
+                else
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.RanToCompletion,
+                        message = "Thành công",
+                        listData = new List<object>() { documentBySubject }
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
     }
 }
