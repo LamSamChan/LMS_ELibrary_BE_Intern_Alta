@@ -161,7 +161,7 @@ namespace LMS_Library_API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(query))
             {
-                var loggerResult = await _userSvc.Search(query.Trim().ToUpper());
+                var loggerResult = await _userSvc.Search(query.ToUpper());
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);

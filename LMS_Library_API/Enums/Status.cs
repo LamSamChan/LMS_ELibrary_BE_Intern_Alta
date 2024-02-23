@@ -17,5 +17,7 @@ namespace LMS_Library_API.Enums
         RefuseApproval = 3,
         [Display(Name = "Đã huỷ phê duyệt")]
         CancelApproval = 4,
+        [Display(Name = "Lưu nháp")]
+        Draft = 5,
     }
 }

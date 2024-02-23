@@ -13,9 +13,6 @@ namespace LMS_Library_API.ModelsDTO
         [Key] public string Id { get; set; }
 
         [Required]
-        public string FileType { get; set; }
-
-        [Required]
         public string FileName { get; set; }
 
         //false: tu luan, true: trac nghiem
@@ -29,7 +26,7 @@ namespace LMS_Library_API.ModelsDTO
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
         [Required]
-        public BlobContentModel FilePath { get; set; }
+        public string FilePath { get; set; }
 
         [Required]
         public Status Status { get; set; }
@@ -48,5 +45,9 @@ namespace LMS_Library_API.ModelsDTO
 
         [Required]
         public string SubjectId { get; set; }
+
+        [Required]
+        public string DepartmentId { get; set; }
+
     }
 }

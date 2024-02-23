@@ -3,8 +3,10 @@ using LMS_Library_API.Context;
 using LMS_Library_API.Helpers;
 using LMS_Library_API.Helpers.BlobHelperService;
 using LMS_Library_API.Services.DepartmentService;
+using LMS_Library_API.Services.ExamService;
 using LMS_Library_API.Services.RoleAccess.PermissionsService;
 using LMS_Library_API.Services.RoleAccess.RoleService;
+using LMS_Library_API.Services.ServiceAboutExam.QuestionBankService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService;
@@ -64,6 +66,8 @@ builder.Services.AddScoped<ISubjectSvc, SubjectSvc>();
 builder.Services.AddScoped<IPartSvc, PartSvc>();
 builder.Services.AddScoped<ILessonSvc, LessonSvc>();
 builder.Services.AddScoped<IDocumentSvc, DocumentSvc>();
+builder.Services.AddScoped<IExamSvc, ExamSvc>();
+builder.Services.AddScoped<IQuestionBankSvc, QuestionBankSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

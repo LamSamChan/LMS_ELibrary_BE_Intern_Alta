@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LMS_Library_API.Models.Exams;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
@@ -21,5 +22,8 @@ namespace LMS_Library_API.Models
         public virtual ICollection<User>? Users { get; set; }
         [JsonIgnore]    
         public virtual ICollection<Subject>? Subjects { get; set; }
+        [JsonIgnore]
+        public virtual Exam? Exam { get; set; }
+
     }
 }

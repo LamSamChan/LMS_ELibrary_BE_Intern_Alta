@@ -317,5 +317,10 @@ namespace LMS_Library_API.Services.SubjectService
                 };
             }
         }
+
+        public Task<Logger> GetDetail(string subjectId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
