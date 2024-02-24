@@ -13,6 +13,9 @@ namespace LMS_Library_API.ModelsDTO
         [Key] public string Id { get; set; }
 
         [Required]
+        public string FileType { get; set; }
+
+        [Required]
         public string FileName { get; set; }
 
         //false: tu luan, true: trac nghiem

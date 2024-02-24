@@ -1,10 +1,10 @@
 ﻿using LMS_Library_API.Enums;
 using LMS_Library_API.Models.AboutUser;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.Exams
 {
@@ -31,7 +31,7 @@ namespace LMS_Library_API.Models.Exams
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        [Column(TypeName = "varchar")]
+        [Column(TypeName = "varchar(max)")]
         [Required]
         public string FilePath {get; set; }
 

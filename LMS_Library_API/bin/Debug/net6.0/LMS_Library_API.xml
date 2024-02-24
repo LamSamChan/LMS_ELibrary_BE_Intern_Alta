@@ -37,8 +37,9 @@
         </member>
         <member name="M:LMS_Library_API.Controllers.ExamsController.Create(LMS_Library_API.ModelsDTO.ExamDTO)">
             <summary>
-            Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào
-            Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt | 5:Lưu nháp"
+            Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào ||
+            Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt | 5:Lưu nháp" ||
+            Format: false -> tự luận true -> trắc nghiệm
             </summary>
         </member>
         <member name="M:LMS_Library_API.Controllers.LessonsController.Create(LMS_Library_API.ModelsDTO.LessonDTO)">
@@ -56,6 +57,16 @@
         <member name="M:LMS_Library_API.Controllers.PrivateFilesController.GetByUserId(System.String)">
             <summary>
             Trả về danh sách file theo id của người dùng
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.QuestionBanksController.CreateESQuestion(LMS_Library_API.ModelsDTO.QuestionBankES_DTO)">
+            <summary>
+            Format: false -> tự luận | Level: 1 -> dễ, 2 -> trung bình, 3 -> khó
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.QuestionBanksController.CreateMCQuestion(LMS_Library_API.ModelsDTO.QuestionBankMC_DTO)">
+            <summary>
+            Format: true -> trắc nghiệm | Level: 1 -> dễ, 2 -> trung bình, 3 -> khó
             </summary>
         </member>
         <member name="M:LMS_Library_API.Controllers.SystemInfomationController.Create(LMS_Library_API.ModelsDTO.SystemInfomationDTO)">

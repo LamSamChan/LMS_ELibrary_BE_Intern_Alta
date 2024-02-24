@@ -11,7 +11,7 @@ namespace LMS_Library_API.Models.Exams
         [Required]
         public bool Format { get; set; }
 
-        [Column(TypeName ="nvarchar")]
+        [Column(TypeName ="nvarchar(max)")]
         [Required]
         public string Content { get; set; }
 

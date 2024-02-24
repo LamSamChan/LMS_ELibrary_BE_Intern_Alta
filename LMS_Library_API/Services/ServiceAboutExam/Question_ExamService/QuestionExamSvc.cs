@@ -1,32 +1,75 @@
 ﻿using LMS_Library_API.Context;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.Exams;
-using LMS_Library_API.Models.RoleAccess;
+using LMS_Library_API.Services.ServiceAboutExam.QuestionBankService;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
-namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
+namespace LMS_Library_API.Services.ServiceAboutExam.Question_ExamService
 {
-    public class QuestionBankSvc:IQuestionBankSvc
+    public class QuestionExamSvc:IQuestionExamSvc
     {
         private readonly DataContext _context;
 
-        public QuestionBankSvc(DataContext context)
+        public QuestionExamSvc(DataContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
-        public async Task<Logger> Create(QuestionBanks questionBanks)
+        public async Task<Logger> CheckFormat(string examId, int quesionId)
         {
             try
             {
-                _context.QuestionBanks.Add(questionBanks);
+                var examFormat = await _context.Exams.FindAsync(examId);
+                var questionFormat = await _context.QuestionBanks.FindAsync(quesionId);
+
+                if (examFormat == null || questionFormat == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Để thi hoặc câu hỏi không tồn tại",
+                    };
+                }
+
+                if (examFormat.Format == examFormat.Format)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.RanToCompletion,
+                    };
+                }
+                else
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Để thi và câu hỏi không chung hình thức",
+
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
+        public async Task<Logger> Create(Question_Exam questionExam)
+        {
+            try
+            {
+                _context.Question_Exam.Add(questionExam);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thêm thành công",
-                    data = questionBanks
+                    data = questionExam
                 };
             }
             catch (Exception ex)
@@ -40,14 +83,12 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> Delete(int questionBanksId)
+        public async Task<Logger> Delete(string examId, int quesionId)
         {
             try
             {
-                var existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay)
-                    .FirstOrDefaultAsync(_ => _.Id == questionBanksId);
+                var existQuestion = await _context.Question_Exam
+                    .FirstOrDefaultAsync(_ => _.ExamId == examId && _.QuestionId == quesionId);
 
                 if (existQuestion == null)
                 {
@@ -82,12 +123,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
         {
             try
             {
-                var respone = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay)
-                    .Include(_ => _.User)
-                    .Include(_ => _.Subject)
-                    .ToListAsync();
+                var respone = await _context.Question_Exam.ToListAsync();
 
                 return new Logger()
                 {
@@ -106,14 +142,12 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> GetById(int questionBanksId)
+        public async Task<Logger> GetById(string examId, int quesionId)
         {
             try
             {
-                QuestionBanks existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC).Include(_ => _.QB_Answer_Essay)
-                    .Include(_ => _.User).Include(_ => _.Subject)
-                    .FirstOrDefaultAsync(x => x.Id == questionBanksId);
+                var existQuestion = await _context.Question_Exam
+                    .FirstOrDefaultAsync(x => x.ExamId == examId && x.QuestionId == quesionId);
 
                 if (existQuestion == null)
                 {
@@ -141,14 +175,13 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> Update(QuestionBanks questionBanks)
+        public async Task<Logger> Update(Question_Exam questionExam)
         {
             try
             {
 
-                QuestionBanks existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay).FirstOrDefaultAsync(x => x.Id == questionBanks.Id);
+                var existQuestion = await _context.Question_Exam
+                    .FirstOrDefaultAsync(x => x.ExamId == questionExam.ExamId && x.QuestionId == questionExam.QuestionId);
 
                 if (existQuestion == null)
                 {
@@ -159,14 +192,8 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                     };
                 }
 
-                existQuestion.Format = questionBanks.Format;
-                existQuestion.Content = questionBanks.Content;
-                existQuestion.LastUpdated = DateTime.Now;
-                existQuestion.Level = questionBanks.Level;
-                existQuestion.TeacherCreatedId = questionBanks.TeacherCreatedId;
-                existQuestion.SubjectId = questionBanks.SubjectId;
-                existQuestion.QB_Answers_MC = questionBanks.QB_Answers_MC;
-                existQuestion.QB_Answer_Essay = questionBanks.QB_Answer_Essay;
+                existQuestion.ExamId = questionExam.ExamId;
+                existQuestion.QuestionId = questionExam.QuestionId;
 
                 await _context.SaveChangesAsync();
 

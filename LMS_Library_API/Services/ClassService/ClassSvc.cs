@@ -1,32 +1,44 @@
-﻿using LMS_Library_API.Context;
+﻿using Azure;
+using LMS_Library_API.Context;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.Exams;
-using LMS_Library_API.Models.RoleAccess;
+using LMS_Library_API.Services.ServiceAboutExam.QuestionBankService;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
-namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
+namespace LMS_Library_API.Services.ClassService
 {
-    public class QuestionBankSvc:IQuestionBankSvc
+    public class ClassSvc:IClassSvc
     {
         private readonly DataContext _context;
-
-        public QuestionBankSvc(DataContext context)
+        
+        public ClassSvc(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<Logger> Create(QuestionBanks questionBanks)
+        public async Task<Logger> Create(Class classModel)
         {
             try
             {
-                _context.QuestionBanks.Add(questionBanks);
+                foreach (var item in await _context.Classes.ToListAsync())
+                {
+                    if (item.Id == classModel.Id.ToUpper())
+                    {
+                        return new Logger()
+                        {
+                            status = TaskStatus.Faulted,
+                            message = "Mã lớp đã tồn tại"
+                        };
+                    }
+                }
+
+                _context.Classes.Add(classModel);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thêm thành công",
-                    data = questionBanks
+                    data = classModel
                 };
             }
             catch (Exception ex)
@@ -40,16 +52,13 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> Delete(int questionBanksId)
+        public async Task<Logger> Delete(string classId)
         {
             try
             {
-                var existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay)
-                    .FirstOrDefaultAsync(_ => _.Id == questionBanksId);
+                var existClass = await _context.Classes.FindAsync(classId);
 
-                if (existQuestion == null)
+                if (existClass == null)
                 {
                     return new Logger()
                     {
@@ -58,13 +67,13 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                     };
                 }
 
-                _context.Remove(existQuestion);
+                _context.Remove(existClass);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Xoá thành công",
-                    data = existQuestion
+                    data = existClass
 
                 };
             }
@@ -82,12 +91,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
         {
             try
             {
-                var respone = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay)
-                    .Include(_ => _.User)
-                    .Include(_ => _.Subject)
-                    .ToListAsync();
+                var respone = await _context.Classes.ToListAsync();
 
                 return new Logger()
                 {
@@ -106,16 +110,15 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> GetById(int questionBanksId)
+        public async Task<Logger> GetById(string classId)
         {
             try
             {
-                QuestionBanks existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC).Include(_ => _.QB_Answer_Essay)
-                    .Include(_ => _.User).Include(_ => _.Subject)
-                    .FirstOrDefaultAsync(x => x.Id == questionBanksId);
+                Class existClass = await _context.Classes
+                    .Include(_ => _.Students)
+                    .FirstOrDefaultAsync(x =>x.Id == classId.ToUpper());
 
-                if (existQuestion == null)
+                if (existClass == null)
                 {
                     return new Logger()
                     {
@@ -128,7 +131,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = existQuestion
+                    data = existClass
                 };
             }
             catch (Exception ex)
@@ -141,16 +144,47 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> Update(QuestionBanks questionBanks)
+        public async Task<Logger> Search(string query)
+        {
+
+            try
+            {
+                var existListClass = await _context.Classes.Where(_ => _.name.Contains(query) || _.Id.Contains(query)).ToListAsync();
+
+                if (existListClass == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
+                    };
+                }
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    data = existListClass
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
+        public async Task<Logger> Update(Class classModel)
         {
             try
             {
 
-                QuestionBanks existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay).FirstOrDefaultAsync(x => x.Id == questionBanks.Id);
+                Class existClass = await _context.Classes.FirstOrDefaultAsync(x => x.Id == classModel.Id);
 
-                if (existQuestion == null)
+                if (existClass == null)
                 {
                     return new Logger()
                     {
@@ -159,14 +193,8 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                     };
                 }
 
-                existQuestion.Format = questionBanks.Format;
-                existQuestion.Content = questionBanks.Content;
-                existQuestion.LastUpdated = DateTime.Now;
-                existQuestion.Level = questionBanks.Level;
-                existQuestion.TeacherCreatedId = questionBanks.TeacherCreatedId;
-                existQuestion.SubjectId = questionBanks.SubjectId;
-                existQuestion.QB_Answers_MC = questionBanks.QB_Answers_MC;
-                existQuestion.QB_Answer_Essay = questionBanks.QB_Answer_Essay;
+                existClass.name = classModel.name;
+                existClass.totalStudent = classModel.totalStudent;
 
                 await _context.SaveChangesAsync();
 
@@ -174,7 +202,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Cập nhật thành công",
-                    data = existQuestion
+                    data = existClass
                 };
             }
             catch (Exception ex)

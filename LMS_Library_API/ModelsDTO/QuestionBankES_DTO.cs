@@ -4,6 +4,7 @@ using LMS_Library_API.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace LMS_Library_API.ModelsDTO
 {
@@ -12,6 +13,7 @@ namespace LMS_Library_API.ModelsDTO
         [Key] public int Id { get; set; }
 
         [Required]
+        [DefaultValue(false)]
         public bool Format { get; set; }
 
         [Column(TypeName = "nvarchar")]

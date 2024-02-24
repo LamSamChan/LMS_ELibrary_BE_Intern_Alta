@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Services\AuthService\" />
-    <Folder Include="Services\ServiceAboutExam\Question_ExamService\" />
   </ItemGroup>
 
 </Project>

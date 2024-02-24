@@ -1,32 +1,44 @@
-﻿using LMS_Library_API.Context;
+﻿using Azure;
+using LMS_Library_API.Context;
 using LMS_Library_API.Models;
+using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.Exams;
-using LMS_Library_API.Models.RoleAccess;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
-namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
+namespace LMS_Library_API.Services.ServiceAboutUser.ExamRecentViewsService
 {
-    public class QuestionBankSvc:IQuestionBankSvc
+    public class ExamRecentViewsSvc:IExamRecentViewsSvc
     {
         private readonly DataContext _context;
 
-        public QuestionBankSvc(DataContext context)
+        public ExamRecentViewsSvc(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<Logger> Create(QuestionBanks questionBanks)
+        public async Task<Logger> Create(ExamRecentViews examRecentViews)
         {
             try
             {
-                _context.QuestionBanks.Add(questionBanks);
+                var countListByUser = await _context.ExamRecentViews.Where(_ => _.UserId == examRecentViews.UserId).ToListAsync();
+
+                if (countListByUser.Count == 10)
+                {
+                    var deleteResult = await DeleteAtTen(countListByUser);
+
+                    if (deleteResult.status == TaskStatus.Faulted)
+                    {
+                        return deleteResult;
+                    }
+                }
+
+                _context.ExamRecentViews.Add(examRecentViews);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thêm thành công",
-                    data = questionBanks
+                    data = examRecentViews
                 };
             }
             catch (Exception ex)
@@ -40,16 +52,13 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> Delete(int questionBanksId)
+        private async Task<Logger> DeleteAtTen(List<ExamRecentViews> examRecentViews)
         {
             try
             {
-                var existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay)
-                    .FirstOrDefaultAsync(_ => _.Id == questionBanksId);
+                var existView = examRecentViews[9];
 
-                if (existQuestion == null)
+                if (existView == null)
                 {
                     return new Logger()
                     {
@@ -58,13 +67,13 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                     };
                 }
 
-                _context.Remove(existQuestion);
+                _context.Remove(existView);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Xoá thành công",
-                    data = existQuestion
+                    data = existView
 
                 };
             }
@@ -82,12 +91,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
         {
             try
             {
-                var respone = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay)
-                    .Include(_ => _.User)
-                    .Include(_ => _.Subject)
-                    .ToListAsync();
+                var respone = await _context.ExamRecentViews.ToListAsync();
 
                 return new Logger()
                 {
@@ -106,16 +110,16 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> GetById(int questionBanksId)
+        public async Task<Logger> GetById(string userId, string examId)
         {
             try
             {
-                QuestionBanks existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC).Include(_ => _.QB_Answer_Essay)
-                    .Include(_ => _.User).Include(_ => _.Subject)
-                    .FirstOrDefaultAsync(x => x.Id == questionBanksId);
+                var existView = await _context.ExamRecentViews
+                    .Include(_ => _.User)
+                    .Include(_ => _.Exam)
+                    .FirstOrDefaultAsync(x => x.ExamId == examId && x.UserId == Guid.Parse(userId));
 
-                if (existQuestion == null)
+                if (existView == null)
                 {
                     return new Logger()
                     {
@@ -128,7 +132,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = existQuestion
+                    data = existView
                 };
             }
             catch (Exception ex)
@@ -141,40 +145,28 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             }
         }
 
-        public async Task<Logger> Update(QuestionBanks questionBanks)
+        public async Task<Logger> GetByUserId(string userId)
         {
             try
             {
+                var existView = await _context.ExamRecentViews
+                    .Include(_ => _.Exam)
+                    .FirstOrDefaultAsync(x => x.UserId == Guid.Parse(userId));
 
-                QuestionBanks existQuestion = await _context.QuestionBanks
-                    .Include(_ => _.QB_Answers_MC)
-                    .Include(_ => _.QB_Answer_Essay).FirstOrDefaultAsync(x => x.Id == questionBanks.Id);
-
-                if (existQuestion == null)
+                if (existView == null)
                 {
                     return new Logger()
                     {
                         status = TaskStatus.Faulted,
-                        message = "Không tìm thấy đối tượng cần cập nhật"
+                        message = "Không tìm thấy đối tượng cần tìm"
                     };
                 }
-
-                existQuestion.Format = questionBanks.Format;
-                existQuestion.Content = questionBanks.Content;
-                existQuestion.LastUpdated = DateTime.Now;
-                existQuestion.Level = questionBanks.Level;
-                existQuestion.TeacherCreatedId = questionBanks.TeacherCreatedId;
-                existQuestion.SubjectId = questionBanks.SubjectId;
-                existQuestion.QB_Answers_MC = questionBanks.QB_Answers_MC;
-                existQuestion.QB_Answer_Essay = questionBanks.QB_Answer_Essay;
-
-                await _context.SaveChangesAsync();
 
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
-                    message = "Cập nhật thành công",
-                    data = existQuestion
+                    message = "Thành công",
+                    data = existView
                 };
             }
             catch (Exception ex)

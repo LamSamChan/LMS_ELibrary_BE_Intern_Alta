@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using LMS_Library_API.Models;
-using LMS_Library_API.Models.AboutSubject;
+using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.Exams;
+using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
-using LMS_Library_API.Services.ExamService;
-using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
+using LMS_Library_API.Services.ClassService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,29 +12,23 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExamsController : ControllerBase
+    public class ClassController : ControllerBase
     {
-        private readonly IExamSvc _examSvc;
+        private readonly IClassSvc _classSvc;
         private readonly IMapper _mapper;
 
-        public ExamsController(IExamSvc examSvc, IMapper mapper)
+        public ClassController(IClassSvc classSvc, IMapper mapper)
         {
+            _classSvc = classSvc;
             _mapper = mapper;
-            _examSvc = examSvc;
         }
 
-        /// <summary>
-        /// Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào ||
-        /// Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt | 5:Lưu nháp" ||
-        /// Format: false -> tự luận true -> trắc nghiệm
-        /// </summary>
-
         [HttpPost]
-        public async Task<ActionResult<Logger>> Create(ExamDTO examDTO)
+        public async Task<ActionResult<Logger>> Create(ClassDTO classDTO)
         {
-            var exam = _mapper.Map<Exam>(examDTO);
-
-            var loggerResult = await _examSvc.Create(exam);
+            var newClass = _mapper.Map<Class>(classDTO);
+            newClass.totalStudent = 0;
+            var loggerResult = await _classSvc.Create(newClass);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -48,7 +42,7 @@ namespace LMS_Library_API.Controllers
         [HttpGet]
         public async Task<ActionResult<Logger>> GetAll()
         {
-            var loggerResult = await _examSvc.GetAll();
+            var loggerResult = await _classSvc.GetAll();
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -64,7 +58,8 @@ namespace LMS_Library_API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
-                var loggerResult = await _examSvc.GetById(id);
+                var loggerResult = await _classSvc.GetById(id.ToUpper());
+
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);
@@ -81,11 +76,12 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Logger>> Update(ExamDTO examDTO)
+        public async Task<ActionResult<Logger>> Update(ClassDTO classDTO)
         {
-            var exam = _mapper.Map<Exam>(examDTO);
 
-            var loggerResult = await _examSvc.Update(exam);
+            var dataClass = _mapper.Map<Class>(classDTO);
+
+            var loggerResult = await _classSvc.Update(dataClass);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);
@@ -96,12 +92,34 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpGet("search/{query}")]
+        public async Task<ActionResult<Logger>> Search(string query)
+        {
+            if (!String.IsNullOrWhiteSpace(query))
+            {
+                var loggerResult = await _classSvc.Search(query);
+
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
+            }
+            else
+            {
+                return BadRequest("Hãy điền nội dung để tìm kiếm đối tượng");
+            }
+        }
+
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Logger>> Delete(string id)
+        public async Task<ActionResult<Role>> Detele(string id)
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
-                var loggerResult = await _examSvc.Delete(id);
+                var loggerResult = await _classSvc.Delete(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);
@@ -114,27 +132,6 @@ namespace LMS_Library_API.Controllers
             else
             {
                 return BadRequest("Hãy điền ID để xoá đối tượng");
-            }
-        }
-
-        [HttpGet("search/{query}")]
-        public async Task<ActionResult<Logger>> Search(string query)
-        {
-            if (!String.IsNullOrWhiteSpace(query))
-            {
-                var loggerResult = await _examSvc.Search(query);
-                if (loggerResult.status == TaskStatus.RanToCompletion)
-                {
-                    return Ok(loggerResult);
-                }
-                else
-                {
-                    return BadRequest(loggerResult);
-                }
-            }
-            else
-            {
-                return BadRequest("Hãy điền nội dung tìm kiếm");
             }
         }
     }

@@ -2,10 +2,12 @@ using Azure.Storage.Blobs;
 using LMS_Library_API.Context;
 using LMS_Library_API.Helpers;
 using LMS_Library_API.Helpers.BlobHelperService;
+using LMS_Library_API.Services.ClassService;
 using LMS_Library_API.Services.DepartmentService;
 using LMS_Library_API.Services.ExamService;
 using LMS_Library_API.Services.RoleAccess.PermissionsService;
 using LMS_Library_API.Services.RoleAccess.RoleService;
+using LMS_Library_API.Services.ServiceAboutExam.Question_ExamService;
 using LMS_Library_API.Services.ServiceAboutExam.QuestionBankService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationService;
@@ -13,9 +15,11 @@ using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingServi
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
+using LMS_Library_API.Services.ServiceAboutUser.ExamRecentViewsService;
 using LMS_Library_API.Services.ServiceAboutUser.HelpService;
 using LMS_Library_API.Services.ServiceAboutUser.PrivateFileService;
 using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
+using LMS_Library_API.Services.StudentService;
 using LMS_Library_API.Services.SubjectService;
 using LMS_Library_API.Services.SystemInfomationService;
 using LMS_Library_API.Services.UserService;
@@ -68,6 +72,10 @@ builder.Services.AddScoped<ILessonSvc, LessonSvc>();
 builder.Services.AddScoped<IDocumentSvc, DocumentSvc>();
 builder.Services.AddScoped<IExamSvc, ExamSvc>();
 builder.Services.AddScoped<IQuestionBankSvc, QuestionBankSvc>();
+builder.Services.AddScoped<IQuestionExamSvc, QuestionExamSvc>();
+builder.Services.AddScoped<IExamRecentViewsSvc, ExamRecentViewsSvc>();
+builder.Services.AddScoped<IClassSvc, ClassSvc>();
+builder.Services.AddScoped<IStudentSvc, StudentSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

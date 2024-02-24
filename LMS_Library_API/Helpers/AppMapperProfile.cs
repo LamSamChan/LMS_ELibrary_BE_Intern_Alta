@@ -32,6 +32,10 @@ namespace LMS_Library_API.Helpers
             CreateMap<QuestionBankMC_DTO, QuestionBanks>();
             CreateMap<QB_Answer_ES_DTO, QB_Answer_Essay>();
             CreateMap<QB_Answer_MC_DTO, QB_Answer_MC>();
+            CreateMap<Question_ExamDTO, Question_Exam>();
+            CreateMap<ExamRecentViewDTO, ExamRecentViews>();
+            CreateMap<ClassDTO, Class>();
+            CreateMap<StudentDTO, Student>();
         }
     }
 }

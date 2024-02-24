@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.Exams
 {
@@ -18,6 +19,7 @@ namespace LMS_Library_API.Models.Exams
         //navigation property
         [ForeignKey("QuestionBanks")]
         public int QuestionId { get; set; }
+        [JsonIgnore]
         public virtual QuestionBanks QuestionBanks { get; set; }
     }
 }
