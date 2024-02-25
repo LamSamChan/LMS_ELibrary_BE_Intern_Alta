@@ -12,6 +12,7 @@ using LMS_Library_API.Services.ServiceAboutExam.QuestionBankService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService;
+using LMS_Library_API.Services.ServiceAboutSubject.CustomInfoOfSubjectService;
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
@@ -76,6 +77,7 @@ builder.Services.AddScoped<IQuestionExamSvc, QuestionExamSvc>();
 builder.Services.AddScoped<IExamRecentViewsSvc, ExamRecentViewsSvc>();
 builder.Services.AddScoped<IClassSvc, ClassSvc>();
 builder.Services.AddScoped<IStudentSvc, StudentSvc>();
+builder.Services.AddScoped<ICustomInfoOfSubjectSvc, CustomInfoOfSubjectSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

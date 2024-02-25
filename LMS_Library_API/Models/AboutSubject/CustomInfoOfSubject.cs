@@ -1,6 +1,7 @@
 ﻿using LMS_Library_API.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -23,6 +24,7 @@ namespace LMS_Library_API.Models.AboutSubject
         //navigation property
         [ForeignKey("Subject")]
         public string subjectId { get; set; }
+        [JsonIgnore]
         public virtual Subject Subject { get; set; }
     } 
 }

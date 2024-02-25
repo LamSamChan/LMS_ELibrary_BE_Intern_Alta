@@ -36,6 +36,7 @@ namespace LMS_Library_API.Helpers
             CreateMap<ExamRecentViewDTO, ExamRecentViews>();
             CreateMap<ClassDTO, Class>();
             CreateMap<StudentDTO, Student>();
+            CreateMap<CustomInfoOfSubjectDTO, CustomInfoOfSubject>();
         }
     }
 }

@@ -16,6 +16,13 @@ namespace LMS_Library_API.Services.ClassService
             _context = context;
         }
 
+        public async Task<int> CountStudentInClass(string classId)
+        {
+            var studentList = await _context.Students.Where(s => s.classId.ToLower() == classId.ToLower()).ToListAsync();
+
+            return studentList.Count();
+        }
+
         public async Task<Logger> Create(Class classModel)
         {
             try

@@ -2,6 +2,7 @@
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.ModelsDTO;
+using LMS_Library_API.Services.ClassService;
 using LMS_Library_API.Services.SubjectService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,14 @@ namespace LMS_Library_API.Controllers
     public class SubjectsController : ControllerBase
     {
         private readonly ISubjectSvc _subjectSvc;
+        private readonly IClassSvc _classSvc;
         private readonly IMapper _mapper;
 
-        public SubjectsController(ISubjectSvc subjectSvc, IMapper mapper)
+        public SubjectsController(ISubjectSvc subjectSvc,IClassSvc classSvc ,IMapper mapper)
         {
             _mapper = mapper;
             _subjectSvc = subjectSvc;
+            _classSvc = classSvc;
         }
 
         [HttpPost]

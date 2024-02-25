@@ -69,6 +69,11 @@
             Format: true -> trắc nghiệm | Level: 1 -> dễ, 2 -> trung bình, 3 -> khó
             </summary>
         </member>
+        <member name="M:LMS_Library_API.Controllers.StudentsController.Create(LMS_Library_API.ModelsDTO.StudentDTO)">
+            <summary>
+            Nếu khi tạo người dùng mới mà không có avartar thì gán cho trường FilePath và FileName trong đổi tượng Avartar là null
+            </summary>
+        </member>
         <member name="M:LMS_Library_API.Controllers.SystemInfomationController.Create(LMS_Library_API.ModelsDTO.SystemInfomationDTO)">
             <summary>
             Nếu khi tạo dữ liệu mới mà không có avartar thì gán cho trường FilePath và FileName trong đổi tượng SchoolLogo là null

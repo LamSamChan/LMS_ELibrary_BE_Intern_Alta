@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-02-24T18:08:57.673Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="qucJNpM-690kdpgpvgw0" version="23.0.2" type="device" pages="3">
+<mxfile host="Electron" modified="2024-02-25T11:28:43.426Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="A7ryUnxcpvzCBiMkK5mb" version="23.0.2" type="device" pages="3">
   <diagram name="Page-1" id="wIqU8FdTsNSahX9Sebv4">
     <mxGraphModel dx="3118" dy="1968" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -242,7 +242,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="hpXJ1rF8rbbTD5kr4emE" name="Page-2">
-    <mxGraphModel dx="3368" dy="2121" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3050" dy="1927" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2463,7 +2463,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="C0kLyXxzm7-c1uhFLFQS-80" value="CustomInfoOfSubject" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+        <mxCell id="C0kLyXxzm7-c1uhFLFQS-80" value="CustomInfoOfSubject" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" parent="1" vertex="1">
           <mxGeometry x="-190" y="775" width="230" height="180" as="geometry" />
         </mxCell>
         <mxCell id="C0kLyXxzm7-c1uhFLFQS-81" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="C0kLyXxzm7-c1uhFLFQS-80" vertex="1">
@@ -2869,7 +2869,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xOYGt9C01pTHgOPHdNXc-15" value="StudentQnALikes" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+        <mxCell id="xOYGt9C01pTHgOPHdNXc-15" value="StudentQnALikes" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" parent="1" vertex="1">
           <mxGeometry x="-550" y="950" width="229.99999999999955" height="150" as="geometry" />
         </mxCell>
         <mxCell id="xOYGt9C01pTHgOPHdNXc-16" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="xOYGt9C01pTHgOPHdNXc-15" vertex="1">
@@ -3604,11 +3604,14 @@
         <mxCell id="HaIZdAGeQLqBP634_1A5-1" value="&lt;b&gt;23/02/2024&lt;br&gt;&lt;/b&gt;Bổ sung service get tất cả document by id subject [DONE]" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="570" y="140" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="s4qWeNGD34tK9Pgz__Wv-1" value="&lt;b&gt;23/02/2024&lt;br&gt;&lt;/b&gt;Subject thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Tổng quan môn học, danh sách chủ đề ( part kèm theo lesson + doc), Hỏi đáp và thông báo môn học" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+        <mxCell id="s4qWeNGD34tK9Pgz__Wv-1" value="&lt;b&gt;23/02/2024&lt;br&gt;&lt;/b&gt;Subject thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Tổng quan môn học (có custom title), danh sách chủ đề ( part kèm theo lesson + doc), Hỏi đáp và thông báo môn học" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="260" y="610" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="0_G22kiVlB0XJtuVeaHJ-1" value="&lt;b&gt;24/02/2024&lt;br&gt;&lt;/b&gt;Exam thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Thông tin đề thi, list câu hỏi. Nếu là dề trắc nghiệm phải có list đám án đúng của mỗi đi kèm&lt;br&gt;&lt;br&gt;&lt;br&gt;Khi add student vào 1 lớp thì cập nhật lại student count của lớp đó" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+        <mxCell id="0_G22kiVlB0XJtuVeaHJ-1" value="&lt;b&gt;24/02/2024&lt;br&gt;&lt;/b&gt;Exam thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Thông tin đề thi, list câu hỏi. Nếu là dề trắc nghiệm phải có list đám án đúng của mỗi đi kèm&lt;br&gt;&lt;br&gt;&lt;br&gt;Khi add student vào 1 lớp thì cập nhật lại student count của lớp đó [DONE]" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="20" y="610" width="210" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="hPTGbc5Xw2RdNG6nPS3K-1" value="&lt;b&gt;25/02/2024&lt;br&gt;&lt;/b&gt;khi nào xong controller bình luậnt kiểm tra xem GetByID cua subject có get các bình luận của bài học ko, nếu ko thì bổ sung trong service" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="500" y="610" width="210" height="210" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

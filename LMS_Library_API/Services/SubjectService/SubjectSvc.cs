@@ -137,7 +137,7 @@ namespace LMS_Library_API.Services.SubjectService
                 var respone = await _context.Subjects.Include(_ => _.Parts)
                     .ThenInclude(_ => _.Lessons)
                     .ThenInclude(_ => _.Documents)
-                    .Include(_ => _.User)
+                    .Include(_ => _.CustomInfoOfSubjects)
                     .FirstOrDefaultAsync(_ => _.Id == subjectId);
 
                 if (respone == null)
@@ -149,26 +149,11 @@ namespace LMS_Library_API.Services.SubjectService
                     };
                 }
 
-                GETSubjectDTO result = new GETSubjectDTO
-                {
-                    Id = respone.Id,
-                    Name = respone.Name,
-                    SubmissionDate = respone.SubmissionDate,
-                    Description = respone.Description,
-                    CountDocument = respone.Parts.SelectMany(p => p.Lessons)
-                                           .SelectMany(l => l.Documents)
-                                           .Count(d => d.status == Status.PendingApproval || d.status == Status.Approved),
-                    CountDocumentApproved = respone.Parts.SelectMany(p => p.Lessons)
-                                           .SelectMany(l => l.Documents)
-                                           .Count(d => d.status == Status.Approved),
-                    Teacher = respone.User
-                };
-
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = result
+                    data = respone
                 };
             }
             catch (Exception ex)

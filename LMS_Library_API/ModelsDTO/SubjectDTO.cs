@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using LMS_Library_API.Models.AboutSubject;
 
 namespace LMS_Library_API.ModelsDTO
 {
@@ -24,5 +25,8 @@ namespace LMS_Library_API.ModelsDTO
         public string DepartmentId { get; set; }
 
         public Guid TeacherId { get; set; }
+
+        public virtual ICollection<CustomInfoOfSubjectDTO> CustomInfoOfSubjects { get; set; }
+
     }
 }
