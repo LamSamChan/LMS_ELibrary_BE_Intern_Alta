@@ -129,7 +129,7 @@ namespace LMS_Library_API.Context
             .HasKey(tc => new { tc.classId, tc.teacherId });
 
             modelBuilder.Entity<StudyTime>()
-            .HasKey(st => new { st.studentId, st.subjectId });
+            .HasKey(st => new { st.studentId, st.subjectId, st.studyDate });
 
             modelBuilder.Entity<StudyHistory>()
             .HasKey(sh => new { sh.studentId, sh.documentId });

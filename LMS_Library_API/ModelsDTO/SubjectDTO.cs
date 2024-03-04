@@ -26,7 +26,7 @@ namespace LMS_Library_API.ModelsDTO
 
         public Guid TeacherId { get; set; }
 
-        public virtual ICollection<CustomInfoOfSubjectDTO> CustomInfoOfSubjects { get; set; }
+        public virtual ICollection<CustomInfoOfSubjectDTO>? CustomInfoOfSubjects { get; set; }
 
     }
 }

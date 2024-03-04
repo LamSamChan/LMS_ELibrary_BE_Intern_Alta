@@ -34,7 +34,7 @@ namespace LMS_Library_API.Models
         [ForeignKey("User")]
         public Guid TeacherId { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<CustomInfoOfSubject> CustomInfoOfSubjects { get; set; }
+        public virtual ICollection<CustomInfoOfSubject>? CustomInfoOfSubjects { get; set; }
         public virtual ICollection<Part> Parts { get; set; }
 
         [JsonIgnore]

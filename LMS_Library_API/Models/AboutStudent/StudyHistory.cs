@@ -16,5 +16,8 @@ namespace LMS_Library_API.Models.AboutStudent
 
         [Required]
         public int watchMinutes { get; set; }
+
+        [Required]
+        public DateTime dateUpdate { get; set; } = DateTime.Now;
     }
 }

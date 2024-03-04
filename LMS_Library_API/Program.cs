@@ -13,6 +13,10 @@ using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesServ
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService;
 using LMS_Library_API.Services.ServiceAboutNotification.Stu_NotificationFeatuesService;
+using LMS_Library_API.Services.ServiceAboutStudent.StudentSubjectService;
+using LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService;
+using LMS_Library_API.Services.ServiceAboutStudent.StudyTimeService;
+using LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService;
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
@@ -78,6 +82,10 @@ builder.Services.AddScoped<IExamRecentViewsSvc, ExamRecentViewsSvc>();
 builder.Services.AddScoped<IClassSvc, ClassSvc>();
 builder.Services.AddScoped<IStudentSvc, StudentSvc>();
 builder.Services.AddScoped<IStuNotificationFeatuesSvc, StuNotificationFeatuesSvc>();
+builder.Services.AddScoped<IStudyTimeSvc, StudyTimeSvc>();
+builder.Services.AddScoped<IStudyHistorySvc, StudyHistorySvc>();
+builder.Services.AddScoped<IClassSubjectSvc, ClassSubjectSvc>();
+builder.Services.AddScoped<IStudentSubjectSvc, StudentSubjectSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

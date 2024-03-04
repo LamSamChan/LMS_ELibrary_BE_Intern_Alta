@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LMS_Library_API.Models;
+using LMS_Library_API.Models.AboutStudent;
 using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.Exams;
@@ -39,6 +40,10 @@ namespace LMS_Library_API.Helpers
             CreateMap<StudentDTO, Student>();
             CreateMap<CustomInfoOfSubjectDTO, CustomInfoOfSubject>();
             CreateMap<StuNotificationSettingDTO, StudentNotificationSetting>();
+            CreateMap<StudyTimeDTO, StudyTime>();
+            CreateMap<StudyHistoryDTO, StudyHistory>();
+            CreateMap<ClassSubjectDTO, ClassSubject>();
+            CreateMap<StudentSubjectDTO, StudentSubject>();
         }
     }
 }
