@@ -75,7 +75,7 @@ namespace LMS_Library_API.Services.ServiceAboutNotification.NotificationService
         {
             try
             {
-                var respone = await _context.Notifications.Include(_ => _.Sender)
+                var respone = await _context.Notifications
                     .ToListAsync();
 
                 return new Logger()
@@ -129,12 +129,12 @@ namespace LMS_Library_API.Services.ServiceAboutNotification.NotificationService
             }
         }
 
-        public async Task<Logger> GetByRecipientId(string recipientId)
+        public async Task<Logger> GetByTeacherRecipientId(string userId)
         {
             try
             {
-                var listNotification = await _context.Notifications.Where(_ => _.RecipientId == Guid.Parse(recipientId))
-                    
+                var listNotification = await _context.Notifications.Where(_ => _.RecipientId == Guid.Parse(userId))
+                    .Include(_ => _.StudentSender)
                     .Include(_ => _.Sender)
                     .ToListAsync();
 
@@ -164,12 +164,82 @@ namespace LMS_Library_API.Services.ServiceAboutNotification.NotificationService
             }
         }
 
-        public async Task<Logger> Search(string userId, string query)
+        public async Task<Logger> SearchTeacherRecipient(string userId, string query)
         {
             try
             {
                 var listNotification = await _context.Notifications.Where(_ => _.RecipientId == Guid.Parse(userId) && _.Content.Contains(query))
-                    
+                    .Include(_ => _.StudentSender)
+                    .Include(_ => _.Sender)
+                    .ToListAsync();
+
+                if (listNotification == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
+                    };
+                }
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    listData = listNotification
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
+        public async Task<Logger> GetByStudentRecipientId(string studentId)
+        {
+            try
+            {
+                var listNotification = await _context.Notifications.Where(_ => _.StudentRecipientId == Guid.Parse(studentId))
+                    .Include(_ => _.StudentSender)
+                    .Include(_ => _.Sender)
+                    .ToListAsync();
+
+                if (listNotification == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
+                    };
+                }
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    listData = listNotification
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
+        public async Task<Logger> SearchStudentRecipient(string studentId, string query)
+        {
+            try
+            {
+                var listNotification = await _context.Notifications.Where(_ => _.StudentRecipientId == Guid.Parse(studentId) && _.Content.Contains(query))
+                    .Include(_ => _.StudentSender)
                     .Include(_ => _.Sender)
                     .ToListAsync();
 

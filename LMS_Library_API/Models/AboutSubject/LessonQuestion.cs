@@ -30,13 +30,13 @@ namespace LMS_Library_API.Models.AboutSubject
 
         [ForeignKey("User")]
         [AllowNull]
-        public Guid teacherId { get; set; }
-        public virtual User User { get; set; }
+        public Guid? teacherId { get; set; }
+        public virtual User? User { get; set; }
 
         [ForeignKey("Student")]
         [AllowNull]
-        public Guid studentId { get; set; }
-        public virtual Student Student { get; set; }
+        public Guid? studentId { get; set; }
+        public virtual Student? Student { get; set; }
 
         public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
 

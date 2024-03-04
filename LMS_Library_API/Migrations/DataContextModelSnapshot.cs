@@ -314,10 +314,10 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("likesCounter")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("studentId")
+                    b.Property<Guid?>("studentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("teacherId")
+                    b.Property<Guid?>("teacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -356,10 +356,10 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("likesCounter")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("studentId")
+                    b.Property<Guid?>("studentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("teacherId")
+                    b.Property<Guid?>("teacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -808,10 +808,19 @@ namespace LMS_Library_API.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("RecipientId")
+                    b.Property<bool>("IsTeacherSend")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("RecipientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SenderId")
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StudentRecipientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StudentSenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("TimeCounter")
@@ -822,6 +831,10 @@ namespace LMS_Library_API.Migrations
                     b.HasIndex("RecipientId");
 
                     b.HasIndex("SenderId");
+
+                    b.HasIndex("StudentRecipientId");
+
+                    b.HasIndex("StudentSenderId");
 
                     b.ToTable("Notification", (string)null);
                 });
@@ -939,7 +952,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Avartar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -978,35 +990,6 @@ namespace LMS_Library_API.Migrations
                     b.ToTable("Student", (string)null);
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.StudentNotification.StudentNotification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("TimeCounter")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("studentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("studentId");
-
-                    b.ToTable("StudentNotification", (string)null);
-                });
-
             modelBuilder.Entity("LMS_Library_API.Models.StudentNotification.StudentNotificationFeatures", b =>
                 {
                     b.Property<int>("Id")
@@ -1015,9 +998,12 @@ namespace LMS_Library_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("featureType")
+                    b.Property<string>("FeatureType")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1032,15 +1018,12 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("featuresId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentNotificationFeaturesId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("receiveNotification")
                         .HasColumnType("bit");
 
                     b.HasKey("studentId", "featuresId");
 
-                    b.HasIndex("StudentNotificationFeaturesId");
+                    b.HasIndex("featuresId");
 
                     b.ToTable("StudentNotificationSetting", (string)null);
                 });
@@ -1163,7 +1146,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Avartar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -1410,15 +1392,11 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonAnswers")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonAnswers")
-                        .HasForeignKey("teacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("teacherId");
 
                     b.Navigation("LessonQuestion");
 
@@ -1437,15 +1415,11 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonQuestion")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonQuestions")
-                        .HasForeignKey("teacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("teacherId");
 
                     b.Navigation("Lesson");
 
@@ -1697,19 +1671,27 @@ namespace LMS_Library_API.Migrations
                 {
                     b.HasOne("LMS_Library_API.Models.User", "Recipient")
                         .WithMany("Recipients")
-                        .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipientId");
 
                     b.HasOne("LMS_Library_API.Models.User", "Sender")
                         .WithMany("Senders")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SenderId");
+
+                    b.HasOne("LMS_Library_API.Models.Student", "StudentRecipient")
+                        .WithMany("NotificationRecipients")
+                        .HasForeignKey("StudentRecipientId");
+
+                    b.HasOne("LMS_Library_API.Models.Student", "StudentSender")
+                        .WithMany("NotificationSenders")
+                        .HasForeignKey("StudentSenderId");
 
                     b.Navigation("Recipient");
 
                     b.Navigation("Sender");
+
+                    b.Navigation("StudentRecipient");
+
+                    b.Navigation("StudentSender");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.Notification.NotificationSetting", b =>
@@ -1761,22 +1743,11 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.StudentNotification.StudentNotification", b =>
-                {
-                    b.HasOne("LMS_Library_API.Models.Student", "Student")
-                        .WithMany("StudentNotifications")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("LMS_Library_API.Models.StudentNotification.StudentNotificationSetting", b =>
                 {
                     b.HasOne("LMS_Library_API.Models.StudentNotification.StudentNotificationFeatures", "StudentNotificationFeatures")
                         .WithMany("StudentNotificationSetting")
-                        .HasForeignKey("StudentNotificationFeaturesId")
+                        .HasForeignKey("featuresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1937,9 +1908,11 @@ namespace LMS_Library_API.Migrations
 
                     b.Navigation("NotificationClassStudents");
 
-                    b.Navigation("StudentNotificationSetting");
+                    b.Navigation("NotificationRecipients");
 
-                    b.Navigation("StudentNotifications");
+                    b.Navigation("NotificationSenders");
+
+                    b.Navigation("StudentNotificationSetting");
 
                     b.Navigation("StudentQnALikes")
                         .IsRequired();

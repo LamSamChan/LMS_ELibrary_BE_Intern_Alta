@@ -9,8 +9,10 @@ namespace LMS_Library_API.Services.ServiceAboutNotification.NotificationService
         Task<Logger> Create(Notification notification);
         Task<Logger> GetAll();
         Task<Logger> GetById(int notificationId);
-        Task<Logger> GetByRecipientId(string userId);
-        Task<Logger> Search(string userId, string query);
+        Task<Logger> GetByTeacherRecipientId(string userId);
+        Task<Logger> GetByStudentRecipientId(string studentId);
+        Task<Logger> SearchTeacherRecipient(string userId, string query);
+        Task<Logger> SearchStudentRecipient(string userId, string query);
         Task<Logger> Delete(int notificationId);
         Task<Logger> Update(Notification notification);
     }

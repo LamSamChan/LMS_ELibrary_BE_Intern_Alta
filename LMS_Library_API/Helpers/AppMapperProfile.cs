@@ -5,6 +5,7 @@ using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.RoleAccess;
+using LMS_Library_API.Models.StudentNotification;
 using LMS_Library_API.ModelsDTO;
 using System.Net;
 
@@ -37,6 +38,7 @@ namespace LMS_Library_API.Helpers
             CreateMap<ClassDTO, Class>();
             CreateMap<StudentDTO, Student>();
             CreateMap<CustomInfoOfSubjectDTO, CustomInfoOfSubject>();
+            CreateMap<StuNotificationSettingDTO, StudentNotificationSetting>();
         }
     }
 }

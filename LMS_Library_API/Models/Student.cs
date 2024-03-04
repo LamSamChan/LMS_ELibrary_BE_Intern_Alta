@@ -5,6 +5,7 @@ using LMS_Library_API.Models.StudentNotification;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models
 {
@@ -46,7 +47,7 @@ namespace LMS_Library_API.Models
         public Gender Gender { get; set; }
 
         [AllowNull]
-        public string Avartar { get; set; }
+        public string? Avartar { get; set; }
         public string Password { get; set; }
 
         //navigation property
@@ -66,8 +67,6 @@ namespace LMS_Library_API.Models
         [InverseProperty("Student")]
         public virtual ICollection<StudentNotificationSetting> StudentNotificationSetting { get; set; }
 
-        public virtual ICollection<StudentNotification.StudentNotification> StudentNotifications { get; set; }
-
         [InverseProperty("Student")]
         public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
 
@@ -76,6 +75,14 @@ namespace LMS_Library_API.Models
 
         [InverseProperty("Student")]
         public virtual ICollection<StudyHistory> StudyHistories { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("StudentRecipient")]
+        public virtual ICollection<Notification.Notification> NotificationRecipients { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("StudentSender")]
+        public virtual ICollection<Notification.Notification> NotificationSenders { get; set; }
 
 
     }

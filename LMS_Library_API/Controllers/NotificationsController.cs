@@ -77,7 +77,7 @@ namespace LMS_Library_API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
-                var loggerResult = await _notificationSvc.GetByRecipientId(id);
+                var loggerResult = await _notificationSvc.GetByTeacherRecipientId(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);
@@ -93,12 +93,54 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpGet("search/{userId}/{query}")]
+        [HttpGet("searchByTeacher/{userId}/{query}")]
         public async Task<ActionResult<Logger>> Search(string userId, string query)
         {
             if (!String.IsNullOrWhiteSpace(query))
             {
-                var loggerResult = await _notificationSvc.Search(userId, query.Trim());
+                var loggerResult = await _notificationSvc.SearchTeacherRecipient(userId, query);
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
+            }
+            else
+            {
+                return BadRequest("Hãy điền nội dung tìm kiếm");
+            }
+        }
+
+        [HttpGet("student/{id}")]
+        public async Task<ActionResult<Logger>> GetByStudentId(string id)
+        {
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                var loggerResult = await _notificationSvc.GetByStudentRecipientId(id);
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
+            }
+            else
+            {
+                return BadRequest("Hãy điền ID để tìm kiếm đối tượng");
+            }
+        }
+
+        [HttpGet("searchByStudent/{studentId}/{query}")]
+        public async Task<ActionResult<Logger>> SearchByStudent(string studentId, string query)
+        {
+            if (!String.IsNullOrWhiteSpace(query))
+            {
+                var loggerResult = await _notificationSvc.SearchStudentRecipient(studentId, query);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);

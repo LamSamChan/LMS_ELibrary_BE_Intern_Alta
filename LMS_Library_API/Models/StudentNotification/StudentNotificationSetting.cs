@@ -5,10 +5,10 @@ namespace LMS_Library_API.Models.StudentNotification
 {
     public class StudentNotificationSetting
     {
-        [ForeignKey("User")]
+        [ForeignKey("Student")]
         public Guid studentId { get; set; }
 
-        [ForeignKey("NotificationFeatures")]
+        [ForeignKey("StudentNotificationFeatures")]
         public int featuresId { get; set; }
 
         [Required]

@@ -18,9 +18,9 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Logger>> Create(NotificationFeatures department)
+        public async Task<ActionResult<Logger>> Create(NotificationFeatures features)
         {
-            var loggerResult = await _notificationFeaturesSvc.Create(department);
+            var loggerResult = await _notificationFeaturesSvc.Create(features);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
                 return Ok(loggerResult);

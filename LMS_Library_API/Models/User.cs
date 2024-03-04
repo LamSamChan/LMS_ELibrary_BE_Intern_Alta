@@ -50,7 +50,7 @@ namespace LMS_Library_API.Models
         public Gender Gender { get; set; }
 
         [AllowNull]
-        public string Avartar { get; set; }
+        public string? Avartar { get; set; }
         public string Password { get; set; }
 
         [DefaultValue(false)]

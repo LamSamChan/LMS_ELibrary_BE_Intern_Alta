@@ -46,7 +46,6 @@ namespace LMS_Library_API.Context
         public DbSet<Class> Classes { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentQnALikes> StudentQnALikes { get; set; }
-        public DbSet<StudentNotification> StudentNotifications { get; set; }
         public DbSet<StudentNotificationSetting> StudentNotificationSetting { get; set; }
         public DbSet<StudentNotificationFeatures> StudentNotificationFeatures { get; set; }
         public DbSet<StudentSubject> StudentSubjects { get; set; }
@@ -91,7 +90,6 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<Class>().ToTable("Class");
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<StudentNotificationFeatures>().ToTable("StudentNotificationFeatures");
-            modelBuilder.Entity<StudentNotification>().ToTable("StudentNotification");
             modelBuilder.Entity<StudentQnALikes>().ToTable("StudentQnALikes");
             modelBuilder.Entity<StudentNotificationSetting>().ToTable("StudentNotificationSetting");
             modelBuilder.Entity<StudentSubject>().ToTable("StudentSubject");
