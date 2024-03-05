@@ -1,28 +1,41 @@
 ﻿using LMS_Library_API.Context;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutStudent;
+using LMS_Library_API.Models.AboutSubject;
 using Microsoft.EntityFrameworkCore;
-using System;
 
-namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
+namespace LMS_Library_API.Services.ServiceAboutSubject.NotificationClassStudentService
 {
-    public class ClassSubjectSvc : IClassSubjectSvc
+    public class NotificationClassStudentSvc: INotificationClassStudentSvc
     {
         private readonly DataContext _context;
-        public ClassSubjectSvc(DataContext context) {
-            _context = context; 
+
+        public NotificationClassStudentSvc(DataContext context)
+        {
+            _context = context;
         }
-        public async Task<Logger> Create(ClassSubject classSubject)
+
+        public async Task<Logger> Create(NotificationClassStudent notification)
         {
             try
             {
-                _context.ClassSubjects.Add(classSubject);
+                if (notification.StudentId != null)
+                {
+                    notification.IsForAllStudent = true;
+                }
+                else
+                {
+                    notification.IsForAllStudent = false;
+
+                }
+
+                _context.NotificationClassStudents.Add(notification);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thêm thành công",
-                    data = classSubject
+                    data = notification
                 };
             }
             catch (Exception ex)
@@ -36,13 +49,14 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
             }
         }
 
-        public async Task<Logger> Delete(string classId, string subjectId)
+        public async Task<Logger> Delete(int subjectNotificationId, string classId, Guid? studentId)
         {
             try
             {
-                var existClassSubject = await _context.ClassSubjects.FirstOrDefaultAsync(_ => _.classId == classId && _.subjectId == subjectId);
+                var existNotification = await _context.NotificationClassStudents.FirstOrDefaultAsync(_ => _.SubjectNotificationId == subjectNotificationId 
+                && _.ClassId == classId && _.StudentId == studentId);
 
-                if (existClassSubject == null)
+                if (existNotification == null)
                 {
                     return new Logger()
                     {
@@ -51,13 +65,13 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
                     };
                 }
 
-                _context.Remove(existClassSubject);
+                _context.Remove(existNotification);
                 await _context.SaveChangesAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Xoá thành công",
-                    data = existClassSubject
+                    data = existNotification
 
                 };
             }
@@ -75,7 +89,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
         {
             try
             {
-                var respone = await _context.ClassSubjects.ToListAsync();
+                var respone = await _context.NotificationClassStudents.ToListAsync();
                 return new Logger()
                 {
                     status = TaskStatus.RanToCompletion,
@@ -97,41 +111,10 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
         {
             try
             {
-                var existClassSubject = await _context.ClassSubjects.Where(_ => _.classId == classId).ToListAsync();
+                var existNotification = await _context.NotificationClassStudents.Include(_ => _.SubjectNotification)
+                    .FirstOrDefaultAsync(_ => _.ClassId == classId);
 
-                if (existClassSubject == null)
-                {
-                    return new Logger()
-                    {
-                        status = TaskStatus.Faulted,
-                        message = "Không tìm thấy danh sách đối tượng cần tìm"
-                    };
-                }
-
-                return new Logger()
-                {
-                    status = TaskStatus.RanToCompletion,
-                    message = "Thành công",
-                    listData = existClassSubject
-                };
-            }
-            catch (Exception ex)
-            {
-                return new Logger()
-                {
-                    status = TaskStatus.Faulted,
-                    message = ex.Message,
-                };
-            }
-        }
-
-        public async Task<Logger> GetById(string classId, string subjectId)
-        {
-            try
-            {
-                var existClassSubject = await _context.ClassSubjects.FirstOrDefaultAsync(_ => _.classId == classId && _.subjectId == subjectId);
-
-                if (existClassSubject == null)
+                if (existNotification == null)
                 {
                     return new Logger()
                     {
@@ -144,7 +127,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = existClassSubject
+                    data = existNotification
                 };
             }
             catch (Exception ex)
@@ -157,13 +140,48 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
             }
         }
 
-        public async Task<Logger> Update(ClassSubject classSubject)
+        public async Task<Logger> GetById(int subjectNotificationId, string classId, Guid? studentId)
         {
             try
             {
-                var existClassSubject = await _context.ClassSubjects.FirstOrDefaultAsync(_ => _.classId == classSubject.classId);
+                var existNotification = await _context.NotificationClassStudents.FirstOrDefaultAsync(_ => _.SubjectNotificationId == subjectNotificationId
+                && _.ClassId == classId && _.StudentId == studentId);
 
-                if (existClassSubject == null)
+                if (existNotification == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
+                    };
+                }
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    data = existNotification
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
+        public async Task<Logger> Update(NotificationClassStudent notification)
+        {
+            try
+            {
+                var existNotification = await _context.NotificationClassStudents
+                    .FirstOrDefaultAsync(_ => _.SubjectNotificationId == notification.SubjectNotificationId
+                && _.ClassId == notification.ClassId && _.StudentId == notification.StudentId);
+
+                if (existNotification == null)
                 {
                     return new Logger()
                     {
@@ -172,8 +190,18 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
                     };
                 }
 
-                existClassSubject.classId = classSubject.classId;
-                existClassSubject.subjectId = classSubject.subjectId;
+                existNotification.SubjectNotificationId = notification.SubjectNotificationId;
+                existNotification.ClassId = notification.ClassId;
+                existNotification.StudentId = notification.StudentId;
+                if (notification.StudentId != null)
+                {
+                    existNotification.IsForAllStudent = true;
+                }
+                else
+                {
+                    existNotification.IsForAllStudent = false;
+
+                }
 
                 await _context.SaveChangesAsync();
 
@@ -181,7 +209,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Cập nhật thành công",
-                    data = existClassSubject
+                    data = existNotification
                 };
             }
             catch (Exception ex)

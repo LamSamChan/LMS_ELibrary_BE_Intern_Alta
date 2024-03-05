@@ -44,6 +44,9 @@ namespace LMS_Library_API.Helpers
             CreateMap<StudyHistoryDTO, StudyHistory>();
             CreateMap<ClassSubjectDTO, ClassSubject>();
             CreateMap<StudentSubjectDTO, StudentSubject>();
+            CreateMap<TeacherClassDTO, TeacherClass>();
+            CreateMap<SubjectNotificationDTO, SubjectNotification>();
+            CreateMap<NotificationClassStudentDTO, NotificationClassStudent>();
         }
     }
 }

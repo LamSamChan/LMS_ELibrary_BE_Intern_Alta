@@ -19,11 +19,14 @@ using LMS_Library_API.Services.ServiceAboutStudent.StudyTimeService;
 using LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService;
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
+using LMS_Library_API.Services.ServiceAboutSubject.NotificationClassStudentService;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
+using LMS_Library_API.Services.ServiceAboutSubject.SubjectNotificationService;
 using LMS_Library_API.Services.ServiceAboutUser.ExamRecentViewsService;
 using LMS_Library_API.Services.ServiceAboutUser.HelpService;
 using LMS_Library_API.Services.ServiceAboutUser.PrivateFileService;
 using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
+using LMS_Library_API.Services.ServiceAboutUser.TeacherClassService;
 using LMS_Library_API.Services.StudentService;
 using LMS_Library_API.Services.SubjectService;
 using LMS_Library_API.Services.SystemInfomationService;
@@ -86,6 +89,9 @@ builder.Services.AddScoped<IStudyTimeSvc, StudyTimeSvc>();
 builder.Services.AddScoped<IStudyHistorySvc, StudyHistorySvc>();
 builder.Services.AddScoped<IClassSubjectSvc, ClassSubjectSvc>();
 builder.Services.AddScoped<IStudentSubjectSvc, StudentSubjectSvc>();
+builder.Services.AddScoped<ITeacherClassSvc, TeacherClassSvc>();
+builder.Services.AddScoped<ISubjectNotificationSvc, SubjectNotificationSvc>();
+builder.Services.AddScoped<INotificationClassStudentSvc, NotificationClassStudentSvc>();
 
 //Helpe
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();

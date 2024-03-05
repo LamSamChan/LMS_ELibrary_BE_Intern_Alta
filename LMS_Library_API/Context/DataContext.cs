@@ -114,7 +114,7 @@ namespace LMS_Library_API.Context
             .HasKey(erv => new { erv.UserId, erv.ExamId });
 
             modelBuilder.Entity<NotificationClassStudent>()
-            .HasKey(ncs => new { ncs.subjectNotificationId, ncs.classId, ncs.studentId });
+            .HasKey(ncs => new { ncs.SubjectNotificationId, ncs.ClassId, ncs.StudentId });
 
             modelBuilder.Entity<StudentNotificationSetting>()
             .HasKey(sns => new { sns.studentId, sns.featuresId });
