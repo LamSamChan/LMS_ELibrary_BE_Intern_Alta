@@ -2,6 +2,7 @@ using Azure.Storage.Blobs;
 using LMS_Library_API.Context;
 using LMS_Library_API.Helpers;
 using LMS_Library_API.Helpers.BlobHelperService;
+using LMS_Library_API.Services.AuthService;
 using LMS_Library_API.Services.ClassService;
 using LMS_Library_API.Services.DepartmentService;
 using LMS_Library_API.Services.ExamService;
@@ -101,7 +102,10 @@ builder.Services.AddScoped<ILessonAccessSvc, LessonAccessSvc>();
 builder.Services.AddScoped<ILessonAnswerSvc, LessonAnswerSvc>();
 builder.Services.AddScoped<ILessonQuestionSvc, LessonQuestionSvc>();
 
-//Helpe
+//Authentication
+builder.Services.AddSingleton<IAuthSvc, AuthSvc>();
+
+//Helper
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();
 builder.Services.AddSingleton<IBlobStorageSvc, BlobStorageSvc>();
 

@@ -42,6 +42,26 @@
             Format: false -> tự luận true -> trắc nghiệm
             </summary>
         </member>
+        <member name="M:LMS_Library_API.Controllers.LessonAnswersController.TeacherCreate(LMS_Library_API.ModelsDTO.LessonAnswerDTO)">
+            <summary>
+            để studentId = null
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.LessonAnswersController.StudentCreate(LMS_Library_API.ModelsDTO.LessonAnswerDTO)">
+            <summary>
+            để teacherId = null
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.LessonQuestionsController.TeacherCreate(LMS_Library_API.ModelsDTO.LessonQuestionDTO)">
+            <summary>
+            để studentId = null
+            </summary>
+        </member>
+        <member name="M:LMS_Library_API.Controllers.LessonQuestionsController.StudentCreate(LMS_Library_API.ModelsDTO.LessonQuestionDTO)">
+            <summary>
+            để teacherId = null
+            </summary>
+        </member>
         <member name="M:LMS_Library_API.Controllers.LessonsController.Create(LMS_Library_API.ModelsDTO.LessonDTO)">
             <summary>
             Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào         

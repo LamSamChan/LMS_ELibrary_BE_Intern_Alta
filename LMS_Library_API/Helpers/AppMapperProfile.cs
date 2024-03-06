@@ -49,6 +49,8 @@ namespace LMS_Library_API.Helpers
             CreateMap<NotificationClassStudentDTO, NotificationClassStudent>();
             CreateMap<LessonAccessDTO, LessonAccess>();
             CreateMap<DocumentAccessDTO, DocumentAccess>();
+            CreateMap<LessonAnswerDTO, LessonAnswer>();
+            CreateMap<LessonQuestionDTO, LessonQuestion>();
         }
     }
 }
