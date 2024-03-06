@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240306061652_updateModel4")]
+    partial class updateModel4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,20 +319,9 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("likesCounter")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("studentId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("teacherId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("lessonQuestionId");
-
-                    b.HasIndex("studentId");
-
-                    b.HasIndex("teacherId");
 
                     b.ToTable("LessonAnswer", (string)null);
                 });
@@ -360,20 +351,9 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("likesCounter")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("studentId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("teacherId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("lessonId");
-
-                    b.HasIndex("studentId");
-
-                    b.HasIndex("teacherId");
 
                     b.ToTable("LessonQuestion", (string)null);
                 });
@@ -1396,21 +1376,7 @@ namespace LMS_Library_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMS_Library_API.Models.Student", "Student")
-                        .WithMany("LessonAnswers")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LMS_Library_API.Models.User", "User")
-                        .WithMany("LessonAnswers")
-                        .HasForeignKey("teacherId");
-
                     b.Navigation("LessonQuestion");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.LessonQuestion", b =>
@@ -1421,21 +1387,7 @@ namespace LMS_Library_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMS_Library_API.Models.Student", "Student")
-                        .WithMany("LessonQuestion")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LMS_Library_API.Models.User", "User")
-                        .WithMany("LessonQuestions")
-                        .HasForeignKey("teacherId");
-
                     b.Navigation("Lesson");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.NotificationClassStudent", b =>
@@ -1912,10 +1864,6 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.Student", b =>
                 {
-                    b.Navigation("LessonAnswers");
-
-                    b.Navigation("LessonQuestion");
-
                     b.Navigation("NotificationClassStudents");
 
                     b.Navigation("NotificationRecipients");
@@ -1971,10 +1919,6 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("ExamRecentViews");
 
                     b.Navigation("Helps");
-
-                    b.Navigation("LessonAnswers");
-
-                    b.Navigation("LessonQuestions");
 
                     b.Navigation("NotificationSetting");
 

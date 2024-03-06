@@ -15,8 +15,7 @@ namespace LMS_Library_API.Models.AboutSubject
         [Column(TypeName = "nvarchar(30)")]
         [MaxLength(30)]
         [ForeignKey("Class")]
-        [AllowNull]
-        public string classId { get; set; }
+        public string? classId { get; set; }
         public virtual Class Class { get; set; }
 
         [Required]

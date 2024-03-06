@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240306030140_updateModel")]
+    partial class updateModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,7 +320,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -361,7 +362,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -390,15 +390,9 @@ namespace LMS_Library_API.Migrations
                     b.Property<bool>("IsForAllStudent")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("StudentId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("SubjectNotificationId", "ClassId");
 
                     b.HasIndex("ClassId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("NotificationClassStudent", (string)null);
                 });
@@ -1398,9 +1392,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonAnswers")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonAnswers")
@@ -1423,9 +1415,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonQuestion")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonQuestions")
@@ -1446,12 +1436,6 @@ namespace LMS_Library_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMS_Library_API.Models.Student", "Student")
-                        .WithMany("NotificationClassStudents")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LMS_Library_API.Models.AboutSubject.SubjectNotification", "SubjectNotification")
                         .WithMany("NotificationClassStudents")
                         .HasForeignKey("SubjectNotificationId")
@@ -1459,8 +1443,6 @@ namespace LMS_Library_API.Migrations
                         .IsRequired();
 
                     b.Navigation("Class");
-
-                    b.Navigation("Student");
 
                     b.Navigation("SubjectNotification");
                 });
@@ -1915,8 +1897,6 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("LessonAnswers");
 
                     b.Navigation("LessonQuestion");
-
-                    b.Navigation("NotificationClassStudents");
 
                     b.Navigation("NotificationRecipients");
 

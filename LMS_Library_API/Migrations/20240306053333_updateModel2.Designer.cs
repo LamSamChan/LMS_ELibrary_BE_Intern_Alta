@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240306053333_updateModel2")]
+    partial class updateModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,17 +211,10 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("documentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("classId")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<bool>("isForAllClasses")
                         .HasColumnType("bit");
 
                     b.HasKey("documentId");
-
-                    b.HasIndex("classId");
 
                     b.ToTable("DocumentAccess", (string)null);
                 });
@@ -277,17 +272,10 @@ namespace LMS_Library_API.Migrations
                     b.Property<int>("lessonId")
                         .HasColumnType("int");
 
-                    b.Property<string>("classId")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<bool>("isForAllClasses")
                         .HasColumnType("bit");
 
                     b.HasKey("lessonId");
-
-                    b.HasIndex("classId");
 
                     b.ToTable("LessonAccess", (string)null);
                 });
@@ -318,7 +306,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -361,7 +348,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -1325,19 +1311,11 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.DocumentAccess", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.Class", "Class")
-                        .WithMany("DocumentAccess")
-                        .HasForeignKey("classId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LMS_Library_API.Models.AboutSubject.Document", "Document")
                         .WithMany("DocumentAccess")
                         .HasForeignKey("documentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Class");
 
                     b.Navigation("Document");
                 });
@@ -1371,19 +1349,11 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.LessonAccess", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.Class", "Class")
-                        .WithMany("LessonAccess")
-                        .HasForeignKey("classId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LMS_Library_API.Models.AboutSubject.Lesson", "Lesson")
                         .WithMany("LessonAccess")
                         .HasForeignKey("lessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Class");
 
                     b.Navigation("Lesson");
                 });
@@ -1398,9 +1368,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonAnswers")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonAnswers")
@@ -1423,9 +1391,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonQuestion")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonQuestions")
@@ -1855,10 +1821,6 @@ namespace LMS_Library_API.Migrations
             modelBuilder.Entity("LMS_Library_API.Models.Class", b =>
                 {
                     b.Navigation("ClassSubjects");
-
-                    b.Navigation("DocumentAccess");
-
-                    b.Navigation("LessonAccess");
 
                     b.Navigation("NotificationClassStudents");
 

@@ -56,7 +56,7 @@ namespace LMS_Library_API.Models
         public virtual Class Class { get; set; }
 
         [InverseProperty("Student")]
-        public virtual ICollection<NotificationClassStudent> NotificationClassStudents { get; set; }
+        public virtual ICollection<NotificationClassStudent>? NotificationClassStudents { get; set; }
 
         public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
 

@@ -16,10 +16,10 @@ namespace LMS_Library_API.Models.AboutSubject
         public string ClassId { get; set; }
         public virtual Class Class { get; set; }
 
+        
         [ForeignKey("Student")]
-        [AllowNull]
         public Guid? StudentId { get; set; }
-        public virtual Student? Student { get; set; }
+        public virtual Student Student { get; set; }
 
         [Required]
         public bool IsForAllStudent { get; set; }

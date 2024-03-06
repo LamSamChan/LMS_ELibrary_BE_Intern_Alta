@@ -60,8 +60,8 @@ namespace LMS_Library_API.Models.AboutSubject
         [JsonIgnore]
         [InverseProperty("Document")]
         public virtual ICollection<StudyHistory> StudyHistories { get; set; }
+        
         [JsonIgnore]
-
         [InverseProperty("Document")]
         public virtual ICollection<DocumentAccess> DocumentAccess { get; set; }
 

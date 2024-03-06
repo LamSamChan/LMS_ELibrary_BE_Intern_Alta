@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240306030247_updateModel1")]
+    partial class updateModel1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,7 +320,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -361,7 +362,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -1398,9 +1398,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonAnswers")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonAnswers")
@@ -1423,9 +1421,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonQuestion")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonQuestions")
