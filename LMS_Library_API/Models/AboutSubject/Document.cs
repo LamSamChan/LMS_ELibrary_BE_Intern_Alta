@@ -39,7 +39,7 @@ namespace LMS_Library_API.Models.AboutSubject
 
         [Column(TypeName ="nvarchar(255)")]
         [AllowNull]
-        public string note { get; set; }
+        public string? note { get; set; }
 
         //navigation property
         [ForeignKey("Lesson")]
@@ -56,10 +56,6 @@ namespace LMS_Library_API.Models.AboutSubject
         [Required]
         public Guid teacherCreatedId { get; set; }
         public virtual User TeacherCreated { get; set; }
-
-        [JsonIgnore]
-        [InverseProperty("Document")]
-        public virtual ICollection<StudyHistory> StudyHistories { get; set; }
         
         [JsonIgnore]
         [InverseProperty("Document")]

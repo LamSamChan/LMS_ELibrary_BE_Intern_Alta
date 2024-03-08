@@ -1,8 +1,9 @@
 ﻿using LMS_Library_API.Enums;
-using Newtonsoft.Json;
+using LMS_Library_API.Models.AboutStudent;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -33,6 +34,7 @@ namespace LMS_Library_API.Models.AboutSubject
 
         [ForeignKey("Part")]
         public int partId { get; set; }
+        [JsonIgnore]
         public virtual Part Part { get; set; }
 
         [ForeignKey("Censor")]
@@ -53,5 +55,9 @@ namespace LMS_Library_API.Models.AboutSubject
         [JsonIgnore]
         [InverseProperty("Lesson")]
         public virtual ICollection<LessonAccess> LessonAccess { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Lesson")]
+        public virtual ICollection<StudyHistory> StudyHistories { get; set; }
     }
 }

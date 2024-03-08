@@ -94,6 +94,27 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpGet("student/{studentId}")]
+        public async Task<ActionResult<Logger>> GetByStudentId(string studentId)
+        {
+            if (!String.IsNullOrWhiteSpace(studentId))
+            {
+                var loggerResult = await _notificationClassStudentSvc.GetByStudentId(studentId);
+                if (loggerResult.status == TaskStatus.RanToCompletion)
+                {
+                    return Ok(loggerResult);
+                }
+                else
+                {
+                    return BadRequest(loggerResult);
+                }
+            }
+            else
+            {
+                return BadRequest("Hãy điền ID để tìm kiếm đối tượng");
+            }
+        }
+
         [HttpPut]
         public async Task<ActionResult<Logger>> Update(NotificationClassStudentDTO notificationClassStudentDTO)
         {

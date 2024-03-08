@@ -37,11 +37,11 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService
             }
         }
 
-        public async Task<Logger> Delete(string studentId, int documentId)
+        public async Task<Logger> Delete(string studentId, int lessonId)
         {
             try
             {
-                var existHistory = await _context.StudyHistories.FirstOrDefaultAsync(_ => _.documentId == documentId && _.studentId == Guid.Parse(studentId));
+                var existHistory = await _context.StudyHistories.FirstOrDefaultAsync(_ => _.LessonId == lessonId && _.StudentId == Guid.Parse(studentId));
 
                 if (existHistory == null)
                 {
@@ -94,11 +94,11 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService
             }
         }
 
-        public async Task<Logger> GetById(string studentId, int documentId)
+        public async Task<Logger> GetById(string studentId, int lessonId)
         {
             try
             {
-                var existHistory = await _context.StudyHistories.Include(_ => _.Document).FirstOrDefaultAsync(_ => _.documentId == documentId && _.studentId == Guid.Parse(studentId));
+                var existHistory = await _context.StudyHistories.Include(_ => _.Lesson).FirstOrDefaultAsync(_ => _.LessonId == lessonId && _.StudentId == Guid.Parse(studentId));
 
                 if (existHistory == null)
                 {
@@ -130,7 +130,7 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService
         {
             try
             {
-                var studentHistory = await _context.StudyHistories.Include(_ => _.Document).Where(_ => _.studentId == Guid.Parse(studentId)).OrderByDescending(_ => _.dateUpdate).ToListAsync();
+                var studentHistory = await _context.StudyHistories.Include(_ => _.Lesson).Where(_ => _.StudentId == Guid.Parse(studentId)).OrderByDescending(_ => _.DateUpdate).ToListAsync();
 
                 if (studentHistory == null)
                 {
@@ -162,7 +162,7 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService
         {
             try
             {
-                var existHistory = await _context.StudyHistories.FirstOrDefaultAsync(_ => _.documentId == studyHistory.documentId && _.studentId == studyHistory.studentId);
+                var existHistory = await _context.StudyHistories.FirstOrDefaultAsync(_ => _.LessonId == studyHistory.LessonId && _.StudentId == studyHistory.StudentId);
 
                 if (existHistory == null)
                 {
@@ -173,10 +173,10 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService
                     };
                 }
 
-                existHistory.studentId = studyHistory.studentId;
-                existHistory.documentId = studyHistory.documentId;
-                existHistory.watchMinutes = studyHistory.watchMinutes;
-                existHistory.dateUpdate = studyHistory.dateUpdate;
+                existHistory.StudentId = studyHistory.StudentId;
+                existHistory.LessonId = studyHistory.LessonId;
+                existHistory.WatchMinutes = studyHistory.WatchMinutes;
+                existHistory.DateUpdate = studyHistory.DateUpdate;
 
                 await _context.SaveChangesAsync();
 

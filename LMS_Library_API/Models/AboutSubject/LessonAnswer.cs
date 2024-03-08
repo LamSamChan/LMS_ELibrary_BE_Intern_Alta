@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -28,6 +29,7 @@ namespace LMS_Library_API.Models.AboutSubject
 
         [ForeignKey("LessonQuestion")]
         public int lessonQuestionId { get; set; }
+        [JsonIgnore]
         public virtual LessonQuestion LessonQuestion { get; set; }
 
         [ForeignKey("User")]

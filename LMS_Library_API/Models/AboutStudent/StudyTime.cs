@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.AboutStudent
 {
@@ -8,6 +9,7 @@ namespace LMS_Library_API.Models.AboutStudent
     {
         [ForeignKey("Student")]
         public Guid studentId { get; set; }
+        [JsonIgnore]
         public virtual Student Student { get; set; }
 
         [Column(TypeName = "varchar(20)")]

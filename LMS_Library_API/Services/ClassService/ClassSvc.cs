@@ -123,6 +123,7 @@ namespace LMS_Library_API.Services.ClassService
             {
                 Class existClass = await _context.Classes
                     .Include(_ => _.Students)
+                    .Include(_ => _.TeacherClasses).ThenInclude(_ => _.Teacher)
                     .FirstOrDefaultAsync(x =>x.Id == classId.ToUpper());
 
                 if (existClass == null)

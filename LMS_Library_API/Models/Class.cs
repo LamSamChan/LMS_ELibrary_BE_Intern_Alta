@@ -25,20 +25,24 @@ namespace LMS_Library_API.Models
 
         //navigation property
         [InverseProperty("Class")]
+        [JsonIgnore]
         public virtual ICollection<NotificationClassStudent> NotificationClassStudents { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
 
         [InverseProperty("Class")]
+        [JsonIgnore]
         public virtual ICollection<ClassSubject> ClassSubjects { get; set; }
 
         [InverseProperty("Class")]
         public virtual ICollection<TeacherClass> TeacherClasses { get; set; }
 
         [InverseProperty("Class")]
+        [JsonIgnore]
         public virtual ICollection<LessonAccess> LessonAccess { get; set; }
 
         [InverseProperty("Class")]
+        [JsonIgnore]
         public virtual ICollection<DocumentAccess> DocumentAccess { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.NotificationClassStudentS
         Task<Logger> Delete(int subjectNotificationId, string classId, Guid? studentId);
         Task<Logger> GetById(int subjectNotificationId, string classId, Guid? studentId);
         Task<Logger> GetByClassId(string classId);
+        Task<Logger> GetByStudentId(string studentId);
         Task<Logger> GetAll();
     }
 }

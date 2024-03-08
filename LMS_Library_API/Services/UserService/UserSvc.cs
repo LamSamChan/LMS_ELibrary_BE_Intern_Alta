@@ -98,6 +98,7 @@ namespace LMS_Library_API.Services.UserService
             {
                 User existUser = await _context.Users.Include(_ => _.Role).ThenInclude(_ => _.Role_Permissions).ThenInclude(_ => _.Permissions)
                     .Include(_ => _.Department)
+                    .Include(_ => _.ExamRecentViews)
                     .FirstOrDefaultAsync(x => x.Id == Guid.Parse(userId));
 
                 if (existUser == null)

@@ -53,21 +53,29 @@ namespace LMS_Library_API.Models
         //navigation property
         [ForeignKey("Class")]
         public string  classId { get; set; }
+
+        [JsonIgnore]
         public virtual Class Class { get; set; }
 
         [InverseProperty("Student")]
+        [JsonIgnore]
         public virtual ICollection<NotificationClassStudent>? NotificationClassStudents { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<LessonQuestion> LessonQuestion { get; set; }
 
+        [JsonIgnore]
         public virtual StudentQnALikes StudentQnALikes { get; set; }
 
         [InverseProperty("Student")]
+        [JsonIgnore]
         public virtual ICollection<StudentNotificationSetting> StudentNotificationSetting { get; set; }
 
         [InverseProperty("Student")]
+        [JsonIgnore]
         public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
 
         [InverseProperty("Student")]

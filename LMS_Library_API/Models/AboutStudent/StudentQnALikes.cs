@@ -11,11 +11,11 @@ namespace LMS_Library_API.Models.AboutStudent
         [ForeignKey("Student")]
         public Guid studentId { get; set; }
 
-        [Column(TypeName ="varchar")]
+        [Column(TypeName ="varchar(max)")]
         [AllowNull]
         public string QuestionsLikedID { get; set; }
 
-        [Column(TypeName ="varchar")]
+        [Column(TypeName ="varchar(max)")]
         [AllowNull]
         public string AnswersLikedID { get; set; }
 

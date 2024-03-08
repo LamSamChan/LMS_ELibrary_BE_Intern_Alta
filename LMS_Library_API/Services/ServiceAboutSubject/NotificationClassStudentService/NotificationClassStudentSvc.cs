@@ -173,6 +173,39 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.NotificationClassStudentS
             }
         }
 
+        public async Task<Logger> GetByStudentId(string studentId)
+        {
+            try
+            {
+                var existNotification = await _context.NotificationClassStudents.Include(_ => _.SubjectNotification)
+                    .FirstOrDefaultAsync(_ => _.StudentId == Guid.Parse(studentId));
+
+                if (existNotification == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng cần tìm"
+                    };
+                }
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    data = existNotification
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
         public async Task<Logger> Update(NotificationClassStudent notification)
         {
             try

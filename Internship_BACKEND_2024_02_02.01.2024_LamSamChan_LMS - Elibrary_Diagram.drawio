@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-03-08T04:17:23.511Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="kHZGbWSH0h3b8R55rhP2" version="23.0.2" type="device" pages="3">
+<mxfile host="Electron" modified="2024-03-08T11:13:54.815Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="DaqkTniEdo3Ug8Z966GT" version="23.0.2" type="device" pages="3">
   <diagram name="Page-1" id="wIqU8FdTsNSahX9Sebv4">
-    <mxGraphModel dx="3118" dy="1968" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3134" dy="1936" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -242,7 +242,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="hpXJ1rF8rbbTD5kr4emE" name="Page-2">
-    <mxGraphModel dx="2880" dy="1782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3134" dy="1936" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -3126,7 +3126,7 @@
             <mxRectangle width="60" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="xOYGt9C01pTHgOPHdNXc-142" value="DocumentID (int)" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;fontStyle=5;overflow=hidden;html=1;whiteSpace=wrap;" parent="xOYGt9C01pTHgOPHdNXc-140" vertex="1">
+        <mxCell id="xOYGt9C01pTHgOPHdNXc-142" value="LessonID (int)" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;fontStyle=5;overflow=hidden;html=1;whiteSpace=wrap;" parent="xOYGt9C01pTHgOPHdNXc-140" vertex="1">
           <mxGeometry x="60" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -3382,12 +3382,12 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="YeP5bTVo-p3JBGyisDEk-2" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="YkQe3L-CzTriOcefJd4O-2" target="xOYGt9C01pTHgOPHdNXc-140" edge="1">
+        <mxCell id="YeP5bTVo-p3JBGyisDEk-2" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Wtqnl8wZqktp23a4N9ob-63" target="xOYGt9C01pTHgOPHdNXc-140" edge="1">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
             <mxPoint x="-530" y="1260" as="sourcePoint" />
             <mxPoint x="-710" y="1480" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-660" y="970" />
+              <mxPoint x="-640" y="790" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -3632,24 +3632,27 @@
     </mxGraphModel>
   </diagram>
   <diagram id="IO4SUDLqtZ0rk3CSArA7" name="Note">
-    <mxGraphModel dx="2266" dy="818" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2284" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="Yu1dtpoj80ZrlaGrU93D-1" value="&lt;b&gt;22/02/2024&lt;br&gt;&lt;/b&gt;Model NotificationFearture trường FeartureType&lt;br&gt;và trường Type sửa thành kiểu eum và tạo 2 enum cho 2 trường này [DONE]&lt;br&gt;&lt;br&gt;Chưa tạo ra các enum&amp;nbsp;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="-220" y="240" width="210" height="210" as="geometry" />
+          <mxGeometry x="-390" y="400" width="210" height="210" as="geometry" />
         </mxCell>
         <mxCell id="HaIZdAGeQLqBP634_1A5-1" value="&lt;b&gt;23/02/2024&lt;br&gt;&lt;/b&gt;Bổ sung service get tất cả document by id subject [DONE]" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="570" y="140" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="s4qWeNGD34tK9Pgz__Wv-1" value="&lt;b&gt;23/02/2024&lt;br&gt;&lt;/b&gt;Subject thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Tổng quan môn học (có custom title), danh sách chủ đề ( part kèm theo lesson + doc), Hỏi đáp và thông báo môn học" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="260" y="610" width="210" height="210" as="geometry" />
+        <mxCell id="s4qWeNGD34tK9Pgz__Wv-1" value="&lt;b&gt;23/02/2024&lt;br&gt;&lt;/b&gt;Subject thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Tổng quan môn học (có custom title), danh sách chủ đề ( part kèm theo lesson + doc), Hỏi đáp và thông báo môn học" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="70" y="140" width="210" height="210" as="geometry" />
         </mxCell>
         <mxCell id="0_G22kiVlB0XJtuVeaHJ-1" value="&lt;b&gt;24/02/2024&lt;br&gt;&lt;/b&gt;Exam thiếu service GetDetail&amp;nbsp;&lt;br&gt;====&amp;gt; Thông tin đề thi, list câu hỏi. Nếu là dề trắc nghiệm phải có list đám án đúng của mỗi đi kèm&lt;br&gt;&lt;br&gt;&lt;br&gt;Khi add student vào 1 lớp thì cập nhật lại student count của lớp đó [DONE]" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="20" y="610" width="210" height="210" as="geometry" />
+          <mxGeometry x="170" y="620" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="hPTGbc5Xw2RdNG6nPS3K-1" value="&lt;b&gt;25/02/2024&lt;br&gt;&lt;/b&gt;khi nào xong controller bình luậnt kiểm tra xem GetByID cua lesson có get các bình luận của bài học ko, nếu ko thì bổ sung trong service" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="500" y="610" width="210" height="210" as="geometry" />
+        <mxCell id="hPTGbc5Xw2RdNG6nPS3K-1" value="&lt;b&gt;25/02/2024&lt;br&gt;&lt;/b&gt;khi nào xong controller bình luậnt kiểm tra xem GetByID cua lesson có get các bình luận của bài học ko, nếu ko thì bổ sung trong service" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="320" y="130" width="210" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="-LNQFW-rvc8BWFgXd_Ia-1" value="&lt;b&gt;08/03/2024&lt;br&gt;&lt;/b&gt;Sửa lại bảng&amp;nbsp;QnALikes của user và student" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="425" y="610" width="210" height="210" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

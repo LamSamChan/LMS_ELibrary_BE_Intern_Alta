@@ -130,14 +130,20 @@ namespace LMS_Library_API.Services.SubjectService
             }
         }
 
-        public async Task<Logger> GetById(string subjectId)
+        public async Task<Logger> GetDetail(string subjectId)
         {
             try
             {
-                var respone = await _context.Subjects.Include(_ => _.Parts)
-                    .ThenInclude(_ => _.Lessons)
-                    .ThenInclude(_ => _.Documents)
+                var respone = await _context.Subjects
+                    .Include(_ => _.Parts)
+                        .ThenInclude(_ => _.Lessons)
+                            .ThenInclude(_ => _.LessonQuestions)
+                                .ThenInclude(_ => _.LessonAnswers)
+                    .Include(_ => _.Parts)
+                        .ThenInclude(_ => _.Lessons)
+                            .ThenInclude(_ => _.Documents)
                     .Include(_ => _.CustomInfoOfSubjects)
+                    .Include(_ => _.SubjectNotifications)
                     .FirstOrDefaultAsync(_ => _.Id == subjectId);
 
                 if (respone == null)
@@ -301,11 +307,6 @@ namespace LMS_Library_API.Services.SubjectService
                     message = ex.Message,
                 };
             }
-        }
-
-        public Task<Logger> GetDetail(string subjectId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

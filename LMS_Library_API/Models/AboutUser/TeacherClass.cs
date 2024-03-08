@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.AboutUser
 {
@@ -16,6 +17,7 @@ namespace LMS_Library_API.Models.AboutUser
         [MaxLength(30)]
         [ForeignKey("Class")]
         public string classId { get; set; }
+        [JsonIgnore]
         public virtual Class Class { get; set; }
 
         

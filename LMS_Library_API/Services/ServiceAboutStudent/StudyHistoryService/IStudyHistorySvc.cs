@@ -7,8 +7,8 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService
     {
         Task<Logger> Create(StudyHistory studyHistory);
         Task<Logger> Update(StudyHistory studyHistory);
-        Task<Logger> Delete(string studentId, int documentId);
-        Task<Logger> GetById(string studentId, int documentId);
+        Task<Logger> Delete(string studentId, int lessonId);
+        Task<Logger> GetById(string studentId, int lessonId);
         Task<Logger> GetByStudentId(string studentId);
         Task<Logger> GetAll();
     }
