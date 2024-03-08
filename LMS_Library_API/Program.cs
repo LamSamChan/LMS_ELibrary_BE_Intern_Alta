@@ -14,6 +14,7 @@ using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesServ
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationService;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService;
 using LMS_Library_API.Services.ServiceAboutNotification.Stu_NotificationFeatuesService;
+using LMS_Library_API.Services.ServiceAboutStudent.StudentQnALikeService;
 using LMS_Library_API.Services.ServiceAboutStudent.StudentSubjectService;
 using LMS_Library_API.Services.ServiceAboutStudent.StudyHistoryService;
 using LMS_Library_API.Services.ServiceAboutStudent.StudyTimeService;
@@ -90,6 +91,7 @@ builder.Services.AddScoped<IExamRecentViewsSvc, ExamRecentViewsSvc>();
 builder.Services.AddScoped<IClassSvc, ClassSvc>();
 builder.Services.AddScoped<IStudentSvc, StudentSvc>();
 builder.Services.AddScoped<IStuNotificationFeatuesSvc, StuNotificationFeatuesSvc>();
+builder.Services.AddScoped<IStudentQnALikesService, StudentStudentQnALikesService>();
 builder.Services.AddScoped<IStudyTimeSvc, StudyTimeSvc>();
 builder.Services.AddScoped<IStudyHistorySvc, StudyHistorySvc>();
 builder.Services.AddScoped<IClassSubjectSvc, ClassSubjectSvc>();

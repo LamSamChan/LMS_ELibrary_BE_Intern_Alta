@@ -3,6 +3,7 @@ using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.Models.AboutUser;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models
 {
@@ -26,9 +27,7 @@ namespace LMS_Library_API.Models
         [InverseProperty("Class")]
         public virtual ICollection<NotificationClassStudent> NotificationClassStudents { get; set; }
 
-
         public virtual ICollection<Student> Students { get; set; }
-
 
         [InverseProperty("Class")]
         public virtual ICollection<ClassSubject> ClassSubjects { get; set; }

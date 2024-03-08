@@ -42,9 +42,9 @@ namespace LMS_Library_API.Models.AboutSubject
         public string note { get; set; }
 
         //navigation property
-        [JsonIgnore]
         [ForeignKey("Lesson")]
         public int lessonId { get; set; }
+        [JsonIgnore]
         public virtual Lesson Lesson { get; set; }
 
         [ForeignKey("Censor")]

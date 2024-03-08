@@ -69,7 +69,7 @@ namespace LMS_Library_API.Services.StudentService
         {
             try
             {
-                var respone = await _context.Students.Include(_ => _.Class)
+                var respone = await _context.Students
                     .ToListAsync();
                 return new Logger()
                 {
@@ -92,7 +92,7 @@ namespace LMS_Library_API.Services.StudentService
         {
             try
             {
-                Student existStudent = await _context.Students.Include(_ => _.Class)
+                Student existStudent = await _context.Students
                     .FirstOrDefaultAsync(x => x.Id == Guid.Parse(studentId));
 
                 if (existStudent == null)
