@@ -104,6 +104,14 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.LessonService
             {
                 var existLesson = await _context.Lessons
                     .Include(_ => _.LessonQuestions)
+                        .ThenInclude(_ => _.Student)
+                    .Include(_ => _.LessonQuestions)
+                        .ThenInclude(_ => _.User)
+                    .Include(_ => _.LessonQuestions)
+                        .ThenInclude(_ => _.LessonAnswers)
+                            .ThenInclude(_ => _.Student)
+                        .ThenInclude(_ => _.LessonAnswers)
+                            .ThenInclude(_ => _.User)
                     .Include(_ => _.Documents)
                     .FirstOrDefaultAsync(_ => _.Id == lessonId);
 
