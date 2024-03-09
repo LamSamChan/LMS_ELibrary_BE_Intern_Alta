@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LMS_Library_API.Services.ServiceAboutExam.Question_ExamService
 {
-    public class QuestionExamSvc:IQuestionExamSvc
+    public class QuestionExamSvc : IQuestionExamSvc
     {
         private readonly DataContext _context;
 

@@ -114,20 +114,19 @@ namespace LMS_Library_API.Services.ExamService
             }
         }
 
-        public async Task<Logger> GetById(string examId)
+        public async Task<Logger> GetDetailExam(string examId)
         {
             try
             {
-                var existExam = await _context.Exams.FirstOrDefaultAsync(_ => _.Id == examId);
-
-                if (existExam.Format)
-                {
-                    //trac nghiem
-                }
-                else
-                {
-                    // tu luan
-                }
+                
+                var existExam = await _context.Exams
+                                .Include(_ => _.Question_Exam)
+                                    .ThenInclude(_ => _.QuestionBanks)
+                                        .ThenInclude(_ => _.QB_Answers_MC)
+                                 .Include(_ => _.Question_Exam)
+                                    .ThenInclude(_ => _.QuestionBanks)
+                                        .ThenInclude(_ => _.QB_Answer_Essay)
+                                .Where(x => x.Id == examId).ToListAsync();
 
                 if (existExam == null)
                 {

@@ -131,7 +131,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.SubjectNotificationServic
         {
             try
             {
-                var existNotification = await _context.SubjectNotifications.Where(_ => _.subjectId == subjectId).ToListAsync();
+                var existNotification = await _context.SubjectNotifications.Include(_ => _.User).Where(_ => _.subjectId == subjectId).ToListAsync();
 
                 if (existNotification == null)
                 {

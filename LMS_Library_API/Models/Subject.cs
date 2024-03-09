@@ -43,7 +43,6 @@ namespace LMS_Library_API.Models
         [JsonIgnore]
         public virtual ICollection<QuestionBanks> QuestionBanks { get; set; }
 
-        [JsonIgnore]
         public virtual ICollection<SubjectNotification> SubjectNotifications { get; set; }
 
         [JsonIgnore]

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -30,6 +31,7 @@ namespace LMS_Library_API.Models.AboutSubject
         public virtual User User { get; set; }
 
         [InverseProperty("SubjectNotification")]
+        [JsonIgnore]
         public virtual ICollection<NotificationClassStudent> NotificationClassStudents { get; set; }
 
     }

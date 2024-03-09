@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LMS_Library_API.Models.AboutStudent;
+using LMS_Library_API.Models.AboutUser;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
@@ -33,15 +35,22 @@ namespace LMS_Library_API.Models.AboutSubject
         [ForeignKey("User")]
         [AllowNull]
         public Guid? teacherId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
         [ForeignKey("Student")]
         [AllowNull]
         public Guid? studentId { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual Student? Student { get; set; }
 
         public virtual ICollection<LessonAnswer> LessonAnswers { get; set; }
 
+        [JsonIgnore]
+        [InverseProperty("LessonQuestion")]
+        public virtual ICollection<QuestionLike> QuestionLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("LessonQuestion")]
+        public virtual ICollection<StudentQuestionLike> StudentQuestionLike { get; set; }
 
     }
 }

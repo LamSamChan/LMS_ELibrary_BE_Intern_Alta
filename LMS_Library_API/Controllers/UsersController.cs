@@ -4,7 +4,6 @@ using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
-using LMS_Library_API.Services.ServiceAboutUser.QnALikesService;
 using LMS_Library_API.Services.UserService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +16,10 @@ namespace LMS_Library_API.Controllers
     {
         private readonly IUserSvc _userSvc;
         private readonly IMapper _mapper;
-        private readonly IQnALikesSvc _qnALikesSvc;
         private readonly IBlobStorageSvc _blobStorageSvc;
-        public UsersController (IUserSvc userSvc, IMapper mapper, IQnALikesSvc qnALikesSvc, IBlobStorageSvc blobStorageSvc) {
+        public UsersController (IUserSvc userSvc, IMapper mapper,IBlobStorageSvc blobStorageSvc) {
             _mapper = mapper;
             _userSvc = userSvc;
-            _qnALikesSvc = qnALikesSvc;
             _blobStorageSvc = blobStorageSvc;
         }
 
@@ -57,20 +54,7 @@ namespace LMS_Library_API.Controllers
 
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
-                User createQnALike = (User)loggerResult.data;
-
-                QnALikes qnALikes = new QnALikes() { UserId = createQnALike.Id, QuestionsLikedID="[]", AnswersLikedID="[]" };
-                var qnaResult = await _qnALikesSvc.Create(qnALikes);
-
-                if (qnaResult.status == TaskStatus.RanToCompletion)
-                {
-                    return Ok(loggerResult);
-                }
-                else
-                {
-                    return BadRequest(qnaResult);
-
-                }
+                return Ok(loggerResult);
             }
             else
             {

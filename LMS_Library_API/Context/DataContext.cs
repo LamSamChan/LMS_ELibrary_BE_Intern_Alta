@@ -21,7 +21,6 @@ namespace LMS_Library_API.Context
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationFeatures> NotificationFeatures { get; set; }
         public DbSet<NotificationSetting> NotificationSetting { get; set; }
-        public DbSet<QnALikes> QnALikes { get; set; }
         public DbSet<Help> Helps { get; set; }
         public DbSet<PrivateFile> PrivateFiles { get; set; }
         public DbSet<ExamRecentViews> ExamRecentViews { get; set; }
@@ -45,7 +44,6 @@ namespace LMS_Library_API.Context
         public DbSet<NotificationClassStudent> NotificationClassStudents { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<StudentQnALikes> StudentQnALikes { get; set; }
         public DbSet<StudentNotificationSetting> StudentNotificationSetting { get; set; }
         public DbSet<StudentNotificationFeatures> StudentNotificationFeatures { get; set; }
         public DbSet<StudentSubject> StudentSubjects { get; set; }
@@ -55,6 +53,10 @@ namespace LMS_Library_API.Context
         public DbSet<StudyHistory> StudyHistories { get; set; }
         public DbSet<LessonAccess> LessonAccess { get; set; }
         public DbSet<DocumentAccess> DocumentAccess { get; set; }
+        public DbSet<AnswerLike> AnswerLikes { get; set; }
+        public DbSet<QuestionLike> QuestionLikes { get; set; }
+        public DbSet<StudentAnswerLike> StudentAnswerLikes { get; set; }
+        public DbSet<StudentQuestionLike> StudentQuestionLikes { get; set; }
 
 
 
@@ -65,7 +67,6 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<Notification>().ToTable("Notification");
             modelBuilder.Entity<NotificationFeatures>().ToTable("NotificationFeatures");
             modelBuilder.Entity<NotificationSetting>().ToTable("NotificationSetting");
-            modelBuilder.Entity<QnALikes>().ToTable("QnALikes");
             modelBuilder.Entity<Help>().ToTable("Help");
             modelBuilder.Entity<PrivateFile>().ToTable("PrivateFile");
             modelBuilder.Entity<ExamRecentViews>().ToTable("ExamRecentViews");
@@ -90,7 +91,6 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<Class>().ToTable("Class");
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<StudentNotificationFeatures>().ToTable("StudentNotificationFeatures");
-            modelBuilder.Entity<StudentQnALikes>().ToTable("StudentQnALikes");
             modelBuilder.Entity<StudentNotificationSetting>().ToTable("StudentNotificationSetting");
             modelBuilder.Entity<StudentSubject>().ToTable("StudentSubject");
             modelBuilder.Entity<ClassSubject>().ToTable("ClassSubject");
@@ -99,6 +99,10 @@ namespace LMS_Library_API.Context
             modelBuilder.Entity<StudyHistory>().ToTable("StudyHistory");
             modelBuilder.Entity<LessonAccess>().ToTable("LessonAccess");
             modelBuilder.Entity<DocumentAccess>().ToTable("DocumentAccess");
+            modelBuilder.Entity<AnswerLike>().ToTable("AnswerLike");
+            modelBuilder.Entity<QuestionLike>().ToTable("QuestionLike");
+            modelBuilder.Entity<StudentQuestionLike>().ToTable("StudentQuestionLike");
+            modelBuilder.Entity<StudentAnswerLike>().ToTable("StudentAnswerLike");
 
 
             modelBuilder.Entity<NotificationSetting>()
@@ -133,6 +137,18 @@ namespace LMS_Library_API.Context
 
             modelBuilder.Entity<StudyHistory>()
             .HasKey(sh => new { sh.StudentId, sh.LessonId });
+
+            modelBuilder.Entity<QuestionLike>()
+            .HasKey(ql => new { ql.UserId, ql.LessonId , ql.LessonQuestionId});
+
+            modelBuilder.Entity<StudentQuestionLike>()
+            .HasKey(sql => new { sql.StudentId, sql.LessonId, sql.LessonQuestionId });
+
+            modelBuilder.Entity<AnswerLike>()
+            .HasKey(al => new { al.UserId, al.LessonId, al.LessonAnswerId });
+
+            modelBuilder.Entity<StudentAnswerLike>()
+            .HasKey(sal => new { sal.StudentId, sal.LessonId, sal.LessonAnswerId });
 
         }
         

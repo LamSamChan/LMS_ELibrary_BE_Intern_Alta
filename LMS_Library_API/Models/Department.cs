@@ -23,7 +23,7 @@ namespace LMS_Library_API.Models
         [JsonIgnore]    
         public virtual ICollection<Subject>? Subjects { get; set; }
         [JsonIgnore]
-        public virtual Exam? Exam { get; set; }
+        public virtual ICollection<Exam>? Exam { get; set; }
 
     }
 }

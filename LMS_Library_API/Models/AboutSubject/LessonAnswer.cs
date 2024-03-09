@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.AboutStudent;
 
 namespace LMS_Library_API.Models.AboutSubject
 {
@@ -35,13 +37,20 @@ namespace LMS_Library_API.Models.AboutSubject
         [ForeignKey("User")]
         [AllowNull]
         public Guid? teacherId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
         [ForeignKey("Student")]
         [AllowNull]
         public Guid? studentId { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual Student? Student { get; set; }
 
 
+        [JsonIgnore]
+        [InverseProperty("LessonAnswer")]
+        public virtual ICollection<AnswerLike> AnswerLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("LessonAnswer")]
+        public virtual ICollection<StudentAnswerLike> StudentAnswerLikes { get; set; }
     }
 }

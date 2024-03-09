@@ -60,11 +60,11 @@ namespace LMS_Library_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Logger>> GetById(string id)
+        public async Task<ActionResult<Logger>> GetDetailExam(string id)
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
-                var loggerResult = await _examSvc.GetById(id);
+                var loggerResult = await _examSvc.GetDetailExam(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);

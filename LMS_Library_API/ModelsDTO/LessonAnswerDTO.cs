@@ -16,7 +16,7 @@ namespace LMS_Library_API.ModelsDTO
         //navigation property
 
         [Required]
-        public int questionId { get; set; }
+        public int lessonQuestionId { get; set; }
 
         public Guid? teacherId { get; set; }
 

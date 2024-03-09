@@ -1,6 +1,7 @@
 ﻿using LMS_Library_API.Enums;
 using LMS_Library_API.Models.AboutStudent;
 using LMS_Library_API.Models.AboutSubject;
+using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.StudentNotification;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -67,9 +68,6 @@ namespace LMS_Library_API.Models
         [JsonIgnore]
         public virtual ICollection<LessonQuestion> LessonQuestion { get; set; }
 
-        [JsonIgnore]
-        public virtual StudentQnALikes StudentQnALikes { get; set; }
-
         [InverseProperty("Student")]
         [JsonIgnore]
         public virtual ICollection<StudentNotificationSetting> StudentNotificationSetting { get; set; }
@@ -91,6 +89,15 @@ namespace LMS_Library_API.Models
         [JsonIgnore]
         [InverseProperty("StudentSender")]
         public virtual ICollection<Notification.Notification> NotificationSenders { get; set; }
+
+
+        [JsonIgnore]
+        [InverseProperty("Student")]
+        public virtual ICollection<StudentQuestionLike> StudentQuestionLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Student")]
+        public virtual ICollection<StudentAnswerLike> StudentAnswerLikes { get; set; }
 
 
     }

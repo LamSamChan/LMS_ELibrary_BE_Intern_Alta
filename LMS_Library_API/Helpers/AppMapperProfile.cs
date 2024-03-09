@@ -51,6 +51,10 @@ namespace LMS_Library_API.Helpers
             CreateMap<DocumentAccessDTO, DocumentAccess>();
             CreateMap<LessonAnswerDTO, LessonAnswer>();
             CreateMap<LessonQuestionDTO, LessonQuestion>();
+            CreateMap<AnswerLikeDTO, AnswerLike>();
+            CreateMap<QuestionLikeDTO, QuestionLike>();
+            CreateMap<StudentAnswerLikeDTO, StudentAnswerLike>();
+            CreateMap<StudentQuestionLikeDTO, StudentQuestionLike>();
         }
     }
 }

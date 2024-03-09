@@ -67,7 +67,6 @@ namespace LMS_Library_API.Models.Exams
         public string DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
-        [JsonIgnore]
         [InverseProperty("Exam")]
         public virtual ICollection<Question_Exam> Question_Exam { get; set; }
 

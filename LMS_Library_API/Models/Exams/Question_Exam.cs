@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.Exams
 {
@@ -7,6 +8,7 @@ namespace LMS_Library_API.Models.Exams
         [ForeignKey("Exam")]
         [Column(TypeName = "varchar(30)")]
         public string ExamId { get; set; }
+        [JsonIgnore]
         public virtual Exam Exam { get; set; }
 
         [ForeignKey("QuestionBanks")]

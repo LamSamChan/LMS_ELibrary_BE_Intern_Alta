@@ -4,7 +4,6 @@ using LMS_Library_API.Models.AboutStudent;
 using LMS_Library_API.Models;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ClassService;
-using LMS_Library_API.Services.ServiceAboutStudent.StudentQnALikeService;
 using LMS_Library_API.Services.StudentService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +16,13 @@ namespace LMS_Library_API.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentSvc _studentSvc;
-        private readonly IStudentQnALikesService _qnALikesSvc;
         private readonly IBlobStorageSvc _blobStorageSvc;
         private readonly IClassSvc _classSvc;
         private readonly IMapper _mapper;
 
-        public StudentsController(IStudentSvc studentSvc, IStudentQnALikesService qnALikesSvc, IBlobStorageSvc blobStorageSvc, IClassSvc classSvc, IMapper mapper)
+        public StudentsController(IStudentSvc studentSvc,  IBlobStorageSvc blobStorageSvc, IClassSvc classSvc, IMapper mapper)
         {
             _studentSvc = studentSvc;
-            _qnALikesSvc = qnALikesSvc;
             _blobStorageSvc = blobStorageSvc;
             _classSvc = classSvc;
             _mapper = mapper;
@@ -72,25 +69,13 @@ namespace LMS_Library_API.Controllers
 
                 var updateTotalStudent = await _classSvc.Update(existClass);
 
-                if (updateTotalStudent.status == TaskStatus.Faulted)
+                if (updateTotalStudent.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(updateTotalStudent);
                 }
-
-                //Create QnALikeList
-                Student createQnALike = (Student)loggerResult.data;
-
-                StudentQnALikes qnALikes = new StudentQnALikes() { studentId = createQnALike.Id, QuestionsLikedID = "[]", AnswersLikedID = "[]" };
-                var qnaResult = await _qnALikesSvc.Create(qnALikes);
-
-                if (qnaResult.status == TaskStatus.RanToCompletion)
-                {
-                    return Ok(loggerResult);
-                }
                 else
                 {
-                    return BadRequest(qnaResult);
-
+                    return BadRequest(updateTotalStudent);
                 }
             }
             else

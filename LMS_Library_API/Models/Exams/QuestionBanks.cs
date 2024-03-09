@@ -1,6 +1,7 @@
 ﻿using LMS_Library_API.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LMS_Library_API.Models.Exams
 {
@@ -37,6 +38,7 @@ namespace LMS_Library_API.Models.Exams
         public virtual QB_Answer_Essay QB_Answer_Essay { get; set; }
 
         [InverseProperty("QuestionBanks")]
+        [JsonIgnore]
         public virtual ICollection<Question_Exam> Question_Exam { get; set; }
     }
 }

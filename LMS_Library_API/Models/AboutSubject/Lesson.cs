@@ -1,5 +1,6 @@
 ﻿using LMS_Library_API.Enums;
 using LMS_Library_API.Models.AboutStudent;
+using LMS_Library_API.Models.AboutUser;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -59,5 +60,21 @@ namespace LMS_Library_API.Models.AboutSubject
         [JsonIgnore]
         [InverseProperty("Lesson")]
         public virtual ICollection<StudyHistory> StudyHistories { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Lesson")]
+        public virtual ICollection<QuestionLike> QuestionLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Lesson")]
+        public virtual ICollection<AnswerLike> AnswerLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Lesson")]
+        public virtual ICollection<StudentQuestionLike> StudentQuestionLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Lesson")]
+        public virtual ICollection<StudentAnswerLike> StudentAnswerLike { get; set; }
     }
 }

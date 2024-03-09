@@ -39,22 +39,44 @@ namespace LMS_Library_API.Migrations
                     b.ToTable("ClassSubject", (string)null);
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentQnALikes", b =>
+            modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentAnswerLike", b =>
                 {
-                    b.Property<Guid>("studentId")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AnswersLikedID")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("QuestionsLikedID")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
+                    b.Property<int>("LessonAnswerId")
+                        .HasColumnType("int");
 
-                    b.HasKey("studentId");
+                    b.HasKey("StudentId", "LessonId", "LessonAnswerId");
 
-                    b.ToTable("StudentQnALikes", (string)null);
+                    b.HasIndex("LessonAnswerId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("StudentAnswerLike", (string)null);
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentQuestionLike", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonQuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "LessonId", "LessonQuestionId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("LessonQuestionId");
+
+                    b.ToTable("StudentQuestionLike", (string)null);
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentSubject", b =>
@@ -178,7 +200,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("note")
-                        .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("status")
@@ -318,7 +339,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -361,7 +381,6 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("studentId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("teacherId")
@@ -489,6 +508,26 @@ namespace LMS_Library_API.Migrations
                     b.ToTable("SubjectNotification", (string)null);
                 });
 
+            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.AnswerLike", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonAnswerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "LessonId", "LessonAnswerId");
+
+                    b.HasIndex("LessonAnswerId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("AnswerLike", (string)null);
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.AboutUser.ExamRecentViews", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -565,22 +604,24 @@ namespace LMS_Library_API.Migrations
                     b.ToTable("PrivateFile", (string)null);
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.QnALikes", b =>
+            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.QuestionLike", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AnswersLikedID")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("QuestionsLikedID")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
+                    b.Property<int>("LessonQuestionId")
+                        .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "LessonId", "LessonQuestionId");
 
-                    b.ToTable("QnALikes", (string)null);
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("LessonQuestionId");
+
+                    b.ToTable("QuestionLike", (string)null);
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutUser.TeacherClass", b =>
@@ -685,8 +726,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasIndex("CensorId");
 
-                    b.HasIndex("DepartmentId")
-                        .IsUnique();
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("SubjectId");
 
@@ -1217,13 +1257,56 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentQnALikes", b =>
+            modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentAnswerLike", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.Student", "Student")
-                        .WithOne("StudentQnALikes")
-                        .HasForeignKey("LMS_Library_API.Models.AboutStudent.StudentQnALikes", "studentId")
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.LessonAnswer", "LessonAnswer")
+                        .WithMany("StudentAnswerLikes")
+                        .HasForeignKey("LessonAnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.Lesson", "Lesson")
+                        .WithMany("StudentAnswerLike")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.Student", "Student")
+                        .WithMany("StudentAnswerLikes")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("LessonAnswer");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.AboutStudent.StudentQuestionLike", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.Lesson", "Lesson")
+                        .WithMany("StudentQuestionLikes")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.LessonQuestion", "LessonQuestion")
+                        .WithMany("StudentQuestionLike")
+                        .HasForeignKey("LessonQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.Student", "Student")
+                        .WithMany("StudentQuestionLikes")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("LessonQuestion");
 
                     b.Navigation("Student");
                 });
@@ -1398,9 +1481,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonAnswers")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonAnswers")
@@ -1423,9 +1504,7 @@ namespace LMS_Library_API.Migrations
 
                     b.HasOne("LMS_Library_API.Models.Student", "Student")
                         .WithMany("LessonQuestion")
-                        .HasForeignKey("studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("studentId");
 
                     b.HasOne("LMS_Library_API.Models.User", "User")
                         .WithMany("LessonQuestions")
@@ -1511,6 +1590,33 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.AnswerLike", b =>
+                {
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.LessonAnswer", "LessonAnswer")
+                        .WithMany("AnswerLikes")
+                        .HasForeignKey("LessonAnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.Lesson", "Lesson")
+                        .WithMany("AnswerLikes")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithMany("AnswerLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("LessonAnswer");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LMS_Library_API.Models.AboutUser.ExamRecentViews", b =>
                 {
                     b.HasOne("LMS_Library_API.Models.Exams.Exam", "Exam")
@@ -1552,13 +1658,29 @@ namespace LMS_Library_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.QnALikes", b =>
+            modelBuilder.Entity("LMS_Library_API.Models.AboutUser.QuestionLike", b =>
                 {
-                    b.HasOne("LMS_Library_API.Models.User", "User")
-                        .WithOne("QnALikes")
-                        .HasForeignKey("LMS_Library_API.Models.AboutUser.QnALikes", "UserId")
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.Lesson", "Lesson")
+                        .WithMany("QuestionLikes")
+                        .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.AboutSubject.LessonQuestion", "LessonQuestion")
+                        .WithMany("QuestionLikes")
+                        .HasForeignKey("LessonQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS_Library_API.Models.User", "User")
+                        .WithMany("QuestionLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("LessonQuestion");
 
                     b.Navigation("User");
                 });
@@ -1591,8 +1713,8 @@ namespace LMS_Library_API.Migrations
                         .IsRequired();
 
                     b.HasOne("LMS_Library_API.Models.Department", "Department")
-                        .WithOne("Exam")
-                        .HasForeignKey("LMS_Library_API.Models.Exams.Exam", "DepartmentId")
+                        .WithMany("Exam")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1828,18 +1950,37 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.Lesson", b =>
                 {
+                    b.Navigation("AnswerLikes");
+
                     b.Navigation("Documents");
 
                     b.Navigation("LessonAccess");
 
                     b.Navigation("LessonQuestions");
 
+                    b.Navigation("QuestionLikes");
+
+                    b.Navigation("StudentAnswerLike");
+
+                    b.Navigation("StudentQuestionLikes");
+
                     b.Navigation("StudyHistories");
+                });
+
+            modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.LessonAnswer", b =>
+                {
+                    b.Navigation("AnswerLikes");
+
+                    b.Navigation("StudentAnswerLikes");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.LessonQuestion", b =>
                 {
                     b.Navigation("LessonAnswers");
+
+                    b.Navigation("QuestionLikes");
+
+                    b.Navigation("StudentQuestionLike");
                 });
 
             modelBuilder.Entity("LMS_Library_API.Models.AboutSubject.Part", b =>
@@ -1922,10 +2063,11 @@ namespace LMS_Library_API.Migrations
 
                     b.Navigation("NotificationSenders");
 
+                    b.Navigation("StudentAnswerLikes");
+
                     b.Navigation("StudentNotificationSetting");
 
-                    b.Navigation("StudentQnALikes")
-                        .IsRequired();
+                    b.Navigation("StudentQuestionLikes");
 
                     b.Navigation("StudentSubjects");
 
@@ -1960,6 +2102,8 @@ namespace LMS_Library_API.Migrations
 
             modelBuilder.Entity("LMS_Library_API.Models.User", b =>
                 {
+                    b.Navigation("AnswerLikes");
+
                     b.Navigation("Censor");
 
                     b.Navigation("CensorDocument");
@@ -1980,10 +2124,9 @@ namespace LMS_Library_API.Migrations
 
                     b.Navigation("PrivateFiles");
 
-                    b.Navigation("QnALikes")
-                        .IsRequired();
-
                     b.Navigation("QuestionBanks");
+
+                    b.Navigation("QuestionLikes");
 
                     b.Navigation("Recipients");
 

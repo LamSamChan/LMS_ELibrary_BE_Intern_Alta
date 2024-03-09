@@ -76,9 +76,6 @@ namespace LMS_Library_API.Models
         public virtual ICollection<TeacherClass> TeacherClasses { get; set; }
 
         [JsonIgnore]
-        public virtual QnALikes QnALikes { get; set; }
-
-        [JsonIgnore]
         [InverseProperty("Recipient")]
         public virtual ICollection<Notification.Notification> Recipients { get; set; }
 
@@ -147,5 +144,13 @@ namespace LMS_Library_API.Models
 
         [JsonIgnore]
         public virtual ICollection<LessonQuestion> LessonQuestions { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("User")]
+        public virtual ICollection<QuestionLike> QuestionLikes { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("User")]
+        public virtual ICollection<AnswerLike> AnswerLikes { get; set; }
     }
 }
