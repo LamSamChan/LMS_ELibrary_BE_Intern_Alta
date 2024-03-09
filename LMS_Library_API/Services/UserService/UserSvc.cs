@@ -96,7 +96,7 @@ namespace LMS_Library_API.Services.UserService
         {
             try
             {
-                User existUser = await _context.Users.Include(_ => _.Role).ThenInclude(_ => _.Role_Permissions).ThenInclude(_ => _.Permissions)
+                User? existUser = await _context.Users.Include(_ => _.Role).ThenInclude(_ => _.Role_Permissions).ThenInclude(_ => _.Permissions)
                     .Include(_ => _.Department)
                     .Include(_ => _.ExamRecentViews)
                     .FirstOrDefaultAsync(x => x.Id == Guid.Parse(userId));
@@ -156,7 +156,7 @@ namespace LMS_Library_API.Services.UserService
             try
             {
 
-                User existUser = await _context.Users.FindAsync(user.Id);
+                User? existUser = await _context.Users.FindAsync(user.Id);
 
                 if (existUser == null)
                 {

@@ -27,6 +27,6 @@ namespace LMS_Library_API.Models.RoleAccess
         public virtual ICollection<User> Users { get; set; }
 
         [InverseProperty("Role")]
-        public virtual ICollection<Role_Permissions>? Role_Permissions { get; set; }
+        public virtual ICollection<Role_Permissions> Role_Permissions { get; set; }
     }
 }

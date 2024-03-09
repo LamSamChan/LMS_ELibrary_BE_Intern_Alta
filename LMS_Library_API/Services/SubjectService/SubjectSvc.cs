@@ -232,7 +232,7 @@ namespace LMS_Library_API.Services.SubjectService
         {
             try
             {
-                Subject existSubject = await _context.Subjects.FindAsync(subject.Id);
+                Subject? existSubject = await _context.Subjects.FindAsync(subject.Id);
 
                 if (existSubject == null)
                 {

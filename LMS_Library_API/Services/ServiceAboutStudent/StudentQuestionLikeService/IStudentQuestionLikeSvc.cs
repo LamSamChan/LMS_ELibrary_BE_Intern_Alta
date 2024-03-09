@@ -9,6 +9,6 @@ namespace LMS_Library_API.Services.ServiceAboutStudent.StudentQuestionLikeServic
         Task<Logger> Create(StudentQuestionLike questionLike);
         Task<Logger> Delete(StudentQuestionLike existQuestionLike);
         Task<Logger> GetAll();
-        Task<Logger> GetByStudentLesson(string studnetId, int lessonId);
+        Task<Logger> GetByStudentLesson(string studentId, int lessonId);
     }
 }

@@ -188,7 +188,7 @@ namespace LMS_Library_API.Services.ExamService
             try
             {
 
-                Exam existExam = await _context.Exams.FirstOrDefaultAsync(_ => _.Id == exam.Id);
+                Exam? existExam = await _context.Exams.FirstOrDefaultAsync(_ => _.Id == exam.Id);
 
                 if (existExam == null)
                 {

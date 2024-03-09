@@ -92,7 +92,7 @@ namespace LMS_Library_API.Services.StudentService
         {
             try
             {
-                Student existStudent = await _context.Students
+                Student? existStudent = await _context.Students
                     .Include(_ => _.StudyTimes)
                     .Include(_ => _.StudyHistories)
                     .FirstOrDefaultAsync(x => x.Id == Guid.Parse(studentId));
@@ -152,7 +152,7 @@ namespace LMS_Library_API.Services.StudentService
             try
             {
 
-                Student existStudent = await _context.Students.FindAsync(student.Id);
+                Student? existStudent = await _context.Students.FindAsync(student.Id);
 
                 if (existStudent == null)
                 {

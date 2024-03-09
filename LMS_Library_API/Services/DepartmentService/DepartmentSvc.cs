@@ -99,7 +99,7 @@ namespace LMS_Library_API.Services.DepartmentService
         {
             try
             {
-                Department existingDepartment = await _context.Departments.FindAsync(departmentId.ToUpper());
+                Department? existingDepartment = await _context.Departments.FindAsync(departmentId.ToUpper());
 
                 if (existingDepartment == null)
                 {
@@ -167,7 +167,7 @@ namespace LMS_Library_API.Services.DepartmentService
             try
             {
 
-                Department existingDepartment = await _context.Departments.FindAsync(department.Id.ToUpper());
+                Department? existingDepartment = await _context.Departments.FindAsync(department.Id.ToUpper());
 
                 if (existingDepartment == null)
                 {

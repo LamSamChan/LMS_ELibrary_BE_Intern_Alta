@@ -121,7 +121,7 @@ namespace LMS_Library_API.Services.ClassService
         {
             try
             {
-                Class existClass = await _context.Classes
+                Class? existClass = await _context.Classes
                     .Include(_ => _.Students)
                     .Include(_ => _.TeacherClasses).ThenInclude(_ => _.Teacher)
                     .FirstOrDefaultAsync(x =>x.Id == classId.ToUpper());
@@ -190,7 +190,7 @@ namespace LMS_Library_API.Services.ClassService
             try
             {
 
-                Class existClass = await _context.Classes.FirstOrDefaultAsync(x => x.Id == classModel.Id);
+                Class? existClass = await _context.Classes.FirstOrDefaultAsync(x => x.Id == classModel.Id);
 
                 if (existClass == null)
                 {

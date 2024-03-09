@@ -110,7 +110,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
         {
             try
             {
-                QuestionBanks existQuestion = await _context.QuestionBanks
+                QuestionBanks? existQuestion = await _context.QuestionBanks
                     .Include(_ => _.QB_Answers_MC).Include(_ => _.QB_Answer_Essay)
                     .Include(_ => _.User).Include(_ => _.Subject)
                     .FirstOrDefaultAsync(x => x.Id == questionBanksId);
@@ -146,7 +146,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
             try
             {
 
-                QuestionBanks existQuestion = await _context.QuestionBanks
+                QuestionBanks? existQuestion = await _context.QuestionBanks
                     .Include(_ => _.QB_Answers_MC)
                     .Include(_ => _.QB_Answer_Essay).FirstOrDefaultAsync(x => x.Id == questionBanks.Id);
 

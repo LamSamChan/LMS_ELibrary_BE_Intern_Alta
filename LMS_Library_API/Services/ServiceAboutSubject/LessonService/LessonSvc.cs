@@ -146,7 +146,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.LessonService
             try
             {
 
-                Lesson existLesson = await _context.Lessons.FindAsync(lesson.Id);
+                Lesson? existLesson = await _context.Lessons.FindAsync(lesson.Id);
 
                 if (existLesson == null)
                 {
