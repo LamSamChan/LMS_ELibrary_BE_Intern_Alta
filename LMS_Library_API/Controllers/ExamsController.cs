@@ -5,6 +5,7 @@ using LMS_Library_API.Models.Exams;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ExamService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExamsController : ControllerBase
     {
         private readonly IExamSvc _examSvc;

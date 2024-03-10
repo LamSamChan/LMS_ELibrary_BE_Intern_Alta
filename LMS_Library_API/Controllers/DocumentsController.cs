@@ -6,6 +6,7 @@ using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.BlobStorage;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -14,6 +15,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
 
     public class DocumentsController : ControllerBase
     {

@@ -3,6 +3,7 @@ using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.BlobStorage;
 using LMS_Library_API.ModelsDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -13,7 +14,7 @@ namespace LMS_Library_API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class BlobStorageController : ControllerBase
     {
 

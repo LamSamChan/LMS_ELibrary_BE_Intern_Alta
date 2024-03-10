@@ -1,6 +1,7 @@
 ﻿using LMS_Library_API.Models;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NotificationFeaturesController : ControllerBase
     {
         private readonly INotificationFeaturesSvc _notificationFeaturesSvc;

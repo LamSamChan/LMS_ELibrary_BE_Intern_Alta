@@ -4,6 +4,7 @@ using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentAccessService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonAccessService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DocumentAccessController : ControllerBase
     {
         private readonly IDocumentAccessSvc _documentAccessSvc;

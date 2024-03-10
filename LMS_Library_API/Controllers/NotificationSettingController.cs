@@ -3,6 +3,7 @@ using LMS_Library_API.Models;
 using LMS_Library_API.Models.Notification;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationSettingService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NotificationSettingController : ControllerBase
     {
         private readonly INotificationSettingSvc _notificationSettingSvc;

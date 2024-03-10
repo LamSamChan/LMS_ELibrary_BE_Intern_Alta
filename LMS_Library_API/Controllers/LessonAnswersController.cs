@@ -3,6 +3,7 @@ using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonAnswerService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LessonAnswersController : ControllerBase
     {
         private readonly ILessonAnswerSvc _lessonAnswerSvc;

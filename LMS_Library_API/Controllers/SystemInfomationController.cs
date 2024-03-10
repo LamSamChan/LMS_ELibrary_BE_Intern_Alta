@@ -6,11 +6,13 @@ using LMS_Library_API.Services.SystemInfomationService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SystemInfomationController : ControllerBase
     {
         private readonly ISystemInfomationSvc _systemInfomationService;

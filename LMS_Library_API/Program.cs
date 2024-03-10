@@ -40,9 +40,12 @@ using LMS_Library_API.Services.SubjectService;
 using LMS_Library_API.Services.SystemInfomationService;
 using LMS_Library_API.Services.UserService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,12 +112,34 @@ builder.Services.AddScoped<IStudentAnswerLikeSvc, StudentAnswerLikeSvc>();
 builder.Services.AddScoped<IStudentQuestionLikeSvc, StudentQuestionLikeSvc>();
 
 //Authentication
-builder.Services.AddSingleton<IAuthSvc, AuthSvc>();
+builder.Services.AddScoped<IAuthSvc, AuthSvc>();
 
 //Helper
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();
 builder.Services.AddSingleton<IBlobStorageSvc, BlobStorageSvc>();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                builder.Configuration["AppSettings:Token"]!))
+    };
+});
 
 var app = builder.Build();
 

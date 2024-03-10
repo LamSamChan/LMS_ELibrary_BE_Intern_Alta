@@ -3,6 +3,7 @@ using LMS_Library_API.Models.Notification;
 using LMS_Library_API.Models.StudentNotification;
 using LMS_Library_API.Services.ServiceAboutNotification.NotificationFeaturesService;
 using LMS_Library_API.Services.ServiceAboutNotification.Stu_NotificationFeatuesService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StudentNotificationSettingsController : ControllerBase
     {
         private readonly IStuNotificationFeatuesSvc _stuNotificationFeaturesSvc;

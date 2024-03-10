@@ -4,6 +4,7 @@ using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
 using LMS_Library_API.Services.SubjectService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -12,6 +13,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     [SwaggerTag("Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt")]
     public class PartsController : ControllerBase
     {

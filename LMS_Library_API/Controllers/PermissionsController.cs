@@ -2,6 +2,7 @@
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.Services.DepartmentService;
 using LMS_Library_API.Services.RoleAccess.PermissionsService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PermissionsController : ControllerBase
     {
         private readonly IPermissionsSvc _permissionsSvc;

@@ -4,6 +4,7 @@ using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutExam.QuestionBankService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class QuestionBanksController : ControllerBase
     {
         private readonly IQuestionBankSvc _questionBankSvc;

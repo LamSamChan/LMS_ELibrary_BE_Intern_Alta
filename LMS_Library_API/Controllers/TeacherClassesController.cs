@@ -5,6 +5,7 @@ using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ServiceAboutStudent.StudentSubjectService;
 using LMS_Library_API.Services.ServiceAboutUser.TeacherClassService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TeacherClassesController : ControllerBase
     {
         private readonly ITeacherClassSvc _teacherClassSvc;

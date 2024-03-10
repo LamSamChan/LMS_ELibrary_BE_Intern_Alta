@@ -4,6 +4,7 @@ using LMS_Library_API.Models.RoleAccess;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.RoleAccess.PermissionsService;
 using LMS_Library_API.Services.RoleAccess.RoleService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
@@ -12,6 +13,7 @@ namespace LMS_Library_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly IRoleSvc _roleSvc;
