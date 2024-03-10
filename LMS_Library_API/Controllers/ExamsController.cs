@@ -26,7 +26,7 @@ namespace LMS_Library_API.Controllers
         }
 
         /// <summary>
-        /// Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là ID của người tạo, khi có người duyệt sẽ cập nhật Id của người duyệt vào ||
+        /// Mặc định censorId (người kiểm duyệt) khi vừa tạo sẽ là null
         /// Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt | 5:Lưu nháp" ||
         /// Format: false -> tự luận true -> trắc nghiệm
         /// </summary>
@@ -46,6 +46,24 @@ namespace LMS_Library_API.Controllers
                 return BadRequest(loggerResult);
             }
         }
+
+        [HttpPost("create/mc-exam")]
+        public async Task<ActionResult<Logger>> CreateMCExam(MC_ExamDTO examDTO)
+        {
+            var exam = _mapper.Map<Exam>(examDTO);
+
+            var loggerResult = await _examSvc.Create(exam);
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }
+        }
+
+
 
         [HttpGet]
         public async Task<ActionResult<Logger>> GetAll()

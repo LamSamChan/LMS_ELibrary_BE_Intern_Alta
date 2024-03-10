@@ -39,9 +39,8 @@ namespace LMS_Library_API.Models.AboutSubject
         public virtual Part Part { get; set; }
 
         [ForeignKey("Censor")]
-        [AllowNull]
-        public Guid censorId { get; set; }
-        public virtual User Censor { get; set; }
+        public Guid? censorId { get; set; }
+        public virtual User? Censor { get; set; }
 
 
         [ForeignKey("TeacherCreated")]

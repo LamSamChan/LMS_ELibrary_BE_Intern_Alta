@@ -1,23 +1,22 @@
 ﻿using LMS_Library_API.Enums;
+using LMS_Library_API.Models.AboutUser;
+using LMS_Library_API.Models.Exams;
 using LMS_Library_API.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using LMS_Library_API.Models.BlobStorage;
 
 namespace LMS_Library_API.ModelsDTO
 {
-    public class ExamDTO
+    public class MC_ExamDTO
     {
-        [Key] public string Id { get; set; }
+        [Required]
+        public string Id { get; set; }
 
-        
-        public string? FileType { get; set; }
-
+        [StringLength(100, ErrorMessage = "Vượt quá độ dài cho phép")]
         [Required]
         public string FileName { get; set; }
-
         //false: tu luan, true: trac nghiem
         [Required]
         public bool Format { get; set; }
@@ -31,29 +30,27 @@ namespace LMS_Library_API.ModelsDTO
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        
-        public string? FilePath { get; set; }
-
         [Required]
         public Status Status { get; set; }
 
+        [MaxLength(255)]
         [AllowNull]
         public string Note { get; set; }
 
 
         //navigation property
-        [AllowNull]
         public Guid CensorId { get; set; }
 
         [Required]
         public Guid TeacherCreatedId { get; set; }
-
 
         [Required]
         public string SubjectId { get; set; }
 
         [Required]
         public string DepartmentId { get; set; }
+
+        public virtual ICollection<MC_QuestionExamDTO> MC_QuestionExams { get; set; }
 
     }
 }

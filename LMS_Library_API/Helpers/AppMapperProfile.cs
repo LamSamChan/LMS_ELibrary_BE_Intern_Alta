@@ -55,6 +55,9 @@ namespace LMS_Library_API.Helpers
             CreateMap<QuestionLikeDTO, QuestionLike>();
             CreateMap<StudentAnswerLikeDTO, StudentAnswerLike>();
             CreateMap<StudentQuestionLikeDTO, StudentQuestionLike>();
+            CreateMap<MC_ExamDTO, Exam>();
+            CreateMap<MC_QuestionExamDTO, Question_Exam>();
+            CreateMap<MC_QuestionBankDTO, QuestionBanks>();
         }
     }
 }

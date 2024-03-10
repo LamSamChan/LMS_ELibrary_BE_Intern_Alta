@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-03-10T07:44:44.421Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="dsl7z8SROV3E4bd3nYf8" version="23.0.2" type="device" pages="3">
+<mxfile host="Electron" modified="2024-03-10T16:15:20.355Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="OQy-cXD_VATdUMqZzuxn" version="23.0.2" type="device" pages="3">
   <diagram name="Page-1" id="wIqU8FdTsNSahX9Sebv4">
     <mxGraphModel dx="3134" dy="1936" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -242,7 +242,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="hpXJ1rF8rbbTD5kr4emE" name="Page-2">
-    <mxGraphModel dx="3209" dy="1980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3134" dy="1936" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -3842,7 +3842,7 @@
         <mxCell id="-LNQFW-rvc8BWFgXd_Ia-1" value="&lt;b&gt;08/03/2024&lt;br&gt;&lt;/b&gt;Sửa lại bảng&amp;nbsp;QnALikes của user và student" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-450" y="140" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="vkpHsPhUqevac5JTU6VJ-1" value="&lt;b&gt;10/03/2024&lt;br&gt;&lt;/b&gt;Xuất file đề thi" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+        <mxCell id="vkpHsPhUqevac5JTU6VJ-1" value="&lt;b&gt;10/03/2024&lt;br&gt;&lt;/b&gt;Xuất file đề thi khi tạo 1 đề thi bao gồm thông tin đề thi và câu hỏi&lt;br&gt;&lt;br&gt;Tạo đề với câu hỏi ngẫu nhiên&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="-20" y="540" width="210" height="210" as="geometry" />
         </mxCell>
       </root>

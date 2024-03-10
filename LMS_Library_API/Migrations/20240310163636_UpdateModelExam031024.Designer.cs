@@ -4,6 +4,7 @@ using LMS_Library_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS_Library_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240310163636_UpdateModelExam031024")]
+    partial class UpdateModelExam031024
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,6 +195,7 @@ namespace LMS_Library_API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<Guid?>("censorId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("lessonId")
@@ -252,7 +255,7 @@ namespace LMS_Library_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid?>("censorId")
+                    b.Property<Guid>("censorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("dateSubmited")
@@ -430,6 +433,7 @@ namespace LMS_Library_API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<Guid?>("censorId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("dateSubmited")
@@ -707,9 +711,6 @@ namespace LMS_Library_API.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("ScoringScale")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -1385,7 +1386,9 @@ namespace LMS_Library_API.Migrations
                 {
                     b.HasOne("LMS_Library_API.Models.User", "Censor")
                         .WithMany("CensorDocument")
-                        .HasForeignKey("censorId");
+                        .HasForeignKey("censorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LMS_Library_API.Models.AboutSubject.Lesson", "Lesson")
                         .WithMany("Documents")
@@ -1429,7 +1432,9 @@ namespace LMS_Library_API.Migrations
                 {
                     b.HasOne("LMS_Library_API.Models.User", "Censor")
                         .WithMany("CensorLesson")
-                        .HasForeignKey("censorId");
+                        .HasForeignKey("censorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LMS_Library_API.Models.AboutSubject.Part", "Part")
                         .WithMany("Lessons")
@@ -1546,7 +1551,9 @@ namespace LMS_Library_API.Migrations
                 {
                     b.HasOne("LMS_Library_API.Models.User", "Censor")
                         .WithMany("CensorPart")
-                        .HasForeignKey("censorId");
+                        .HasForeignKey("censorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LMS_Library_API.Models.Subject", "Subject")
                         .WithMany("Parts")

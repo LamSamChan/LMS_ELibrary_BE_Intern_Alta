@@ -14,8 +14,7 @@ namespace LMS_Library_API.Models.Exams
         [Key] public string Id { get; set; }
 
         [Column(TypeName = "varchar(30)")]
-        [Required]
-        public string FileType { get; set; }
+        public string? FileType { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         [StringLength(100, ErrorMessage = "Vượt quá độ dài cho phép")]
@@ -29,11 +28,13 @@ namespace LMS_Library_API.Models.Exams
         public int Duration { get; set; }
 
         [Required]
+        public int ScoringScale { get; set; }
+
+        [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
         [Column(TypeName = "varchar(max)")]
-        [Required]
-        public string FilePath {get; set; }
+        public string? FilePath {get; set; }
 
         [Required]
         public Status Status { get; set; }
@@ -47,8 +48,8 @@ namespace LMS_Library_API.Models.Exams
         //navigation property
         [ForeignKey("Censor")]
         [AllowNull]
-        public Guid CensorId { get; set; }
-        public virtual User Censor { get; set; }
+        public Guid? CensorId { get; set; }
+        public virtual User? Censor { get; set; }
 
 
         [ForeignKey("TeacherCreated")]

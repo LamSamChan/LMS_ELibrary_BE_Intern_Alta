@@ -32,9 +32,8 @@ namespace LMS_Library_API.Models.AboutSubject
         //navigation property
 
         [ForeignKey("Censor")]
-        [AllowNull]
         public Guid? censorId { get; set; }
-        public virtual User Censor { get; set; }
+        public virtual User? Censor { get; set; }
 
 
         [ForeignKey("TeacherCreated")]

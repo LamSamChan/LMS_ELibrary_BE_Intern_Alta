@@ -203,6 +203,7 @@ namespace LMS_Library_API.Services.ExamService
                 existExam.FileName = exam.FileName;
                 existExam.Format = exam.Format;
                 existExam.Duration = exam.Duration;
+                existExam.ScoringScale = exam.ScoringScale;
                 existExam.DateCreated = exam.DateCreated;
                 existExam.FilePath = exam.FileName;
                 existExam.Status = exam.Status;
