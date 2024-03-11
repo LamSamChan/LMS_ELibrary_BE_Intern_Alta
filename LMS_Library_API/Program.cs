@@ -2,6 +2,7 @@ using Azure.Storage.Blobs;
 using LMS_Library_API.Context;
 using LMS_Library_API.Helpers;
 using LMS_Library_API.Helpers.BlobHelperService;
+using LMS_Library_API.Helpers.ExportFileExamService;
 using LMS_Library_API.Services.AuthService;
 using LMS_Library_API.Services.ClassService;
 using LMS_Library_API.Services.DepartmentService;
@@ -112,6 +113,7 @@ builder.Services.AddScoped<IAuthSvc, AuthSvc>();
 //Helper
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();
 builder.Services.AddSingleton<IBlobStorageSvc, BlobStorageSvc>();
+builder.Services.AddSingleton<IExportFileExamSvc, ExportFileExamSvc>();
 
 builder.Services.AddSwaggerGen(options =>
 {
