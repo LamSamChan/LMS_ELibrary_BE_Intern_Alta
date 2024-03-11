@@ -63,6 +63,22 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpPost("create/essay-exam")]
+        public async Task<ActionResult<Logger>> CreateEssayExam(Essay_ExamDTO examDTO)
+        {
+            var exam = _mapper.Map<Exam>(examDTO);
+
+            var loggerResult = await _examSvc.Create(exam);
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }
+        }
+
 
 
         [HttpGet]

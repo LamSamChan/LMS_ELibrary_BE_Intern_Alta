@@ -58,6 +58,9 @@ namespace LMS_Library_API.Helpers
             CreateMap<MC_ExamDTO, Exam>();
             CreateMap<MC_QuestionExamDTO, Question_Exam>();
             CreateMap<MC_QuestionBankDTO, QuestionBanks>();
+            CreateMap<Essay_ExamDTO, Exam>();
+            CreateMap<Essay_QuestionExamDTO, Question_Exam>();
+            CreateMap<Essay_QuestionBankDTO, QuestionBanks>();
         }
     }
 }

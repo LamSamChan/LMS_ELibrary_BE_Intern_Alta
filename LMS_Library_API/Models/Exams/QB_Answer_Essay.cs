@@ -13,8 +13,7 @@ namespace LMS_Library_API.Models.Exams
         [Required]
         public bool SubmitType { get; set; }
 
-        [AllowNull]
-        public int LimitWord { get; set; }
+        public int? LimitWord { get; set; }
 
         //navigation property
         [ForeignKey("QuestionBanks")]
