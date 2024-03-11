@@ -32,6 +32,7 @@ namespace LMS_Library_API.Services.ExamService
                     }
                 }
 
+                exam.CensorId = null;
                 exam.Id = exam.Id.ToUpper();
 
                 _context.Exams.Add(exam);

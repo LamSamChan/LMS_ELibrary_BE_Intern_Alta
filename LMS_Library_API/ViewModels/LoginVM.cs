@@ -9,6 +9,7 @@ namespace LMS_Library_API.ViewModels
         [Required(ErrorMessage = "Hãy nhâp email để đăng nhập")]
         [RegularExpression("^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$",
             ErrorMessage = "Email không hợp lệ !")]
+        [MaxLength(50)]
         public string Email { get; set; }
         [Required(ErrorMessage = "Hãy nhâp mật khẩu để đăng nhập")]
         public string Password { get; set; }

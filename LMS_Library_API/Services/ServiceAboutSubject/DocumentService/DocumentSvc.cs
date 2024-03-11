@@ -33,6 +33,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.DocumentService
                     }
                 }
 
+                document.censorId = null;
                 _context.Documents.Add(document);
                 await _context.SaveChangesAsync();
                 return new Logger()

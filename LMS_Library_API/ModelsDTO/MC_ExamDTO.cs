@@ -35,7 +35,7 @@ namespace LMS_Library_API.ModelsDTO
 
         [MaxLength(255)]
         [AllowNull]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
 
         //navigation property
@@ -50,7 +50,7 @@ namespace LMS_Library_API.ModelsDTO
         [Required]
         public string DepartmentId { get; set; }
 
-        public virtual ICollection<MC_QuestionExamDTO> MC_QuestionExams { get; set; }
+        public virtual ICollection<MC_QuestionExamDTO> Question_Exam { get; set; }
 
     }
 }

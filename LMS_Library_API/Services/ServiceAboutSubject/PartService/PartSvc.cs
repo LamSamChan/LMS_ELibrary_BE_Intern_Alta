@@ -18,6 +18,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.PartService
         {
             try
             {
+                part.censorId = null;
                 _context.Parts.Add(part);
                 await _context.SaveChangesAsync();
                 return new Logger()

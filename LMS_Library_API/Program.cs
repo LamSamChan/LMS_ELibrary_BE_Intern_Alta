@@ -39,6 +39,8 @@ using LMS_Library_API.Services.StudentService;
 using LMS_Library_API.Services.SubjectService;
 using LMS_Library_API.Services.SystemInfomationService;
 using LMS_Library_API.Services.UserService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -58,13 +60,6 @@ builder.Services.AddControllers();
 builder.Services.AddControllers().AddDataAnnotationsLocalization();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(s => { 
-    s.SwaggerDoc("v1", new OpenApiInfo { Title = "LMS ELibrary API", Version = "v1" });
-
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    s.IncludeXmlComments(xmlPath);
-});
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -120,6 +115,12 @@ builder.Services.AddSingleton<IBlobStorageSvc, BlobStorageSvc>();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "LMS ELibrary API", Version = "v1" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -129,7 +130,12 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-builder.Services.AddAuthentication().AddJwtBearer(options =>
+builder.Services.AddAuthentication(a =>
+{
+    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    a.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -141,6 +147,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
     };
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -149,6 +156,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(s => { 
         s.SwaggerEndpoint("/swagger/v1/swagger.json", "LMS ELibrary API");
+        s.OAuthClientId("YourClientId");
+        s.OAuthClientSecret("YourClientSecret");
+        s.OAuthAppName("LMS ELibrary");
     });
 }
 

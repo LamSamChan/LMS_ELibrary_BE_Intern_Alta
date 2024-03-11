@@ -102,7 +102,7 @@ namespace LMS_Library_API.Models
 
         [JsonIgnore]
         [InverseProperty("Censor")]
-        public virtual ICollection<Exam> Censor { get; set; }
+        public virtual ICollection<Exam>? Censor { get; set; }
 
         [JsonIgnore]
         [InverseProperty("TeacherCreated")]

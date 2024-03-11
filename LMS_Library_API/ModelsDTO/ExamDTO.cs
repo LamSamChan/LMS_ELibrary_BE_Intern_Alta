@@ -37,8 +37,7 @@ namespace LMS_Library_API.ModelsDTO
         [Required]
         public Status Status { get; set; }
 
-        [AllowNull]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
 
         //navigation property

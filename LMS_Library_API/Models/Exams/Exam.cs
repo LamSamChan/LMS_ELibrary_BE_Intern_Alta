@@ -42,12 +42,11 @@ namespace LMS_Library_API.Models.Exams
         [Column(TypeName = "nvarchar(255)")]
         [MaxLength(255)]
         [AllowNull]  
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
 
         //navigation property
         [ForeignKey("Censor")]
-        [AllowNull]
         public Guid? CensorId { get; set; }
         public virtual User? Censor { get; set; }
 

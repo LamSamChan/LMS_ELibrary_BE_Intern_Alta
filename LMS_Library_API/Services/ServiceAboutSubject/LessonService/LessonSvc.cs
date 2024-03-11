@@ -18,6 +18,7 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.LessonService
         {
             try
             {
+                lesson.censorId = null;
                 _context.Lessons.Add(lesson);
                 await _context.SaveChangesAsync();
                 return new Logger()

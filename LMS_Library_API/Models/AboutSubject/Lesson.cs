@@ -29,7 +29,7 @@ namespace LMS_Library_API.Models.AboutSubject
 
         [Column(TypeName ="nvarchar(255)")]
         [AllowNull]
-        public string note { get; set; }
+        public string? note { get; set; }
 
         //navigation property
 
