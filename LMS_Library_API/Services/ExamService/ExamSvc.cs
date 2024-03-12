@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LMS_Library_API.Services.ExamService
 {
-    public class ExamSvc:IExamSvc
+    public class ExamSvc : IExamSvc
     {
         private readonly DataContext _context;
 
@@ -115,6 +115,38 @@ namespace LMS_Library_API.Services.ExamService
             }
         }
 
+        public async Task<Logger> GetById(string examId)
+        {
+            try
+            {
+                var existExam = await _context.Exams.FindAsync(examId);
+
+                if (existExam == null)
+                {
+                    return new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Không tìm thấy đối tượng"
+                    };
+                }
+
+                return new Logger()
+                {
+                    status = TaskStatus.RanToCompletion,
+                    message = "Thành công",
+                    data = existExam
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = ex.Message,
+                };
+            }
+        }
+
         public async Task<Logger> GetDetailExam(string examId)
         {
             try
@@ -206,7 +238,7 @@ namespace LMS_Library_API.Services.ExamService
                 existExam.Duration = exam.Duration;
                 existExam.ScoringScale = exam.ScoringScale;
                 existExam.DateCreated = exam.DateCreated;
-                existExam.FilePath = exam.FileName;
+                existExam.FilePath = exam.FilePath;
                 existExam.Status = exam.Status;
                 existExam.Note = exam.Note;
                 existExam.CensorId = exam.CensorId;

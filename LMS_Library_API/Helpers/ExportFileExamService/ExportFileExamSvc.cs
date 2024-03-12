@@ -184,9 +184,7 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
             string fileName = $"{exam.Id}.xlsx";
             wb.Save(fileName, ExcelSaveFormat.Xlsx);
 
-/*            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
-            System.IO.File.Delete("Excel.xlsx");*/
+
 
             return new BlobContentModel { FileName= fileName, FilePath = fileName, isImage = false };
         }

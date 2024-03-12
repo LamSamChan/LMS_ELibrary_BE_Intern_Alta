@@ -3,6 +3,7 @@ using LMS_Library_API.Helpers.BlobHelperService;
 using LMS_Library_API.Helpers.ExportFileExamService;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutSubject;
+using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.BlobStorage;
 using LMS_Library_API.Models.Exams;
 using LMS_Library_API.ModelsDTO;
@@ -64,24 +65,48 @@ namespace LMS_Library_API.Controllers
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
 
-                var exportFile = await _exportFileExamSvc.ExportExamToWord(exam);
+                var exportFile = await _exportFileExamSvc.ExportExamToExcel(exam);
 
                 var uploadResult = await _blobStorageSvc.UploadBlobFile(exportFile);
 
                 if (uploadResult.status == TaskStatus.RanToCompletion)
                 {
                     string filePath = (string)uploadResult.data;
-                    string extfileExtension = Path.GetExtension(exportFile.FileName);
+                    string fileExtension = Path.GetExtension(exportFile.FileName);
 
+                    var getExam = await _examSvc.GetById(exam.Id);
 
+                    if (getExam.status == TaskStatus.RanToCompletion)
+                    {
+                        var updateExam = (Exam)getExam.data;
+
+                        updateExam.FileType = fileExtension;
+                        updateExam.FilePath = filePath;
+
+                        var updateResult = await _examSvc.Update(updateExam);
+
+                        if (updateResult.status == TaskStatus.RanToCompletion)
+                        {
+                            System.GC.Collect();
+                            System.GC.WaitForPendingFinalizers();
+                            System.IO.File.Delete(exportFile.FilePath);
+
+                            return Ok(updateResult);
+                        }
+                        else
+                        {
+                            return BadRequest(updateResult);
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(getExam);
+                    }
                 }
                 else
                 {
                     return BadRequest(uploadResult);
                 }
-
-
-                return Ok(loggerResult);
             }
             else
             {
@@ -140,6 +165,29 @@ namespace LMS_Library_API.Controllers
             {
                 return BadRequest("Hãy điền ID để tìm kiếm đối tượng");
             }
+        }
+
+        [HttpGet("DownloadFile/{id}")]
+        public async Task<ActionResult<Logger>> DownloadFile(string id)
+        {
+            var getFile = await _examSvc.GetById(id.ToUpper());
+            if (getFile.status == TaskStatus.Faulted)
+            {
+                return BadRequest(getFile);
+            }
+            var examFile = (Exam)getFile.data;
+
+            BlobObject blobObject = await _blobStorageSvc.GetBlobFile(examFile.FilePath, "document");
+
+            if (blobObject == null)
+            {
+                return BadRequest(new Logger
+                {
+                    status = TaskStatus.Faulted,
+                    message = "Container hoặc File không tồn tại, hãy kiểm tra lại"
+                });
+            }
+            return File(blobObject.Content, blobObject.ContentType, examFile.Id+"-"+examFile.FileName);     
         }
 
         [HttpPut]

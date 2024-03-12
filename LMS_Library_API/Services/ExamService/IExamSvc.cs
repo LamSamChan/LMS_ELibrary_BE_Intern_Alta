@@ -10,6 +10,7 @@ namespace LMS_Library_API.Services.ExamService
         Task<Logger> Update(Exam exam);
         Task<Logger> Delete(string examId);
         Task<Logger> GetDetailExam(string examId);
+        Task<Logger> GetById(string examId);
         Task<Logger> Search(string query);
         Task<Logger> GetAll();
     }
