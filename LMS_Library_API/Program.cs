@@ -113,7 +113,7 @@ builder.Services.AddScoped<IAuthSvc, AuthSvc>();
 //Helper
 builder.Services.AddSingleton<IEncodeHelper, EncodeHelper>();
 builder.Services.AddSingleton<IBlobStorageSvc, BlobStorageSvc>();
-builder.Services.AddSingleton<IExportFileExamSvc, ExportFileExamSvc>();
+builder.Services.AddScoped<IExportFileExamSvc, ExportFileExamSvc>();
 
 builder.Services.AddSwaggerGen(options =>
 {

@@ -5,7 +5,7 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
 {
     public interface IExportFileExamSvc
     {
-        public BlobContentModel ExportExamToExcel(Exam exam);
-        public BlobContentModel ExportExamToWord(Exam exam);
+        Task<BlobContentModel> ExportExamToExcel(Exam exam);
+        Task<BlobContentModel> ExportExamToWord(Exam exam);
     }
 }

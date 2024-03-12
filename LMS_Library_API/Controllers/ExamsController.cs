@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using LMS_Library_API.Helpers.BlobHelperService;
+using LMS_Library_API.Helpers.ExportFileExamService;
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutSubject;
+using LMS_Library_API.Models.BlobStorage;
 using LMS_Library_API.Models.Exams;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ExamService;
@@ -18,11 +21,15 @@ namespace LMS_Library_API.Controllers
     {
         private readonly IExamSvc _examSvc;
         private readonly IMapper _mapper;
+        private readonly IExportFileExamSvc _exportFileExamSvc;
+        private readonly IBlobStorageSvc _blobStorageSvc;
 
-        public ExamsController(IExamSvc examSvc, IMapper mapper)
+        public ExamsController(IExamSvc examSvc, IMapper mapper, IExportFileExamSvc exportFileExamSvc, IBlobStorageSvc blobStorageSvc)
         {
             _mapper = mapper;
             _examSvc = examSvc;
+            _exportFileExamSvc = exportFileExamSvc;
+            _blobStorageSvc = blobStorageSvc;
         }
 
         /// <summary>
@@ -53,8 +60,27 @@ namespace LMS_Library_API.Controllers
             var exam = _mapper.Map<Exam>(examDTO);
 
             var loggerResult = await _examSvc.Create(exam);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
+
+                var exportFile = await _exportFileExamSvc.ExportExamToWord(exam);
+
+                var uploadResult = await _blobStorageSvc.UploadBlobFile(exportFile);
+
+                if (uploadResult.status == TaskStatus.RanToCompletion)
+                {
+                    string filePath = (string)uploadResult.data;
+                    string extfileExtension = Path.GetExtension(exportFile.FileName);
+
+
+                }
+                else
+                {
+                    return BadRequest(uploadResult);
+                }
+
+
                 return Ok(loggerResult);
             }
             else
