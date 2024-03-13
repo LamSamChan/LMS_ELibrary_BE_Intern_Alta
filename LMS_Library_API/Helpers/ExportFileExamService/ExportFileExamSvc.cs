@@ -12,6 +12,7 @@ using WordSaveFormat = Aspose.Cells.SaveFormat;
 using WordBorderType = Aspose.Words.BorderType;
 using Microsoft.OpenApi.Extensions;
 using Aspose.Words.Tables;
+using Microsoft.AspNetCore.Components;
 
 namespace LMS_Library_API.Helpers.ExportFileExamService
 {
@@ -192,6 +193,41 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
 
         public async Task<BlobContentModel> ExportExamToWord(Exam exam)
         {
+            var department = await _context.Departments.FindAsync(exam.DepartmentId.ToUpper());
+            var subject = await _context.Subjects.FindAsync(exam.SubjectId.ToUpper());
+            var teacherCreate = await _context.Users.FindAsync(exam.TeacherCreatedId);
+
+            string status = "";
+            if (exam.Status == Enums.Status.Unsubmitted)
+            {
+                status = "Chưa gửi phê duyệt";
+            }
+            else if (exam.Status == Enums.Status.PendingApproval)
+            {
+                status = "Đang chờ phê duyệt";
+            }
+            else if (exam.Status == Enums.Status.Approved)
+            {
+                status = "Đã phê duyệt";
+            }
+            else if (exam.Status == Enums.Status.RefuseApproval)
+            {
+                status = "Đã từ chối phê duyệt";
+            }
+            else if (exam.Status == Enums.Status.CancelApproval)
+            {
+                status = "Đã hủy phê duyệt";
+            }
+            else
+            {
+                status = "Lưu nháp";
+            }
+
+            List<string> value = new List<string>
+            {
+                $"{exam.Id}", $"{exam.FileName}","Tự luận", $"{exam.Duration} phút", $"{exam.ScoringScale}", $"{exam.DateCreated.ToString("dd/MM/yyyy")}",
+                $"{department?.Name}",  $"{subject?.Name}", $"{exam.Note}",  $"{teacherCreate?.FullName}", $"{status}"
+            };
 
             Document doc = new Document();
             // Use a document builder to add content to the document.
@@ -214,10 +250,55 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
                 builder.Write($"{title[i]}:");
                 builder.InsertCell();
                 font.Bold = false;
-                builder.Write($"value");
+                builder.Write($"{value[i]}");
                 builder.EndRow();
             }
             builder.EndTable();
+
+            builder.Writeln();
+
+            //Add question
+            List<Question_Exam> listQuestion = exam.Question_Exam.ToList();
+            int questionCount = listQuestion.Count();
+
+            for (int i = 0; i < questionCount; i++)
+            {
+                var settingQuestion = listQuestion[i].QuestionBanks.QB_Answer_Essay;
+
+                font.Bold = true;
+
+                string submitType;
+                if (settingQuestion.SubmitType)
+                {
+                    submitType = "Tải tệp lên";
+                }
+                else
+                {
+                    submitType = "Điền đáp án trực tiếp vào câu trả lời";
+
+                    if (settingQuestion.LimitWord != 0 || String.IsNullOrEmpty(settingQuestion.LimitWord.ToString()))
+                    {
+                        submitType += $" (giới hạn {settingQuestion.LimitWord} từ)";
+                    }
+                    else
+                    {
+                        submitType += " (không giới hạn số từ)";
+                    }
+                }
+
+                builder.Writeln($"Câu {i + 1}: [{submitType}]");
+
+                font.Bold = false;
+                if (listQuestion[i].QuestionBanks.Content.EndsWith('.'))
+                {
+                    builder.Writeln("\t" + listQuestion[i].QuestionBanks.Content);
+                }
+                else
+                {
+                    builder.Writeln("\t" + listQuestion[i].QuestionBanks.Content+'.');
+                }
+                builder.Writeln();
+            }
 
             string fileName = exam.Id+".docx";
             doc.Save(fileName, Aspose.Words.SaveFormat.Docx);

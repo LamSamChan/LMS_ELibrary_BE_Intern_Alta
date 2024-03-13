@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-03-13T01:32:06.756Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="GXAAwwM7VvHEx313zqee" version="23.1.5" type="device" pages="3">
+<mxfile host="Electron" modified="2024-03-13T07:15:47.689Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="bP1qqMbwlnTiQgTDvPY2" version="23.1.5" type="device" pages="3">
   <diagram name="Page-1" id="wIqU8FdTsNSahX9Sebv4">
     <mxGraphModel dx="2750" dy="1721" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -3842,10 +3842,10 @@
         <mxCell id="-LNQFW-rvc8BWFgXd_Ia-1" value="&lt;b&gt;08/03/2024&lt;br&gt;&lt;/b&gt;Sửa lại bảng&amp;nbsp;QnALikes của user và student" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-450" y="140" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="vkpHsPhUqevac5JTU6VJ-1" value="&lt;b&gt;10/03/2024&lt;br&gt;&lt;/b&gt;Xuất file đề thi khi tạo 1 đề thi bao gồm thông tin đề thi và câu hỏi [Done với đề trắc nghiệm]&lt;br&gt;&lt;br&gt;Tạo đề với câu hỏi ngẫu nhiên&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+        <mxCell id="vkpHsPhUqevac5JTU6VJ-1" value="&lt;b&gt;10/03/2024&lt;br&gt;&lt;/b&gt;Xuất file đề thi khi tạo 1 đề thi bao gồm thông tin đề thi và câu hỏi [Done với 2 dạng đề]&lt;br&gt;&lt;br&gt;Tạo đề với câu hỏi ngẫu nhiên&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="-20" y="540" width="210" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="LOQP3by90PacoxMIyysv-1" value="&lt;b&gt;13/03/2024&lt;br&gt;&lt;/b&gt;Sau khi cập nhật trạng thái của đề hay sửa câu hỏi trong đề thì xuất lại file mới&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+        <mxCell id="LOQP3by90PacoxMIyysv-1" value="&lt;b&gt;13/03/2024&lt;br&gt;&lt;/b&gt;Sau khi cập nhật trạng thái của đề hay sửa câu hỏi trong đề thì xuất lại file mới&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="-290" y="540" width="210" height="210" as="geometry" />
         </mxCell>
       </root>

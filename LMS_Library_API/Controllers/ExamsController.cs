@@ -120,26 +120,57 @@ namespace LMS_Library_API.Controllers
             var exam = _mapper.Map<Exam>(examDTO);
 
             var loggerResult = await _examSvc.Create(exam);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
-                return Ok(loggerResult);
+                var exportFile = await _exportFileExamSvc.ExportExamToWord(exam);
+
+                var uploadResult = await _blobStorageSvc.UploadBlobFile(exportFile);
+
+                if (uploadResult.status == TaskStatus.RanToCompletion)
+                {
+                    string filePath = (string)uploadResult.data;
+                    string fileExtension = Path.GetExtension(exportFile.FileName);
+
+                    var getExam = await _examSvc.GetById(exam.Id);
+
+                    if (getExam.status == TaskStatus.RanToCompletion)
+                    {
+                        var updateExam = (Exam)getExam.data;
+
+                        updateExam.FileType = fileExtension;
+                        updateExam.FilePath = filePath;
+
+                        var updateResult = await _examSvc.Update(updateExam);
+
+                        if (updateResult.status == TaskStatus.RanToCompletion)
+                        {
+                            System.GC.Collect();
+                            System.GC.WaitForPendingFinalizers();
+                            System.IO.File.Delete(exportFile.FilePath);
+
+                            return Ok(updateResult);
+                        }
+                        else
+                        {
+                            return BadRequest(updateResult);
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(getExam);
+                    }
+                }
+                else
+                {
+                    return BadRequest(uploadResult);
+                }
             }
             else
             {
                 return BadRequest(loggerResult);
             }
         }
-
-        [HttpPost("export/essay-exam")]
-        public async Task<ActionResult<BlobContentModel>> ExportEssayExam(Essay_ExamDTO examDTO)
-        {
-            var exam = _mapper.Map<Exam>(examDTO);
-
-            var loggerResult = await _exportFileExamSvc.ExportExamToWord(exam);
-            return Ok(loggerResult);
-        }
-
-
 
 
         [HttpGet]

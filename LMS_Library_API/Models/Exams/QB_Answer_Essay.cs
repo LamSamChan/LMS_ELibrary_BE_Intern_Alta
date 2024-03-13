@@ -11,6 +11,7 @@ namespace LMS_Library_API.Models.Exams
 
         [Column(TypeName ="bit")]
         [Required]
+        //true: tai tep len / false dien truc tiep
         public bool SubmitType { get; set; }
 
         public int? LimitWord { get; set; }
