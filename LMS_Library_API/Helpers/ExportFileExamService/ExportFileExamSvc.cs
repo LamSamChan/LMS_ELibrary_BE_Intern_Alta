@@ -11,6 +11,7 @@ using ExcelSaveFormat = Aspose.Cells.SaveFormat;
 using WordSaveFormat = Aspose.Cells.SaveFormat;
 using WordBorderType = Aspose.Words.BorderType;
 using Microsoft.OpenApi.Extensions;
+using Aspose.Words.Tables;
 
 namespace LMS_Library_API.Helpers.ExportFileExamService
 {
@@ -23,16 +24,16 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
             _context = context;
         }
 
+        private List<string> title = new List<string>
+        {
+            "ID", "Tên đề thi","Hình thức", "Thời gian", "Thang điểm", "Ngày tạo", "Tổ bộ môn", "Môn học", "Ghi chú", "Giảng viên tạo", "Trạng thái"
+        };
+
         public async Task<BlobContentModel> ExportExamToExcel(Exam exam)
         {
             List<char> Answer = new List<char>
             {
                 'A','B','C','D','E','F','G','H', 'I', 'J', 'K'
-            };
-
-            List<string> title = new List<string>
-            {
-                "ID", "Tên đề thi","Hình thức", "Thời gian", "Thang điểm", "Ngày tạo", "Tổ bộ môn", "Môn học", "Ghi chú", "Giảng viên tạo", "Trạng thái"
             };
 
             var department = await _context.Departments.FindAsync(exam.DepartmentId.ToUpper());
@@ -86,7 +87,7 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
             StyleFlag flagBold = new StyleFlag();
             flagBold.FontBold = true;
 
-            Cell columnA = sheet.Cells["A1"];
+            Aspose.Cells.Cell columnA = sheet.Cells["A1"];
 
             Aspose.Cells.Style style= columnA.GetStyle();
             style.Font.Name = "Times New Roman";
@@ -115,10 +116,10 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
             //Put value to Column A and add style
             for (int i = 0; i < title.Count; i++)
             {
-                Cell cellA = sheet.Cells[$"A{i+1}"];
+                Aspose.Cells.Cell cellA = sheet.Cells[$"A{i+1}"];
                 cellA.PutValue($"{title[i]}:");
 
-                Cell cellB = sheet.Cells[$"B{i + 1}"];
+                Aspose.Cells.Cell cellB = sheet.Cells[$"B{i + 1}"];
                 cellB.PutValue($"{value[i]}");
             }
 
@@ -136,7 +137,7 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
                 //Setting
                 sheet.Cells.Merge(cellIndex - 1, 4, 1, 14);
 
-                Cell columnTitle = sheet.Cells[$"D{cellIndex}"];
+                Aspose.Cells.Cell columnTitle = sheet.Cells[$"D{cellIndex}"];
                 Aspose.Cells.Style styleTitleQuestion = columnTitle.GetStyle();
                 styleTitleQuestion.Font.Name = "Times New Roman";
                 styleTitleQuestion.Font.IsBold = true;
@@ -146,20 +147,20 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
                 styleTitleQuestion.IsTextWrapped = true;
                 sheet.Cells.CreateRange($"D{cellIndex}:E{cellIndex}").ApplyStyle(styleTitleQuestion, flag);
 
-                Cell cellDQuestion = sheet.Cells[$"D{cellIndex}"];
+                Aspose.Cells.Cell cellDQuestion = sheet.Cells[$"D{cellIndex}"];
                 cellDQuestion.PutValue($"Câu {i + 1}:");
       
-                Cell cellEQuestion = sheet.Cells[$"E{cellIndex}"];
+                Aspose.Cells.Cell cellEQuestion = sheet.Cells[$"E{cellIndex}"];
                 cellEQuestion.PutValue($"{listQuestion[i].QuestionBanks.Content}");
 
                 var listAnswer = listQuestion[i].QuestionBanks.QB_Answers_MC.ToList();
 
                 for (int j = 0; j < listAnswer.Count; j++)
                 {
-                    Cell cellEAnswer = sheet.Cells[$"E{cellIndex + 1 + j}"];
+                    Aspose.Cells.Cell cellEAnswer = sheet.Cells[$"E{cellIndex + 1 + j}"];
                     cellEAnswer.PutValue($"{Answer[j]}.");
 
-                    Cell cellFAnswer = sheet.Cells[$"F{cellIndex + 1 + j}"];
+                    Aspose.Cells.Cell cellFAnswer = sheet.Cells[$"F{cellIndex + 1 + j}"];
                     cellFAnswer.PutValue($"{listAnswer[j].AnswerContent}.");
 
                     Aspose.Cells.Style styleAnswer = cellEAnswer.GetStyle();
@@ -191,7 +192,37 @@ namespace LMS_Library_API.Helpers.ExportFileExamService
 
         public async Task<BlobContentModel> ExportExamToWord(Exam exam)
         {
-            return new BlobContentModel { FileName = "", FilePath = "", isImage = false };
+
+            Document doc = new Document();
+            // Use a document builder to add content to the document.
+            DocumentBuilder builder = new DocumentBuilder(doc);
+
+            // Set font formatting properties
+            Aspose.Words.Font font = builder.Font;
+            font.Bold = false;
+            font.Color = System.Drawing.Color.Black;
+            font.Name = "Times New Roman";
+            font.Size = 12;
+
+            // Mark the start of Word Table 
+            Table table= builder.StartTable();
+
+            for (int i = 0; i < title.Count(); i++)
+            {
+                builder.InsertCell();
+                font.Bold = true;
+                builder.Write($"{title[i]}:");
+                builder.InsertCell();
+                font.Bold = false;
+                builder.Write($"value");
+                builder.EndRow();
+            }
+            builder.EndTable();
+
+            string fileName = exam.Id+".docx";
+            doc.Save(fileName, Aspose.Words.SaveFormat.Docx);
+
+            return new BlobContentModel { FileName = fileName, FilePath = fileName, isImage = false };
         }
     }
 }

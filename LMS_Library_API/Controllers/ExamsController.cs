@@ -130,6 +130,16 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpPost("export/essay-exam")]
+        public async Task<ActionResult<BlobContentModel>> ExportEssayExam(Essay_ExamDTO examDTO)
+        {
+            var exam = _mapper.Map<Exam>(examDTO);
+
+            var loggerResult = await _exportFileExamSvc.ExportExamToWord(exam);
+            return Ok(loggerResult);
+        }
+
+
 
 
         [HttpGet]
