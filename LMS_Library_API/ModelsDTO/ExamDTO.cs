@@ -42,7 +42,7 @@ namespace LMS_Library_API.ModelsDTO
 
         //navigation property
         [AllowNull]
-        public Guid CensorId { get; set; }
+        public Guid? CensorId { get; set; }
 
         [Required]
         public Guid TeacherCreatedId { get; set; }

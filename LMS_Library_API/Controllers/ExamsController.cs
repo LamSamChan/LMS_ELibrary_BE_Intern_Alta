@@ -9,6 +9,7 @@ using LMS_Library_API.Models.Exams;
 using LMS_Library_API.ModelsDTO;
 using LMS_Library_API.Services.ExamService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
+using LMS_Library_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -172,6 +173,40 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpPost("auto-create")]
+        public async Task<ActionResult<Logger>> AutoCreateExam(AutoCreateMCExam autoCreateExam)
+        {
+            if (autoCreateExam.QuestionsEasy + autoCreateExam.QuestionsEasy + autoCreateExam.QuestionsEasy != autoCreateExam.NumberOfQuestions)
+            {
+                Logger logger = new Logger() { 
+                    status = TaskStatus.Faulted,
+                    message = "Số lượng tổng câu hỏi và tổng số lượng câu hỏi của 3 mức độ không khớp"
+                };
+                return BadRequest(logger); 
+            }
+
+            for (int i = 0; i < autoCreateExam.NumberOfExams; i++)
+            {
+                var exam = _mapper.Map<Exam>(autoCreateExam.AutoExamDTO);
+                exam.Id = Guid.NewGuid().ToString().Substring(0, 4) + DateTime.Now.Ticks.ToString().Substring(7, 4);
+                exam.FileType = ".xlsx";
+                exam.Format = true;
+                exam.Duration = 60;
+                exam.Status = Enums.Status.PendingApproval;
+            }
+
+            /*var loggerResult = await _examSvc.Create(exam);
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }*/
+
+            return new Logger();
+        }
 
         [HttpGet]
         public async Task<ActionResult<Logger>> GetAll()
