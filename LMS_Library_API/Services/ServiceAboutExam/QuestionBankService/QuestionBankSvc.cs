@@ -186,5 +186,55 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
                 };
             }
         }
+
+        public async Task<ICollection<Question_Exam>> GetRandomQuestion(int easy, int medium, int hard, string subjectId)
+        {
+            var listQuestion = await _context.QuestionBanks.Include(_ => _.QB_Answers_MC)
+                                                           .Where(_ => _.SubjectId == subjectId && _.Format == true)
+                                                           .ToListAsync();
+
+            List<QuestionBanks> easyQuestions = listQuestion.Where(_ => _.Level == Enums.Level.Easy).OrderBy(x => Guid.NewGuid()).Take(easy).ToList();
+
+            List<QuestionBanks> mediumQuestions = listQuestion.Where(_ => _.Level == Enums.Level.Medium).OrderBy(x => Guid.NewGuid()).Take(medium).ToList();
+
+            List<QuestionBanks> hardQuestions = listQuestion.Where(_ => _.Level == Enums.Level.Hard).OrderBy(x => Guid.NewGuid()).Take(hard).ToList();
+
+            List<Question_Exam> question_Exams = new List<Question_Exam>();
+
+            foreach (var item in easyQuestions)
+            {
+                Question_Exam question = new Question_Exam()
+                {
+                    QuestionId= item.Id,
+                    QuestionBanks = item
+                };
+
+                question_Exams.Add(question);
+            }
+
+            foreach (var item in mediumQuestions)
+            {
+                Question_Exam question = new Question_Exam()
+                {
+                    QuestionId = item.Id,
+                    QuestionBanks = item
+                };
+
+                question_Exams.Add(question);
+            }
+
+            foreach (var item in hardQuestions)
+            {
+                Question_Exam question = new Question_Exam()
+                {
+                    QuestionId = item.Id,
+                    QuestionBanks = item
+                };
+
+                question_Exams.Add(question);
+            }
+
+            return question_Exams;
+        }
     }
 }

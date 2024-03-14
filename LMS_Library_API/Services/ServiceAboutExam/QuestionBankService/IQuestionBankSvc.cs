@@ -11,5 +11,7 @@ namespace LMS_Library_API.Services.ServiceAboutExam.QuestionBankService
         Task<Logger> Delete(int questionBanksId);
         Task<Logger> GetById(int questionBanksId);
         Task<Logger> GetAll();
+        Task<ICollection<Question_Exam>> GetRandomQuestion(int easy, int medium, int hard, string subjectId);
+
     }
 }

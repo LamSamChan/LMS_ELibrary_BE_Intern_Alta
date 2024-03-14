@@ -192,3 +192,13 @@ E:\Intern\LMS_ELibrary_BE_Intern_Alta\LMS_ELibrary_BE_Intern_Alta\LMS_Library_AP
 E:\Intern\LMS_ELibrary_BE_Intern_Alta\LMS_ELibrary_BE_Intern_Alta\LMS_Library_API\bin\Debug\net6.0\runtimes\win-x64\native\libSkiaSharp.dll
 E:\Intern\LMS_ELibrary_BE_Intern_Alta\LMS_ELibrary_BE_Intern_Alta\LMS_Library_API\bin\Debug\net6.0\runtimes\win-x86\native\libSkiaSharp.dll
 E:\Intern\LMS_ELibrary_BE_Intern_Alta\LMS_ELibrary_BE_Intern_Alta\LMS_Library_API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Aspose.Cells.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Aspose.Words.Pdf2Word.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\Aspose.Words.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\SkiaSharp.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\runtimes\osx\native\libSkiaSharp.dylib
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\runtimes\win-arm64\native\libSkiaSharp.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\runtimes\win-x64\native\libSkiaSharp.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\runtimes\win-x86\native\libSkiaSharp.dll
+D:\Intern_Alta\TASK_2\ELibrary_TASK2\LMS_Library_API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
