@@ -68,6 +68,8 @@ namespace LMS_Library_API.Controllers
             {
                 BlobContentModel? uploadModel = loggerResult.data as BlobContentModel;
 
+                string examId = (string)loggerResult.listData.ToList()[0];
+
                 var uploadResult = await _blobStorageSvc.UploadBlobFile(uploadModel);
 
                 if (uploadResult.status == TaskStatus.Faulted)
@@ -75,7 +77,19 @@ namespace LMS_Library_API.Controllers
                     return BadRequest(uploadResult);
                 }
 
-                return Ok(loggerResult);
+                var getExam = await _examSvc.GetById(examId);
+                var exam = (Exam)getExam.data;
+
+                exam.FilePath = (string)uploadResult.data;
+                
+                var updateResult = await _examSvc.Update(exam);
+
+                if (updateResult.status == TaskStatus.Faulted)
+                {
+                    return BadRequest(updateResult);
+                }
+
+                return Ok(updateResult);
             }
             else
             {

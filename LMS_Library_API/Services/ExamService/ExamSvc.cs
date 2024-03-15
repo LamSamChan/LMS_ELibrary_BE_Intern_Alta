@@ -59,11 +59,6 @@ namespace LMS_Library_API.Services.ExamService
 
         public async Task<Logger> CreateMCExamByFile(string filePath)
         {
-            List<char> Answer = new List<char>
-            {
-                'A','B','C','D','E','F','G','H', 'I', 'J', 'K'
-            };
-
             try
             {
                 Workbook workbook = new Workbook(filePath);
@@ -238,7 +233,7 @@ namespace LMS_Library_API.Services.ExamService
 
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
-                    return new Logger() { 
+                    return new Logger() {
                         status = loggerResult.status,
                         message = loggerResult.message,
                         data = new BlobContentModel()
@@ -246,7 +241,8 @@ namespace LMS_Library_API.Services.ExamService
                             FileName = Path.GetFileName(filePath),
                             FilePath = filePath,
                             isImage = false
-                        }
+                        },
+                        listData = new List<string>() { exam.Id }
                     };
                 }
                 else
