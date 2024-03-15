@@ -63,8 +63,18 @@ namespace LMS_Library_API.Controllers
         public async Task<ActionResult<Logger>> UploadExam(string filePath)
         {
             var loggerResult = await _examSvc.CreateMCExamByFile(filePath);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
+                BlobContentModel? uploadModel = loggerResult.data as BlobContentModel;
+
+                var uploadResult = await _blobStorageSvc.UploadBlobFile(uploadModel);
+
+                if (uploadResult.status == TaskStatus.Faulted)
+                {
+                    return BadRequest(uploadResult);
+                }
+
                 return Ok(loggerResult);
             }
             else

@@ -81,41 +81,41 @@ namespace LMS_Library_API.Services.ExamService
                 exam.DateCreated = Convert.ToDateTime(worksheet.Cells["B6"].Value);
                 exam.DepartmentId = worksheet.Cells["B7"].Value.ToString().ToUpper();
                 exam.SubjectId = worksheet.Cells["B8"].Value.ToString().ToUpper();
-                try
-                {
-                    exam.Note = worksheet.Cells["B9"].Value.ToString();
-                }
-                catch (Exception)
-                {
 
-                    exam.Note = null;
+                switch (worksheet.Cells["B9"].Type)
+                {
+                    case Aspose.Cells.CellValueType.IsNull:
+                        exam.Note = null;
+                        break;
+                    default:
+                        exam.Note = worksheet.Cells["B9"].Value.ToString();
+                        break;
                 }
+
                 exam.TeacherCreatedId = Guid.Parse(worksheet.Cells["B10"].Value.ToString());
                 exam.Status = Enums.Status.PendingApproval;
 
-                /*var styleE4 = worksheet.Cells["E4"].GetDisplayStyle();
-
-                var foreground = styleE4.Font.Color.Name.ToString();*/
-
                 List<Question_Exam> listQuestion = new List<Question_Exam>();
 
-                bool endQuestion = false;
+                bool isEndQuestion = false;
+                int indexQuestion = 1;
+                
                 do
-                {
+                {       
                     QuestionBanks qBanks = new QuestionBanks();
                     qBanks.Format = true;
-                    qBanks.Content = worksheet.Cells["E1"].Value.ToString();
+                    qBanks.Content = worksheet.Cells[$"E{indexQuestion}"].Value.ToString();
                     qBanks.LastUpdated = DateTime.Now;
                     qBanks.TeacherCreatedId = exam.TeacherCreatedId;
                     qBanks.SubjectId = exam.SubjectId;
 
-                    string foreground = worksheet.Cells["E1"].GetDisplayStyle().Font.Color.Name.ToUpper();
+                    string foreground = worksheet.Cells[$"E{indexQuestion}"].GetDisplayStyle().Font.Color.Name.ToUpper();
 
-                    if (foreground == "0070C0")
+                    if (foreground == "FF0070C0")
                     {
                         qBanks.Level = Enums.Level.Medium;
                     }
-                    else if (foreground == "7030A0")
+                    else if (foreground == "FF7030A0")
                     {
                         qBanks.Level = Enums.Level.Hard;
                     }
@@ -124,22 +124,39 @@ namespace LMS_Library_API.Services.ExamService
                         qBanks.Level = Enums.Level.Easy;
                     }
 
+                    Aspose.Cells.Cell cellStyle = worksheet.Cells[$"E{indexQuestion}"];
+                    Aspose.Cells.Style style = cellStyle.GetStyle();
+                    style.Font.Name = "Times New Roman";
+                    style.Font.IsBold = true;
+                    style.Font.Size = 12;
+                    style.Font.Color = System.Drawing.Color.Black;
+                    cellStyle.SetStyle(style);
+
                     //Answer
                     List<QB_Answer_MC> listAnswer = new List<QB_Answer_MC>();
-                    QB_Answer_MC qB_Answer_MC = new QB_Answer_MC();
-                    qB_Answer_MC.AnswerContent = worksheet.Cells["F2"].Value.ToString();
-                    string foregroundAnswer = worksheet.Cells["E2"].GetDisplayStyle().Font.Color.Name.ToUpper();
+                    bool isEndAnswer = false;
 
-                    if (foregroundAnswer == "FFFF0000")
+                    int indexAnswer = indexQuestion + 1;
+                    do
                     {
-                        qB_Answer_MC.IsCorrect = true;
-                    }
-                    else
-                    {
-                        qB_Answer_MC.IsCorrect = false;
-                    }
-                    listAnswer.Add(qB_Answer_MC);
+                        QB_Answer_MC qB_Answer_MC = new QB_Answer_MC();
+                        qB_Answer_MC.AnswerContent = worksheet.Cells[$"F{indexAnswer}"].Value.ToString();
+                        string foregroundAnswer = worksheet.Cells[$"F{indexAnswer}"].GetDisplayStyle().Font.Color.Name.ToUpper();
 
+                        qB_Answer_MC.IsCorrect = foregroundAnswer == "FFFF0000";
+                        listAnswer.Add(qB_Answer_MC);
+
+                        indexAnswer++;
+
+                        switch (worksheet.Cells[$"F{indexAnswer}"].Type)
+                        {
+                            case Aspose.Cells.CellValueType.IsNull:
+                                isEndAnswer = true;
+                                break;
+                        }
+
+                    } while (!isEndAnswer);
+                    
                     qBanks.QB_Answers_MC = listAnswer;
 
                     listQuestion.Add(new Question_Exam
@@ -147,7 +164,17 @@ namespace LMS_Library_API.Services.ExamService
                         QuestionBanks = qBanks
                     });
 
-                } while (!endQuestion);
+                    indexQuestion = indexAnswer + 1;
+                    indexAnswer++;
+
+                    switch (worksheet.Cells[$"E{indexQuestion}"].Type)
+                    {
+                        case Aspose.Cells.CellValueType.IsNull:
+                            isEndQuestion = true;
+                            break;
+                    }
+
+                } while (!isEndQuestion);
 
                 exam.Question_Exam = listQuestion;
 
