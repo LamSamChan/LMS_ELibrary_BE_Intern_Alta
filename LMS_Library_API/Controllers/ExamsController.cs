@@ -59,12 +59,35 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpPost("{filePath}")]
+        public async Task<ActionResult<Logger>> UploadExam(string filePath)
+        {
+            var loggerResult = await _examSvc.CreateMCExamByFile(filePath);
+            if (loggerResult.status == TaskStatus.RanToCompletion)
+            {
+                return Ok(loggerResult);
+            }
+            else
+            {
+                return BadRequest(loggerResult);
+            }
+        }
+
         [HttpPost("create/mc-exam")]
         public async Task<ActionResult<Logger>> CreateMCExam(MC_ExamDTO examDTO)
         {
+            if (!examDTO.Format)
+            {
+                return BadRequest(new Logger()
+                {
+                    status= TaskStatus.Faulted,
+                    message = "Sai định dạng đề thi / kiểm tra!"
+                });
+            }
+
             var exam = _mapper.Map<Exam>(examDTO);
 
-            var loggerResult = await CreateAndExportMCExam(exam);
+            var loggerResult = await CreateAndExportExam(exam);
 
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
@@ -79,54 +102,22 @@ namespace LMS_Library_API.Controllers
         [HttpPost("create/essay-exam")]
         public async Task<ActionResult<Logger>> CreateEssayExam(Essay_ExamDTO examDTO)
         {
+            if (examDTO.Format)
+            {
+                return BadRequest(new Logger()
+                {
+                    status = TaskStatus.Faulted,
+                    message = "Sai định dạng đề thi / kiểm tra!"
+                });
+            }
+
             var exam = _mapper.Map<Exam>(examDTO);
 
-            var loggerResult = await _examSvc.Create(exam);
+            var loggerResult = await CreateAndExportExam(exam);
 
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
-                var exportFile = await _exportFileExamSvc.ExportExamToWord(exam);
-
-                var uploadResult = await _blobStorageSvc.UploadBlobFile(exportFile);
-
-                if (uploadResult.status == TaskStatus.RanToCompletion)
-                {
-                    string filePath = (string)uploadResult.data;
-                    string fileExtension = Path.GetExtension(exportFile.FileName);
-
-                    var getExam = await _examSvc.GetById(exam.Id);
-
-                    if (getExam.status == TaskStatus.RanToCompletion)
-                    {
-                        var updateExam = (Exam)getExam.data;
-
-                        updateExam.FileType = fileExtension;
-                        updateExam.FilePath = filePath;
-
-                        var updateResult = await _examSvc.Update(updateExam);
-
-                        if (updateResult.status == TaskStatus.RanToCompletion)
-                        {
-                            System.GC.Collect();
-                            System.GC.WaitForPendingFinalizers();
-                            System.IO.File.Delete(exportFile.FilePath);
-
-                            return Ok(updateResult);
-                        }
-                        else
-                        {
-                            return BadRequest(updateResult);
-                        }
-                    }
-                    else
-                    {
-                        return BadRequest(getExam);
-                    }
-                }
-                else
-                {
-                    return BadRequest(uploadResult);
-                }
+                return Ok(loggerResult);
             }
             else
             {
@@ -156,14 +147,14 @@ namespace LMS_Library_API.Controllers
                 exam.Status = Enums.Status.PendingApproval;
                 exam.Question_Exam = await _questionBankSvc.GetRandomQuestion(autoCreateExam.QuestionsEasy, autoCreateExam.QuestionsMedium, autoCreateExam.QuestionsHard, exam.SubjectId.ToUpper());
 
-                var loggerResult = await CreateAndExportMCExam(exam);
+                var loggerResult = await CreateAndExportExam(exam);
 
                 if (loggerResult.status == TaskStatus.Faulted)
                 {
                     return BadRequest(loggerResult);
                 }
             }
-
+ 
             return Ok(new Logger()
             {
                 status = TaskStatus.RanToCompletion,
@@ -185,12 +176,12 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Logger>> GetDetailExam(string id)
+        [HttpGet("{id}/{format}")]
+        public async Task<ActionResult<Logger>> GetDetailExam(string id, bool format)
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
-                var loggerResult = await _examSvc.GetDetailExam(id);
+                var loggerResult = await _examSvc.GetDetailExam(id, format);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
                     return Ok(loggerResult);
@@ -245,6 +236,92 @@ namespace LMS_Library_API.Controllers
             }
         }
 
+        [HttpPut("update/mc-exam")]
+        public async Task<ActionResult<Logger>> UpdateMCExam(MC_ExamDTO examDTO)
+        {
+            var exam = _mapper.Map<Exam>(examDTO);
+
+            var getOldExam = await _examSvc.GetById(examDTO.Id);
+
+            if (getOldExam.status == TaskStatus.Faulted)
+            {
+                return BadRequest(getOldExam);
+            }
+
+            var oldPath = (Exam)getOldExam.data;
+
+            var exportExam = await _exportFileExamSvc.ExportExamToExcel(exam);
+
+            var uploadResult = await _blobStorageSvc.UploadBlobFile(exportExam);
+
+            if (uploadResult.status == TaskStatus.Faulted)
+            {
+                return BadRequest(uploadResult);
+            }
+
+            exam.FilePath = (string)uploadResult.data;
+            exam.FileType = Path.GetExtension(exportExam.FileName);
+
+            var loggerResult = await _examSvc.Update(exam);
+
+            if (loggerResult.status == TaskStatus.Faulted)
+            {
+                return BadRequest(loggerResult);
+            }
+
+            var deleteResult = await _blobStorageSvc.DeleteBlobFile(oldPath.FilePath, "document");
+
+            if (deleteResult.status == TaskStatus.Faulted)
+            {
+                return BadRequest(deleteResult);
+            }
+
+            return Ok(loggerResult);
+        }
+
+        [HttpPut("update/essay-exam")]
+        public async Task<ActionResult<Logger>> UpdateEssayExam(Essay_ExamDTO examDTO)
+        {
+            var exam = _mapper.Map<Exam>(examDTO);
+
+            var getOldExam = await _examSvc.GetById(examDTO.Id);
+
+            if (getOldExam.status == TaskStatus.Faulted)
+            {
+                return BadRequest(getOldExam);
+            }
+
+            var oldPath = (Exam)getOldExam.data;
+
+            var exportExam = await _exportFileExamSvc.ExportExamToWord(exam);
+
+            var uploadResult = await _blobStorageSvc.UploadBlobFile(exportExam);
+
+            if (uploadResult.status == TaskStatus.Faulted)
+            {
+                return BadRequest(uploadResult);
+            }
+
+            exam.FilePath = (string)uploadResult.data;
+            exam.FileType = Path.GetExtension(exportExam.FileName);
+
+            var loggerResult = await _examSvc.Update(exam);
+
+            if (loggerResult.status == TaskStatus.Faulted)
+            {
+                return BadRequest(loggerResult);
+            }
+
+            var deleteResult = await _blobStorageSvc.DeleteBlobFile(oldPath.FilePath, "document");
+
+            if (deleteResult.status == TaskStatus.Faulted)
+            {
+                return BadRequest(deleteResult);
+            }
+
+            return Ok(loggerResult);
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<Logger>> Delete(string id)
         {
@@ -287,14 +364,21 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        private async Task<Logger> CreateAndExportMCExam(Exam exam)
+        private async Task<Logger> CreateAndExportExam(Exam exam)
         {
             var loggerResult = await _examSvc.Create(exam);
 
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
-
-                var exportFile = await _exportFileExamSvc.ExportExamToExcel(exam);
+                BlobContentModel exportFile;
+                if (exam.Format)
+                {
+                    exportFile = await _exportFileExamSvc.ExportExamToExcel(exam);
+                }
+                else
+                {
+                    exportFile = await _exportFileExamSvc.ExportExamToWord(exam);
+                }
 
                 var uploadResult = await _blobStorageSvc.UploadBlobFile(exportFile);
 
