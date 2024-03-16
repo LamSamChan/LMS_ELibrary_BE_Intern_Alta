@@ -9,14 +9,15 @@ namespace LMS_Library_API.ModelsDTO
 {
     public class NotificationClassStudentDTO
     {
-        [Required]
-        public int SubjectNotificationId { get; set; }
+        public int? SubjectNotificationId { get; set; }
 
         [Required]
         [MaxLength(30)]
         public string ClassId { get; set; }
 
-        [AllowNull]
         public Guid? StudentId { get; set; }
+
+        [Required]
+        public bool IsForAllStudent { get; set; }
     }
 }

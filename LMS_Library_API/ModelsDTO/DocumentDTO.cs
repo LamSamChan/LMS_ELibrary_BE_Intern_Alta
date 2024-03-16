@@ -46,5 +46,8 @@ namespace LMS_Library_API.ModelsDTO
 
         [Required]
         public Guid teacherCreatedId { get; set; }
+
+        [Required]
+        public DocumentAccessDTO DocumentAccess { get; set; }
     }
 }

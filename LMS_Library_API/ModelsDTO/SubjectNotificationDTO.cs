@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using LMS_Library_API.Models.AboutSubject;
 
 namespace LMS_Library_API.ModelsDTO
 {
@@ -26,5 +27,7 @@ namespace LMS_Library_API.ModelsDTO
 
         [Required]
         public Guid teacherId { get; set; }
+
+        public virtual ICollection<NotificationClassStudentDTO> NotificationClassStudents { get; set; }
     }
 }

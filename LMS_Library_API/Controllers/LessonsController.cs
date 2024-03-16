@@ -2,6 +2,7 @@
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.ModelsDTO;
+using LMS_Library_API.Services.ServiceAboutSubject.LessonAccessService;
 using LMS_Library_API.Services.ServiceAboutSubject.LessonService;
 using LMS_Library_API.Services.ServiceAboutSubject.PartService;
 using Microsoft.AspNetCore.Authorization;
@@ -20,12 +21,14 @@ namespace LMS_Library_API.Controllers
     {
 
         private readonly ILessonSvc _lessonSvc;
+        private readonly ILessonAccessSvc _lessonAccessSvc;
         private readonly IMapper _mapper;
 
-        public LessonsController(ILessonSvc lessonSvc, IMapper mapper)
+        public LessonsController(ILessonSvc lessonSvc, ILessonAccessSvc lessonAccessSvc, IMapper mapper)
         { 
             _mapper = mapper;
             _lessonSvc = lessonSvc;
+            _lessonAccessSvc = lessonAccessSvc;
         }
 
         /// <summary>
@@ -38,8 +41,27 @@ namespace LMS_Library_API.Controllers
             var lesson = _mapper.Map<Lesson>(lessonDTO);
 
             var loggerResult = await _lessonSvc.Create(lesson);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
+                var lessonAccess = _mapper.Map<LessonAccess>(lessonDTO.LessonAccess);
+
+                if ((lessonAccess.classId != null && lessonAccess.isForAllClasses) || (lessonAccess.classId == null && !lessonAccess.isForAllClasses))
+                {
+                    return BadRequest(new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Hãy kiểm tra lại phân công bài học"
+                    });
+                }
+
+                var addLessonAccess = await _lessonAccessSvc.Create(lessonAccess);
+
+                if (addLessonAccess.status == TaskStatus.Faulted)
+                {
+                    return BadRequest(addLessonAccess);
+                }
+
                 return Ok(loggerResult);
             }
             else

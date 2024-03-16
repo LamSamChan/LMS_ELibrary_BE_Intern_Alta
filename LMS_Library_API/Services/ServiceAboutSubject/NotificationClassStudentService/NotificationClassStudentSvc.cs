@@ -226,6 +226,8 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.NotificationClassStudentS
                 existNotification.SubjectNotificationId = notification.SubjectNotificationId;
                 existNotification.ClassId = notification.ClassId;
                 existNotification.StudentId = notification.StudentId;
+                existNotification.IsForAllStudent = notification.IsForAllStudent;
+
                 if (notification.StudentId != null)
                 {
                     existNotification.IsForAllStudent = true;

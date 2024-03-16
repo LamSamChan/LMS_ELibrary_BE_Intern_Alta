@@ -5,6 +5,7 @@ using LMS_Library_API.Models.AboutSubject;
 using LMS_Library_API.Models.AboutUser;
 using LMS_Library_API.Models.BlobStorage;
 using LMS_Library_API.ModelsDTO;
+using LMS_Library_API.Services.ServiceAboutSubject.DocumentAccessService;
 using LMS_Library_API.Services.ServiceAboutSubject.DocumentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,17 +21,19 @@ namespace LMS_Library_API.Controllers
     public class DocumentsController : ControllerBase
     {
         private readonly IDocumentSvc _documentSvc;
+        private readonly IDocumentAccessSvc _documentAccessSvc;
         private readonly IBlobStorageSvc _blobStorageSvc;
         private readonly IMapper _mapper;
 
-        public DocumentsController(IDocumentSvc documentSvc, IBlobStorageSvc blobStorageSvc, IMapper mapper)
+        public DocumentsController(IDocumentSvc documentSvc, IDocumentAccessSvc documentAccessSvc, IBlobStorageSvc blobStorageSvc, IMapper mapper)
         {
             _documentSvc = documentSvc;
+            _documentAccessSvc = documentAccessSvc;
             _blobStorageSvc = blobStorageSvc;
             _mapper = mapper;
         }
         /// <summary>
-        /// false: tai lieu, true: bai giang 
+        /// Type => false: tài liệu đi kèm của bài giảng, true: tài liệu hiển thị cho bài giảng 
         /// Status: 0 -> Chưa gửi phê duyệt | 1: -> Đang chờ phê duyệt | 2: Đã phê duyệt | 3: Đã từ chối duyệt | 4: Đã huỷ phê duyệt"
         /// </summary>
 
@@ -65,6 +68,24 @@ namespace LMS_Library_API.Controllers
             var loggerResult = await _documentSvc.Create(document);
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
+                var documentAccess = _mapper.Map<DocumentAccess>(documentDTO.DocumentAccess);
+
+                if ((documentAccess.classId != null && documentAccess.isForAllClasses) || (documentAccess.classId == null && !documentAccess.isForAllClasses))
+                {
+                    return BadRequest(new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Hãy kiểm tra lại phân công bài học"
+                    });
+                }
+
+                var addDocumentAccess = await _documentAccessSvc.Create(documentAccess);
+
+                if (addDocumentAccess.status == TaskStatus.Faulted)
+                {
+                    return BadRequest(addDocumentAccess);
+                }
+
                 return Ok(loggerResult);
             }
             else
@@ -122,7 +143,7 @@ namespace LMS_Library_API.Controllers
                     document.FilePath = filePath.data.ToString();
 
                     var oldDocData = (Document)_documentSvc.GetById(documentDTO.Id).Result.data;
-                    var deleteOldDocFile = _blobStorageSvc.DeleteBlobFile(oldDocData.FilePath, "image");
+                    var deleteOldDocFile = _blobStorageSvc.DeleteBlobFile(oldDocData.FilePath, "document");
 
                     if (deleteOldDocFile.IsFaulted)
                     {

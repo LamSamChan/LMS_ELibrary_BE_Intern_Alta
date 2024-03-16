@@ -351,6 +351,22 @@ namespace LMS_Library_API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(id))
             {
+                var getExam = await _examSvc.GetById(id);
+
+                if (getExam.status == TaskStatus.Faulted)
+                {
+                    return BadRequest(getExam);
+                }
+
+                Exam exam = (Exam)getExam.data;
+
+                var deleteExamFile = await _blobStorageSvc.DeleteBlobFile(exam.FilePath, "document");
+
+                if (deleteExamFile.status == TaskStatus.Faulted)
+                {
+                    return BadRequest(deleteExamFile);
+                }
+
                 var loggerResult = await _examSvc.Delete(id);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {

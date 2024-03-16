@@ -2,6 +2,8 @@
 using LMS_Library_API.Models;
 using LMS_Library_API.Models.AboutStudent;
 using LMS_Library_API.ModelsDTO;
+using LMS_Library_API.Services.ClassService;
+using LMS_Library_API.Services.ServiceAboutStudent.StudentSubjectService;
 using LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,22 +17,45 @@ namespace LMS_Library_API.Controllers
     public class ClassSubjectsController : ControllerBase
     {
         private readonly IClassSubjectSvc _classSubjectSvc;
+        private readonly IStudentSubjectSvc _studentSubjectSvc;
+        private readonly IClassSvc _classSvc;
         private readonly IMapper _mapper;
 
-        public ClassSubjectsController(IClassSubjectSvc classSubjectSvc, IMapper mapper)
+        public ClassSubjectsController(IClassSubjectSvc classSubjectSvc, IStudentSubjectSvc studentSubjectSvc, IClassSvc classSvc, IMapper mapper)
         {
             _classSubjectSvc = classSubjectSvc;
+            _studentSubjectSvc = studentSubjectSvc;
+            _classSvc = classSvc;
             _mapper = mapper;
         }
 
         [HttpPost]
         public async Task<ActionResult<Logger>> Create(ClassSubjectDTO classSubjectDTO)
         {
-            var studyHistory = _mapper.Map<ClassSubject>(classSubjectDTO);
+            var classSubject = _mapper.Map<ClassSubject>(classSubjectDTO);
 
-            var loggerResult = await _classSubjectSvc.Create(studyHistory);
+            var loggerResult = await _classSubjectSvc.Create(classSubject);
+
             if (loggerResult.status == TaskStatus.RanToCompletion)
             {
+                var listStudentInClass = await _classSvc.ListStudentInClass(classSubject.classId);
+
+                foreach (var student in listStudentInClass)
+                {
+                    StudentSubject studentSubject = new StudentSubject() {
+                        studentId = student.Id,
+                        subjectId = classSubject.subjectId,
+                        subjectMark = false
+                    };
+
+                    var addStudentSubject = await _studentSubjectSvc.Create(studentSubject);
+
+                    if (addStudentSubject.status == TaskStatus.Faulted)
+                    {
+                        return BadRequest(addStudentSubject);
+                    }
+                }
+
                 return Ok(loggerResult);
             }
             else
@@ -95,30 +120,30 @@ namespace LMS_Library_API.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Logger>> Update(ClassSubjectDTO classSubjectDTO)
+        [HttpDelete]
+        public async Task<ActionResult<Logger>> Delete(ClassSubjectDTO classSubjectDTO)
         {
             var classSubject = _mapper.Map<ClassSubject>(classSubjectDTO);
 
-            var loggerResult = await _classSubjectSvc.Update(classSubject);
-            if (loggerResult.status == TaskStatus.RanToCompletion)
+            if (!String.IsNullOrWhiteSpace(classSubject.classId) || !String.IsNullOrWhiteSpace(classSubject.subjectId))
             {
-                return Ok(loggerResult);
-            }
-            else
-            {
-                return BadRequest(loggerResult);
-            }
-        }
+                var loggerResult = await _classSubjectSvc.Delete(classSubject);
 
-        [HttpDelete("{classId}/{subjectId}")]
-        public async Task<ActionResult<Logger>> Delete(string classId, string subjectId)
-        {
-            if (!String.IsNullOrWhiteSpace(classId) || !String.IsNullOrWhiteSpace(subjectId))
-            {
-                var loggerResult = await _classSubjectSvc.Delete(classId, subjectId);
                 if (loggerResult.status == TaskStatus.RanToCompletion)
                 {
+
+                    var listStudentInClass = await _classSvc.ListStudentInClass(classSubject.classId);
+
+                    foreach (var student in listStudentInClass)
+                    {
+                        var addStudentSubject = await _studentSubjectSvc.Delete(student.Id.ToString(), classSubject.subjectId);
+
+                        if (addStudentSubject.status == TaskStatus.Faulted)
+                        {
+                            return BadRequest(addStudentSubject);
+                        }
+                    }
+
                     return Ok(loggerResult);
                 }
                 else

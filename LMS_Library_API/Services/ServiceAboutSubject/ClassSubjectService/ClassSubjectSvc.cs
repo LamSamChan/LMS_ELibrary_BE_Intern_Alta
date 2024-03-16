@@ -36,11 +36,11 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
             }
         }
 
-        public async Task<Logger> Delete(string classId, string subjectId)
+        public async Task<Logger> Delete(ClassSubject classSubject)
         {
             try
             {
-                var existClassSubject = await _context.ClassSubjects.FirstOrDefaultAsync(_ => _.classId == classId && _.subjectId == subjectId);
+                var existClassSubject = await _context.ClassSubjects.FirstOrDefaultAsync(_ => _.classId == classSubject.classId && _.subjectId == classSubject.subjectId);
 
                 if (existClassSubject == null)
                 {
@@ -144,43 +144,6 @@ namespace LMS_Library_API.Services.ServiceAboutSubject.ClassSubjectService
                 {
                     status = TaskStatus.RanToCompletion,
                     message = "Thành công",
-                    data = existClassSubject
-                };
-            }
-            catch (Exception ex)
-            {
-                return new Logger()
-                {
-                    status = TaskStatus.Faulted,
-                    message = ex.Message,
-                };
-            }
-        }
-
-        public async Task<Logger> Update(ClassSubject classSubject)
-        {
-            try
-            {
-                var existClassSubject = await _context.ClassSubjects.FirstOrDefaultAsync(_ => _.classId == classSubject.classId);
-
-                if (existClassSubject == null)
-                {
-                    return new Logger()
-                    {
-                        status = TaskStatus.Faulted,
-                        message = "Không tìm thấy đối tượng cần cập nhật"
-                    };
-                }
-
-                existClassSubject.classId = classSubject.classId;
-                existClassSubject.subjectId = classSubject.subjectId;
-
-                await _context.SaveChangesAsync();
-
-                return new Logger()
-                {
-                    status = TaskStatus.RanToCompletion,
-                    message = "Cập nhật thành công",
                     data = existClassSubject
                 };
             }

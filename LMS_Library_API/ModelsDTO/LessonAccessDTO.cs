@@ -12,5 +12,8 @@ namespace LMS_Library_API.ModelsDTO
         public int lessonId { get; set; }
 
         public string? classId { get; set; }
+
+        [Required]
+        public bool isForAllClasses { get; set; }
     }
 }

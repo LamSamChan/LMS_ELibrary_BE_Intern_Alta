@@ -27,6 +27,18 @@ namespace LMS_Library_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Logger>> Create(SubjectNotificationDTO subjectNotificationDTO)
         {
+            foreach (var item in subjectNotificationDTO.NotificationClassStudents)
+            {
+                if ((item.StudentId != null && item.IsForAllStudent) || (item.StudentId == null && !item.IsForAllStudent))
+                {
+                    return BadRequest(new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Hãy kiểm tra lại phân công thông báo"
+                    });
+                }
+            }
+
             var notification = _mapper.Map<SubjectNotification>(subjectNotificationDTO);
 
             var loggerResult = await _subjectNotificationSvc.Create(notification);
@@ -120,6 +132,18 @@ namespace LMS_Library_API.Controllers
         [HttpPut]
         public async Task<ActionResult<Logger>> Update(SubjectNotificationDTO subjectNotificationDTO)
         {
+            foreach (var item in subjectNotificationDTO.NotificationClassStudents)
+            {
+                if ((item.StudentId != null && item.IsForAllStudent) || (item.StudentId == null && !item.IsForAllStudent))
+                {
+                    return BadRequest(new Logger()
+                    {
+                        status = TaskStatus.Faulted,
+                        message = "Hãy kiểm tra lại phân công thông báo"
+                    });
+                }
+            }
+
             var notification = _mapper.Map<SubjectNotification>(subjectNotificationDTO);
 
             var loggerResult = await _subjectNotificationSvc.Update(notification);

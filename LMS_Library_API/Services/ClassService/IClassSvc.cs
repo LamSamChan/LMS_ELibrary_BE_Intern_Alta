@@ -8,7 +8,7 @@ namespace LMS_Library_API.Services.ClassService
         Task<Logger> Update(Class classModel);
         Task<Logger> Delete(string classId);
         Task<Logger> GetById(string classId);
-        Task<int> CountStudentInClass(string classId);
+        Task<IEnumerable<Student>> ListStudentInClass(string classId);
         Task<Logger> GetAll();
         Task<Logger> Search(string query);
     }
